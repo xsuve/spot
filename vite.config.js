@@ -1,31 +1,22 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import path, { resolve } from 'path';
 import react from '@vitejs/plugin-react';
-import createManifest from './utils/plugins/createManifest';
+import { crx } from '@crxjs/vite-plugin';
+import manifest from './manifest.json';
 
 export default defineConfig({
-  root: resolve(__dirname, 'src'),
-  publicDir: resolve(__dirname, 'public'),
   build: {
     outDir: resolve(__dirname, 'build'),
-    sourcemap: 'inline',
-    rollupOptions: {
-      input: {
-        content_scripts: resolve(__dirname, 'src', 'extension', 'content_scripts', 'index.tsx'),
-        background: resolve(__dirname, 'src', 'extension', 'background', 'index.ts'),
-        options: resolve(__dirname, 'src', 'extension', 'options', 'index.html'),
-        popup: resolve(__dirname, 'src', 'extension', 'popup', 'index.html')
-      },
-      output: {
-        entryFileNames: (chunk) => `${chunk.name}.js`,
-        assetFileNames: 'assets/[name].[ext]'
-      }
-    }
+    sourcemap: 'inline'
   },
   plugins: [
-    react({
-      include: '**/*.{js,jsx,ts,tsx}'
-    }),
-    createManifest()
-  ]
+    react(),
+    crx({ manifest })
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@components': path.resolve(__dirname, './src/components'),
+    },
+  }
 });

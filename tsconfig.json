@@ -2,15 +2,23 @@
   "compilerOptions": {
     "outDir": "./build/",
     "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
+    "module": "ESNext",
+    "target": "ESNext",
     "jsx": "react",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
     "downlevelIteration": true,
     "lib": [
-      "es5", "es6", "dom", "dom.iterable"
-    ]
+      "ESNext", "DOM", "DOM.Iterable"
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ]
+    }
   }
 }

@@ -7,21 +7,17 @@
   "permissions": [
     "storage"
   ],
-  "options_page": "extension/options/index.html",
   "content_scripts": [
     {
       "matches": [
-        "https://*/*"
+        "https://www.linkedin.com/jobs/view/*"
       ],
       "js": [
-        "content_scripts.js"
+        "src/extension/content_scripts/index.tsx"
       ],
       "css": []
     }
   ],
-  "background": {
-    "service_worker": "background.js"
-  },
   "icons": {
     "16": "assets/icons/icon16.png",
     "48": "assets/icons/icon48.png",
@@ -32,7 +28,7 @@
       "16": "assets/icons/icon16.png",
       "48": "assets/icons/icon48.png"
     },
-    "default_popup": "extension/popup/index.html"
+    "default_popup": "src/extension/popup/index.html"
   },
   "host_permissions": [
     "https://*/*"

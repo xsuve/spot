@@ -14,6 +14,7 @@
     "clean": "rm -r build"
   },
   "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.11",
     "@types/chrome": "^0.0.196",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.20",
