@@ -7,6 +7,7 @@ import Box from '@components/box/Box';
 // Functions
 const renderBox = (element: Element) => {
   const root: HTMLDivElement = document.createElement('div');
+  root.classList.add('mt-[100px]');
   element.insertAdjacentElement('beforeend', root);
   const reactElement: Root = createRoot(root);
   reactElement.render(<Box />);
