@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "name": "spot",
-  "description": "",
+  "name": "Spot",
+  "description": "Your Interview AI Assistant",
   "author": "xsuve",
   "manifest_version": 3,
   "permissions": [
@@ -18,6 +18,9 @@
       "css": []
     }
   ],
+  "background": {
+    "service_worker": "src/extension/background/background.ts"
+  },
   "icons": {
     "16": "assets/icons/icon16.png",
     "48": "assets/icons/icon48.png",
