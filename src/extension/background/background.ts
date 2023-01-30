@@ -1,25 +1,11 @@
 import { MessageType } from '@/types/MessageType';
 import supabase from '@/services/supabase';
+import { parseTechnologies } from '@/services/technologiesParser';
 
 chrome.runtime.onMessage.addListener(async (message) => {
   switch (message.type) {
     case MessageType.GENERATE_REQUEST:
-      const technologies: string[] = [];
-      if (
-        message.data.content.toLowerCase().includes('React'.toLowerCase())
-      ) {
-        technologies.push('React');
-      }
-      if (
-        message.data.content.toLowerCase().includes('Jest'.toLowerCase())
-      ) {
-        technologies.push('Jest');
-      }
-      if (
-        message.data.content.toLowerCase().includes('JavaScript'.toLowerCase())
-      ) {
-        technologies.push('JavaScript');
-      }
+      const technologies: string[] = parseTechnologies(message.data.content);
 
       const sendMessage: any = {
         type: undefined,

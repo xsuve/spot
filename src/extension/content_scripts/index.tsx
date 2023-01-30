@@ -24,20 +24,6 @@ chrome.runtime.onMessage.addListener((message) => {
           reactElement.render(<Wrapper data={message.data} />);
 
           container.style.setProperty('display', 'none', 'important');
-          
-          // const content: HTMLDivElement = container.querySelector(CONTAINER_CONTENT);
-          // if (content) {
-          //   container.removeChild(root);
-
-          //   content.style.overflow = 'hidden';
-          //   content.style.height = '0px';
-
-          //   const wrapperRoot = document.createElement('div');
-          //   wrapperRoot.classList.add('spot-wrapper-root', 'mt-[24px]');
-          //   container.insertAdjacentElement('beforeend', wrapperRoot);
-          //   reactElement = createRoot(wrapperRoot);
-          //   reactElement.render(<Wrapper data={message.data} />);
-          // }
         }
       }
     break;

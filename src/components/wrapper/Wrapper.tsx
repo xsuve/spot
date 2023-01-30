@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import Questions from '@/components/questions/Questions';
 import Toggle from '@/components/toggle/Toggle';
+import Technologies from '../technologies/Technologies';
 
 interface WrapperPropsData {
   technologies: string[];
@@ -21,7 +22,9 @@ const Wrapper: FC<WrapperProps> = ({
       <Toggle />
       
       <div className='spot-box-wrapper mt-[2.4rem]'>
-        <Questions data={data.questions} />
+        <Technologies data={data.technologies} />
+
+        <Questions data={data.questions} className='mt-[4.8rem]' />
       </div>
     </div>
   );
