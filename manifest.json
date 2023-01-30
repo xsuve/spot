@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "name": "Spot",
-  "description": "Your Interview AI Assistant",
+  "description": "Your AI Jobs Interview Assistant",
   "author": "xsuve",
   "manifest_version": 3,
   "permissions": [
