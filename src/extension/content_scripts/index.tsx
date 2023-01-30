@@ -6,7 +6,6 @@ import Wrapper from '@/components/wrapper/Wrapper';
 import { MessageType } from '@/types/MessageType';
 
 
-let SAVED_CONTENT: HTMLDivElement;
 const CONTAINER = 'section.jobs-unified-description';
 const CONTAINER_CONTENT = 'div.jobs-unified-description__content';
 
@@ -17,25 +16,28 @@ chrome.runtime.onMessage.addListener((message) => {
     case MessageType.GENERATE_RESPONSE:
       const container: HTMLElement = document.querySelector(CONTAINER);
       if (window.location.href.includes('/jobs/view/') && container) {
-        const root: HTMLDivElement = container.querySelector('.spot-box-root');
-        if (root) {
-          const content: HTMLDivElement = container.querySelector(CONTAINER_CONTENT);
-          if (content) {
-            container.removeChild(root);
+        const boxRoot: HTMLDivElement = container.parentElement.querySelector('.spot-box-root');
+        if (boxRoot) {
+          boxRoot.innerHTML = '';
 
-            SAVED_CONTENT = content;
-            content.innerHTML = '';
+          let reactElement: Root = createRoot(boxRoot);
+          reactElement.render(<Wrapper data={message.data} />);
 
-            const wrapperRoot = document.createElement('div');
-            wrapperRoot.classList.add('spot-wrapper-root');
-            content.insertAdjacentElement('beforeend', wrapperRoot);
+          container.style.setProperty('display', 'none', 'important');
+          
+          // const content: HTMLDivElement = container.querySelector(CONTAINER_CONTENT);
+          // if (content) {
+          //   container.removeChild(root);
 
-            const reactElement: Root = createRoot(wrapperRoot);
-            reactElement.render(<Wrapper data={message.data} />);
+          //   content.style.overflow = 'hidden';
+          //   content.style.height = '0px';
 
-            console.log(message.data);
-            
-          }
+          //   const wrapperRoot = document.createElement('div');
+          //   wrapperRoot.classList.add('spot-wrapper-root', 'mt-[24px]');
+          //   container.insertAdjacentElement('beforeend', wrapperRoot);
+          //   reactElement = createRoot(wrapperRoot);
+          //   reactElement.render(<Wrapper data={message.data} />);
+          // }
         }
       }
     break;
@@ -46,8 +48,8 @@ chrome.runtime.onMessage.addListener((message) => {
 // Functions
 const renderBox = (element: Element, content: string) => {
   const root: HTMLDivElement = document.createElement('div');
-  root.classList.add('spot-box-root', 'mt-[125px]');
-  element.insertAdjacentElement('beforeend', root);
+  root.classList.add('spot-box-root', 'mb-[1.6rem]');
+  element.insertAdjacentElement('beforebegin', root);
   const reactElement: Root = createRoot(root);
   reactElement.render(<Box content={content} />);
 };

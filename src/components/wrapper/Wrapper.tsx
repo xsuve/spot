@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import Questions from '../questions/Questions';
+import Questions from '@/components/questions/Questions';
+import Toggle from '@/components/toggle/Toggle';
 
 interface WrapperPropsData {
   technologies: string[];
@@ -14,10 +15,14 @@ interface WrapperProps {
 const Wrapper: FC<WrapperProps> = ({
   data,
   className = ''
-}) => {  
+}) => {
   return (
-    <div className={`flex flex-col gap-y-[2.4rem] ${className}`}>
-      <Questions data={data.questions} />
+    <div className={`flex flex-col p-[2.4rem] rounded-[0.8rem] bg-[#1d2226] ${className}`}>
+      <Toggle />
+      
+      <div className='spot-box-wrapper mt-[2.4rem]'>
+        <Questions data={data.questions} />
+      </div>
     </div>
   );
 };
