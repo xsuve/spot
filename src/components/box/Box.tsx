@@ -30,7 +30,7 @@ const Box: FC<BoxProps> = ({
         <p className='font-poppins text-[14px] font-normal text-white'>Generate a list of interview questions based on the job description.</p>
       </div>
       <div className='flex justify-end'>
-        <Button type='button' onClick={handleClick} loading={loading}>Let's start!</Button>
+        <Button type='button' color='yellow' size='normal' onClick={handleClick} loading={loading}>Let's start!</Button>
       </div>
     </div>
   );
