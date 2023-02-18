@@ -3,7 +3,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'poppins': ['Poppins']
+        'space-grotesk': ['Space Grotesk'],
+        'open-sans': ['Open Sans']
+      },
+      colors: {
+        'spot-gray': '#F8F7FD'
       }
     },
   },

@@ -15,8 +15,8 @@ const ButtonIconPropsColorMap = {
 
 type ButtonPropsSize = 'normal' | 'small';
 const ButtonPropsSizeMap = {
-  'normal': 'gap-x-[10px] h-[42px] px-[24px] rounded-xl',
-  'small': 'gap-x-[8px] h-[36px] px-[16px] rounded-md'
+  'normal': 'gap-x-[10px] h-[45px] px-[24px]',
+  'small': 'gap-x-[8px] h-[35px] px-[16px]'
 };
 const ButtonTextPropsSizeMap = {
   'normal': 'text-[16px]',
@@ -60,13 +60,13 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      className={`flex flex-row items-center justify-center ${ButtonPropsSizeMap[size]} ${ButtonPropsColorMap[color]} ${(disabled || loading) ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+      className={`flex flex-row items-center justify-center rounded ${ButtonPropsSizeMap[size]} ${ButtonPropsColorMap[color]} ${(disabled || loading) ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
       disabled={disabled || loading}
       onClick={onClick}
     >
       { _icon }
       { loading && <ArrowPathIcon className={`${ButtonIconPropsSizeMap[size]} ${ButtonIconPropsColorMap[color]} leading-none animate-spin`} /> }
-      <span className={`font-poppins font-medium ${ButtonTextPropsSizeMap[size]}`}>{children}</span>
+      <span className={`font-space-grotesk font-medium ${ButtonTextPropsSizeMap[size]}`}>{children}</span>
     </button>
   );
 };

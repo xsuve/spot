@@ -25,7 +25,7 @@ const Toggle: FC = () => {
     <div className='flex justify-between items-center'>
       <div className='flex justify-between items-center gap-x-[16px]'>
         <Switch onClick={handleToggle} toggled={toggled} />
-        <p className={`font-poppins text-[13px] font-medium ${toggled ? 'text-white' : 'text-yellow-500'}`}>{toggled ? 'Disable' : 'Enable'} Spot</p>
+        <p className={`font-poppins text-[13px] font-medium text-white`}>{toggled ? 'Disable' : 'Enable'} Spot</p>
       </div>
       <img src={chrome.runtime.getURL('assets/img/spot-logo-white.svg')} className='w-[100px]' />
     </div>
