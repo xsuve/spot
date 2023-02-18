@@ -11,7 +11,7 @@ const Questions: FC<QuestionsProps> = ({
 }) => {
   return (
     <div className={`${className}`}>
-      <h2 className='t-20 t-bold text-white mb-[24px]'>Interview questions</h2>
+      <h2 className='font-space-grotesk text-[2rem] font-semibold text-white mb-[24px]'>Interview questions</h2>
       { data.map(item => <div className='mb-[8px]'>{item}</div>) }
     </div>
   );

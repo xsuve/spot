@@ -7,13 +7,14 @@ const TextPropsTypeMap = {
   'paragraph': 'font-poppins text-[13px] font-light'
 };
 
-type TextPropsColor = 'dark' | 'gray' | 'white' | 'red' | 'green';
+type TextPropsColor = 'dark' | 'gray' | 'white' | 'red' | 'green' | 'yellow';
 const TextPropsColorMap = {
   'dark': 'text-slate-700',
   'gray': 'text-slate-400',
   'white': 'text-white',
   'red': 'text-red-400',
-  'green': 'text-green-400'
+  'green': 'text-green-400',
+  'yellow': 'text-yellow-500'
 };
 
 interface TextProps {
