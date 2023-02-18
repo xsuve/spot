@@ -10,16 +10,28 @@ import Text from '@/components/text/Text';
 type AlertPropsType = 'success' | 'error' | 'warning' | 'info';
 const AlertPropsTypeMap = {
   'success': {
-    'icon': <CheckCircleIcon className='w-5 h-5 text-green-400' />
+    'icon':
+      <div className='w-6 h-6 flex justify-center items-center shrink-0 rounded-full bg-green-100'>
+        <CheckCircleIcon className='w-4 h-4 text-green-600' />
+      </div>
   },
   'error': {
-    'icon': <XCircleIcon className='w-5 h-5 text-red-400' />
+    'icon': 
+      <div className='w-6 h-6 flex justify-center items-center shrink-0 rounded-full bg-red-100'>
+        <XCircleIcon className='w-4 h-4 text-red-600' />
+      </div>
   },
   'warning': {
-    'icon': <ExclamationCircleIcon className='w-5 h-5 text-yellow-400' />
+    'icon': 
+      <div className='w-6 h-6 flex justify-center items-center shrink-0 rounded-full bg-yellow-100'>
+        <ExclamationCircleIcon className='w-4 h-4 text-yellow-600' />
+      </div>
   },
   'info': {
-    'icon': <InformationCircleIcon className='w-5 h-5 text-blue-400' />
+    'icon': 
+      <div className='w-6 h-6 flex justify-center items-center shrink-0 rounded-full bg-blue-100'>
+        <InformationCircleIcon className='w-4 h-4 text-blue-600' />
+      </div>
   }
 };
 

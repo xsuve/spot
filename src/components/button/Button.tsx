@@ -3,14 +3,16 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 type ButtonPropsType = 'submit' | 'button';
 
-type ButtonPropsColor = 'yellow' | 'gray';
+type ButtonPropsColor = 'yellow' | 'white' | 'dark';
 const ButtonPropsColorMap = {
-  'yellow': 'bg-yellow-500 hover:bg-yellow-500 text-white',
-  'gray': 'bg-zinc-100 hover:bg-zinc-200 text-zinc-800'
+  'yellow': 'bg-yellow-500 text-white',
+  'white': 'bg-white border border-slate-200 text-slate-700',
+  'dark': 'bg-slate-700 border border-slate-700 text-white'
 };
 const ButtonIconPropsColorMap = {
   'yellow': 'text-white',
-  'gray': 'text-zinc-800'
+  'white': 'text-slate-700',
+  'dark': 'text-white'
 };
 
 type ButtonPropsSize = 'normal' | 'small';
@@ -19,8 +21,8 @@ const ButtonPropsSizeMap = {
   'small': 'gap-x-[8px] h-[35px] px-[16px]'
 };
 const ButtonTextPropsSizeMap = {
-  'normal': 'text-[16px]',
-  'small': 'text-[14px]'
+  'normal': 'text-[15px]',
+  'small': 'text-[13px]'
 };
 const ButtonIconPropsSizeMap = {
   'normal': 'w-[20px] h-[20px]',

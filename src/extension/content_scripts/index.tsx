@@ -5,6 +5,15 @@ import Box from '@/components/box/Box';
 import Wrapper from '@/components/wrapper/Wrapper';
 import { MessageType } from '@/types/MessageType';
 
+let font: HTMLLinkElement = document.querySelector('.spot-fonts');
+if (!font) {
+  font = document.createElement('link');
+  font.classList.add('spot-fonts');
+  font.rel = 'stylesheet';
+  font.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&&family=Space+Grotesk:wght@500&display=swap';
+  (document.head || document.documentElement).appendChild(font);
+}
+
 
 const CONTAINER = 'section.jobs-unified-description';
 const CONTAINER_CONTENT = 'div.jobs-unified-description__content';

@@ -2,12 +2,12 @@ import React, { BaseSyntheticEvent, useState } from 'react';
 import Text from '@/components/text/Text';
 import Button from '@/components/button/Button';
 import Input from '@/components/input/Input';
+import Logo from '@/components/logo/Logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import supabase from '@/services/supabase';
 import Alert, { AlertProps } from '@/components/alert/Alert';
 import { useUser } from '@/hooks/useUser';
-import SpotLogoBlack from '../../../public/assets/img/spot-logo-black.svg';
 
 type LoginData = {
   email: string;
@@ -48,17 +48,13 @@ const Login: React.FC = () => {
     }
 
     setLoading(false);
-    // const response = await supabase.auth.setSession(session);
-    // if (response.error === null) {
-    //   navigate('/');
-    // }
     navigate('/');
     reset();
   };
 
   return (
     <div className='p-6 flex flex-col items-start gap-y-8'>
-      <img src={SpotLogoBlack} alt='' className='w-[90px]' />
+      <Logo />
 
       <div className='flex flex-col gap-y-1.5'>
         <Text type='title' color='dark'>Log into Spot</Text>
@@ -102,16 +98,19 @@ const Login: React.FC = () => {
           <>
             { alert && !loading ? <Alert {...alert} /> : null }
           </>
-          <Link to='/forgot'>
-            <Text type='caption' color='light-gray'>Forgot password?</Text>
-          </Link>
+          <div className='flex gap-x-1.5'>
+            <Text type='paragraph' color='gray'>Forgot password? </Text>
+            <Link to='/forgot'>
+              <Text type='label' color='gray'>Reset</Text>
+            </Link>
+          </div>
         </div>
         <div className='w-full'>
-          <Button type='submit' size='normal' color='yellow' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
-          <div className='mt-6'>
+          <Button type='submit' size='normal' color='dark' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
+          <div className='mt-6 flex flex-col gap-y-1.5 items-start'>
             <Text type='paragraph' color='gray'>Don't have an account? </Text>
             <Link to='/signup'>
-              <Text type='caption' color='light-gray'>Sign up</Text>
+              <Text type='label' color='dark'>Sign up</Text>
             </Link>
           </div>
         </div>

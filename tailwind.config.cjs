@@ -4,7 +4,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'space-grotesk': ['Space Grotesk'],
-        'open-sans': ['Open Sans']
+        'poppins': ['Poppins']
       },
       colors: {
         'spot-gray': '#F8F7FD'

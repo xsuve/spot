@@ -7,7 +7,12 @@ import manifest from './manifest.json';
 export default defineConfig({
   build: {
     outDir: resolve(__dirname, 'build'),
-    sourcemap: 'inline'
+    sourcemap: 'inline',
+    rollupOptions: {
+      input: {
+        confirmed: path.resolve(__dirname, 'src', 'extension', 'pages', 'confirmed', 'index.html')
+      }
+    }
   },
   plugins: [
     react(),

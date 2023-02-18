@@ -1,18 +1,16 @@
 import React, { FC, ReactNode } from 'react';
 
-type TextPropsType = 'title' | 'label' | 'caption' | 'paragraph';
+type TextPropsType = 'title' | 'label' | 'paragraph';
 const TextPropsTypeMap = {
-  'title': 'font-space-grotesk text-[24px] font-semibold',
-  'label': 'font-space-grotesk text-[14px] font-semibold',
-  'caption': 'font-space-grotesk text-[13px] font-normal',
-  'paragraph': 'font-open-sans text-[14px] font-normal'
+  'title': 'font-space-grotesk text-[23px] font-medium',
+  'label': 'font-space-grotesk text-[14px] font-medium',
+  'paragraph': 'font-poppins text-[13px] font-light'
 };
 
-type TextPropsColor = 'dark' | 'gray' | 'light-gray' | 'white' | 'red' | 'green';
+type TextPropsColor = 'dark' | 'gray' | 'white' | 'red' | 'green';
 const TextPropsColorMap = {
   'dark': 'text-slate-700',
-  'light-gray': 'text-slate-400',
-  'gray': 'text-slate-500',
+  'gray': 'text-slate-400',
   'white': 'text-white',
   'red': 'text-red-400',
   'green': 'text-green-400'
@@ -32,7 +30,7 @@ const Text: FC<TextProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`${TextPropsTypeMap[type]} ${TextPropsColorMap[color]} ${className}`}>{children}</div>
+    <div className={`inline-block ${TextPropsTypeMap[type]} ${TextPropsColorMap[color]} ${className}`}>{children}</div>
   );
 };
 
