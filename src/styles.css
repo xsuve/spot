@@ -3,3 +3,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Get Started */
+.get-started-item {
+  @apply 
+    before:absolute before:-top-[15px] before:w-[2px] before:h-[15px]
+    after:absolute after:-bottom-[15px] after:w-[2px] after:h-[15px];
+}
+
+.get-started-item.status-done {
+  @apply border-white
+    before:bg-yellow-500
+    after:bg-yellow-500;
+}
+.get-started-item.status-ongoing {
+  @apply border-yellow-500
+    before:bg-yellow-500 before:h-[13px]
+    after:bg-slate-300 after:h-[13px];
+}
+.get-started-item.status-todo {
+  @apply border-white
+    before:bg-slate-300
+    after:bg-slate-300;
+}
+.get-started-items div:first-of-type .get-started-item {
+  @apply before:h-0;
+}
+.get-started-items div:last-of-type .get-started-item {
+  @apply after:h-0;
+}
+
+.get-started-item .get-started-item-icon svg {
+  @apply w-3 h-3;
+}
+.get-started-item.status-done .get-started-item-icon {
+  @apply bg-yellow-500 border-yellow-500;
+}
+.get-started-item.status-done .get-started-item-icon svg {
+  @apply text-white;
+}
+.get-started-item.status-ongoing .get-started-item-icon {
+  @apply bg-yellow-100 border-white;
+}
+.get-started-item.status-ongoing .get-started-item-icon svg {
+  @apply text-yellow-500;
+}
+.get-started-item.status-todo .get-started-item-icon {
+  @apply bg-white border-slate-300;
+}
+.get-started-item.status-todo .get-started-item-icon svg {
+  @apply text-slate-500;
+}

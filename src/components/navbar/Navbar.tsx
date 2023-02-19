@@ -4,6 +4,7 @@ import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import Logo from '@/components/logo/Logo';
 import { useSWRConfig } from 'swr';
+import Text from '@/components/text/Text';
 
 const Navbar: FC = () => {
   const navigate = useNavigate();
@@ -17,7 +18,10 @@ const Navbar: FC = () => {
   return (
     <div className='fixed top-0 left-0 bg-white w-full h-[56px] px-6 flex justify-between items-center'>
       <Logo />
-      <ArrowRightOnRectangleIcon className='w-5 h-5 text-slate-500 cursor-pointer' onClick={logOut} />
+      <div className='flex items-center gap-x-2 cursor-pointer' onClick={logOut}>
+        <ArrowRightOnRectangleIcon className='w-5 h-5 text-slate-500' />
+        <Text type='paragraph' color='gray' className='!text-xs'>Log out</Text>
+      </div>
     </div>
   );
 };
