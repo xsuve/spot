@@ -1,52 +1,63 @@
 const technologies = [
-  'HTML',
-  'CSS',
-  'React', 'Angular', 'Vue', 'VueJS',
-  'JavaScript', 'JS',
-  'TypeScript',
+  ['HTML'],
+  ['CSS'],
+  ['React', 'ReactJS', 'React.JS'], ['Angular'], ['Vue', 'VueJS'],
+  ['JavaScript', 'JS'],
+  ['TypeScript'],
 
-  'Python',
-  'NodeJS', 'Express', 'Deno',
-  'Java',
-  'PHP',
-  'C++',
-  'C#',
-  'C',
-  'Golang', 'GO',
-  'Scala',
-  'Perl',
-  'Shell',
-  'Haskell',
-  'Rust',
-  'Ruby on Rails', 'Ruby',
-  'Lua',
+  ['Python'],
+  ['NodeJS', 'Node.JS'], ['Express'], ['Deno'],
+  ['Java'],
+  ['PHP'],
+  ['C++'],
+  ['C#'],
+  ['.NET', 'NET'],
+  ['C'],
+  ['Golang', 'GO'],
+  ['Scala'],
+  ['Perl'],
+  ['Shell'],
+  ['Haskell'],
+  ['Rust'],
+  ['Ruby on Rails', 'Ruby'],
+  ['Lua'],
 
-  'Swift',
-  'Kotlin',
-  'Flutter',
-  'Dart',
+  ['Swift'],
+  ['Kotlin'],
+  ['Flutter'],
+  ['Dart'],
+  ['React Native'],
 
-  'MySQL', 'SQL',
-  'Mongo', 'MongoDB',
-  'Redis',
+  ['MySQL'], ['SQL'],
+  ['PostgresSQL'],
+  ['Mongo', 'MongoDB'],
+  ['Redis'],
 
-  'Linux',
-  'MATLAB',
-  'R',
+  ['AWS', 'Amazon Web Services'],
 
-  'Search Engine Optimization', 'SEO'
+  ['Linux'],
+  ['MATLAB'],
+  ['R'],
+
+  ['Search Engine Optimization', 'SEO']
 ];
 
 export const parseTechnologies = (
-  content: string
+  jobDescription: string
 )  => {
   const _technologies: string[] = [];
 
-  const _content: string = content.toLowerCase();
+  const _jobDescription: string = jobDescription.toLowerCase();
 
   for (let i = 0; i < technologies.length; i++) {
-    if (_content.includes(technologies[i].toLowerCase()) && !_technologies.includes(technologies[i])) {
-      _technologies.push(technologies[i]);
+    for (let j = 0; j < technologies[i].length; j++) {
+      if (
+        new RegExp('\\b' + technologies[i][j].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '\\b', 'i').test(_jobDescription)
+        && !_technologies.includes(technologies[i][j].toLowerCase())
+      ) {
+        _technologies.push(technologies[i][j]);
+        break;
+      }
     }
   }
 

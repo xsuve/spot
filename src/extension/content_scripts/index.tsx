@@ -16,7 +16,7 @@ if (!font) {
 
 
 const CONTAINER = 'section.jobs-unified-description';
-const CONTAINER_CONTENT = 'div.jobs-unified-description__content';
+const CONTAINER_JOB_DESCRIPTION = 'div.jobs-unified-description__content';
 
 
 // Message
@@ -41,12 +41,12 @@ chrome.runtime.onMessage.addListener((message) => {
 
 
 // Functions
-const renderBox = (element: Element, content: string) => {
+const renderBox = (element: Element, jobDescription: string) => {
   const root: HTMLDivElement = document.createElement('div');
   root.classList.add('spot-box-root', 'mb-[1.6rem]');
   element.insertAdjacentElement('beforebegin', root);
   const reactElement: Root = createRoot(root);
-  reactElement.render(<Box content={content} />);
+  reactElement.render(<Box jobDescription={jobDescription} />);
 };
 
 
@@ -57,9 +57,9 @@ new MutationObserver((mutations: MutationRecord[]) => {
       if (!(element instanceof HTMLElement)) continue;
 
       if (window.location.href.includes('/jobs/view/') && element.matches(CONTAINER)) {
-        const content: HTMLDivElement = element.querySelector(CONTAINER_CONTENT);
-        if (content) {
-          renderBox(element, content.textContent);
+        const jobDescription: HTMLDivElement = element.querySelector(CONTAINER_JOB_DESCRIPTION);
+        if (jobDescription) {
+          renderBox(element, jobDescription.textContent);
         }
       }
     }
@@ -71,8 +71,8 @@ new MutationObserver((mutations: MutationRecord[]) => {
 
 const container = document.querySelector(CONTAINER);
 if (window.location.href.includes('/jobs/view/') && container) {
-  const content: HTMLDivElement = container.querySelector(CONTAINER_CONTENT);
-  if (content) {
-    renderBox(container, content.textContent);
+  const jobDescription: HTMLDivElement = container.querySelector(CONTAINER_JOB_DESCRIPTION);
+  if (jobDescription) {
+    renderBox(container, jobDescription.textContent);
   }
 }
