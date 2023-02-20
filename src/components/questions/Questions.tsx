@@ -12,7 +12,9 @@ const Questions: FC<QuestionsProps> = ({
   return (
     <div className={`${className}`}>
       <h2 className='font-space-grotesk text-[2rem] font-semibold text-white mb-[24px]'>Interview questions</h2>
-      { data.map(item => <div className='mb-[8px]'>{item}</div>) }
+      <ul className='!list-decimal indent-[5px] pl-[30px]'>
+        { data.map(item => <li className='leading-[2]'>{item}</li>) }
+      </ul>
     </div>
   );
 };
