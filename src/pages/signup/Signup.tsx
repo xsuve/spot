@@ -62,7 +62,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className='p-6 flex flex-col items-start gap-y-8'>
+    <div className='p-5 flex flex-col items-start gap-y-8'>
       <Logo />
 
       <div className='flex flex-col gap-y-1.5'>

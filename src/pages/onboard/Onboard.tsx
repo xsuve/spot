@@ -55,7 +55,7 @@ const Onboard: React.FC = () => {
   };
 
   return (
-    <div className='p-6 flex flex-col items-start gap-y-8'>
+    <div className='p-5 flex flex-col items-start gap-y-8'>
       <div className='flex flex-col gap-y-1.5'>
         <Text type='title' color='dark'>Let's complete your account</Text>
         <Text type='paragraph' color='gray'>We need more info about you before you can start using Spot.</Text>

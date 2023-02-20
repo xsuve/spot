@@ -1,6 +1,7 @@
 const technologies = [
-  ['HTML'],
-  ['CSS'],
+  ['HTML', 'HTML5'],
+  ['CSS'], ['SCSS'],
+  ['Bootstrap'], ['MUI', 'Material UI'],
   ['React', 'ReactJS', 'React.JS'], ['Angular'], ['Vue', 'VueJS'],
   ['JavaScript', 'JS'],
   ['TypeScript'],
@@ -38,6 +39,9 @@ const technologies = [
   ['Linux'],
   ['MATLAB'],
   ['R'],
+
+  ['REST API'],
+  ['OOP', 'Object-Oriented Programming'],
 
   ['Search Engine Optimization', 'SEO']
 ];
