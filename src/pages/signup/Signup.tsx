@@ -8,10 +8,13 @@ import { useForm } from 'react-hook-form';
 import supabase from '@/services/supabase';
 import Alert, { AlertProps } from '@/components/alert/Alert';
 import { useUser } from '@/hooks/useUser';
+import { countryList } from '@/utils/countryList';
+import Select from '@/components/select/Select';
 
 type SignupData = {
   email: string;
   password: string;
+  country: string;
 };
 
 const Signup: React.FC = () => {
@@ -22,6 +25,7 @@ const Signup: React.FC = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     formState: { errors, isValid }
@@ -37,6 +41,7 @@ const Signup: React.FC = () => {
       options: {
         data: {
           fullName: null,
+          country: signupData.country,
           position: null
         }
       }
@@ -91,7 +96,7 @@ const Signup: React.FC = () => {
           <Input
             type='password'
             name='password'
-            placeholder='You password'
+            placeholder='Your password'
             label='Password'
             errors={errors}
             register={register}
@@ -102,6 +107,18 @@ const Signup: React.FC = () => {
                 message: 'Password minimum length is 8 characters.'
               }
             }}
+            required
+          />
+          <Select
+            name='country'
+            placeholder='Your country'
+            label='Country'
+            errors={errors}
+            control={control}
+            validation={{
+              required: 'This field is required.',
+            }}
+            options={countryList}
             required
           />
           <>
