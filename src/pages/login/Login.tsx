@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import supabase from '@/services/supabase';
 import Alert, { AlertProps } from '@/components/alert/Alert';
 import { useUser } from '@/hooks/useUser';
+import { MessageType } from '@/types/MessageType';
 
 type LoginData = {
   email: string;
@@ -32,7 +33,7 @@ const Login: React.FC = () => {
     e?.preventDefault();
 
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data: { session }, error } = await supabase.auth.signInWithPassword({
       email: loginData.email,
       password: loginData.password
     });
@@ -46,6 +47,11 @@ const Login: React.FC = () => {
       });
       return;
     }
+
+    chrome.runtime.sendMessage({
+      type: MessageType.SET_SESSION,
+      data: { session }
+    });
 
     setLoading(false);
     navigate('/');
@@ -82,7 +88,7 @@ const Login: React.FC = () => {
           <Input
             type='password'
             name='password'
-            placeholder='You password'
+            placeholder='Your password'
             label='Password'
             errors={errors}
             register={register}

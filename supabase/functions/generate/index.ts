@@ -28,7 +28,7 @@ export const createCompletion = async (prompt: string) => {
 
 // @ts-ignore
 serve(async (req) => {
-  const { jobDescription } = await req.json();
+  const { userCountry, jobDescription } = await req.json();
 
   const prompt = `
     Generate JSON with fields from job description:
@@ -37,6 +37,7 @@ serve(async (req) => {
     \n
     - programmingLanguagesAndLibraries (array)
     - interviewQuestions (array, 10)
+    - salaryRangeForPosition (object(min,max,currency)), Country: ${userCountry}
     \n
     Job description: """${jobDescription}"""
     \n

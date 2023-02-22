@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '@/components/logo/Logo';
 import { useSWRConfig } from 'swr';
 import Text from '@/components/text/Text';
+import { MessageType } from '@/types/MessageType';
 
 const Navbar: FC = () => {
   const navigate = useNavigate();
@@ -12,6 +13,10 @@ const Navbar: FC = () => {
   
   const logOut = async () => {
     await supabase.auth.signOut();
+    chrome.runtime.sendMessage({
+      type: MessageType.REMOVE_SESSION,
+      data: null
+    });
     mutate('/session');
     navigate('/login');
   };
