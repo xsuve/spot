@@ -40,18 +40,22 @@ const Select: FC<SelectProps> = ({
       <ReactSelect
         ref={field.ref}
         name={field.name}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
         placeholder={placeholder}
         options={options}
         required={required}
         classNames={{
           control: () => `!rounded !h-[45px] group !border !border-slate-200 !hover:border-slate-300 !shadow-none`,
           placeholder: () => `!text-[13px] font-poppins font-normal !text-slate-400 !group-hover:text-slate-500`,
+          input: () => `!text-[13px] font-poppins font-normal !text-slate-400 !group-hover:text-slate-500`,
           singleValue: () => `!text-[13px] font-poppins font-normal !text-slate-500`,
           indicatorSeparator: () => `!bg-slate-200 !group-hover:bg-slate-300`,
           indicatorsContainer: () => `!text-slate-200 !group-hover:text-slate-300`,
           menu: () => `!rounded !shadow-none !border !border-slate-200`,
           menuList: () => `!py-0`,
-          option: (state) => `!text-[13px] font-poppins font-normal ${state.isSelected ? '!text-white' : '!text-slate-500'}`
+          option: (state) => `!text-[13px] font-poppins font-normal ${state.isSelected ? '!text-white' : '!text-slate-500'}`,
+          noOptionsMessage: () => `!text-[11px] font-poppins font-normal !text-slate-400 !text-left`
         }}
       />
       { errors && errors[name]?.type === 'required' ? <Text type='paragraph' color='red' className='!text-xs mt-1'>{errors[name]?.message}</Text> : null }
