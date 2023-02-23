@@ -45,6 +45,16 @@ const Select: FC<SelectProps> = ({
         placeholder={placeholder}
         options={options}
         required={required}
+        theme={(theme) => ({
+          ...theme,
+          colors: {
+            ...theme.colors,
+            primary25: '#F8FAFC',
+            primary50: '#F1F5F9',
+            primary75: '#E2E8F0',
+            primary: '#CBD5E1'
+          }
+        })}
         classNames={{
           control: () => `!rounded !h-[45px] group !border !border-slate-200 !hover:border-slate-300 !shadow-none`,
           valueContainer: () => `!px-4`,
@@ -55,7 +65,7 @@ const Select: FC<SelectProps> = ({
           indicatorsContainer: () => `!text-slate-200 !group-hover:text-slate-300`,
           menu: () => `!rounded !shadow-none !border !border-slate-200`,
           menuList: () => `!py-0`,
-          option: (state) => `!text-[13px] font-poppins font-normal ${state.isSelected ? '!text-white' : '!text-slate-500'}`,
+          option: () => `!text-[13px] font-poppins font-normal !text-slate-600`,
           noOptionsMessage: () => `!text-[11px] font-poppins font-normal !text-slate-400 !text-left`
         }}
       />
