@@ -55,8 +55,11 @@ chrome.runtime.onMessage.addListener(async (message) => {
             }
           } else {
             sendMessage.type = MessageType.GENERATE_ERROR;
-            sendMessage.data = 'Something went wrong.';
+            sendMessage.data = 'Something went wrong. Please log out and log in again.';
           }
+        } else {
+          sendMessage.type = MessageType.GENERATE_ERROR;
+          sendMessage.data = 'Please log into your account.';
         }
 
         chrome.tabs.query({

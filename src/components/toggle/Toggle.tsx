@@ -1,8 +1,10 @@
 import React, { FC, useState } from 'react';
 import Switch from '@/components/switch/Switch';
-
-const CONTAINER = 'section.jobs-unified-description';
-const SPOT_BOX_WRAPPER = 'div.spot-box-wrapper';
+import {
+  LINKEDIN_JOB_DESCRIPTION_CONTAINER,
+  LINKEDIN_JOB_DESCRIPTION_FOOTER,
+  SPOT_BOX_WRAPPER
+} from '@/utils/interfaceSelectors';
 
 const Toggle: FC = () => {
   const [toggled, setToggled] = useState(true);
@@ -10,9 +12,14 @@ const Toggle: FC = () => {
   const handleToggle = () => {
     setToggled(!toggled);
 
-    const container: HTMLElement = document.querySelector(CONTAINER);
+    const container: HTMLElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTAINER);
     if (window.location.href.includes('/jobs/view/') && container) {
       container.style.setProperty('display', toggled ? 'block' : 'none', 'important');
+
+      const footer: HTMLDivElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_FOOTER);
+      if (footer) {
+        footer.style.setProperty('display', toggled ? 'block' : 'none', 'important');
+      }
 
       const wrapper: HTMLDivElement = document.querySelector(SPOT_BOX_WRAPPER);
       if (wrapper) {

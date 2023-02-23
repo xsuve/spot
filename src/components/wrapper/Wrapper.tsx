@@ -2,9 +2,10 @@ import React, { FC } from 'react';
 import Questions from '@/components/questions/Questions';
 import Toggle from '@/components/toggle/Toggle';
 import Technologies from '../technologies/Technologies';
+import { TechnologyItem } from '@/types/TechnologyItem';
 
 interface WrapperPropsData {
-  technologies: string[];
+  technologies: TechnologyItem[];
   questions: string[];
 };
 

@@ -4,6 +4,12 @@ import '@/styles.css';
 import Box from '@/components/box/Box';
 import Wrapper from '@/components/wrapper/Wrapper';
 import { MessageType } from '@/types/MessageType';
+import {
+  LINKEDIN_JOB_DESCRIPTION_CONTAINER,
+  LINKEDIN_JOB_DESCRIPTION_CONTENT,
+  LINKEDIN_JOB_DESCRIPTION_FOOTER
+} from '@/utils/interfaceSelectors';
+
 
 let font: HTMLLinkElement = document.querySelector('.spot-fonts');
 if (!font) {
@@ -15,19 +21,20 @@ if (!font) {
 }
 
 
-const CONTAINER = 'section.jobs-unified-description';
-const CONTAINER_JOB_DESCRIPTION = 'div.jobs-unified-description__content';
-
-
 // Message
 chrome.runtime.onMessage.addListener((message) => {
   switch (message.type) {
     case MessageType.GENERATE_RESPONSE:
-      const container: HTMLElement = document.querySelector(CONTAINER);
+      const container: HTMLElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTAINER);
       if (window.location.href.includes('/jobs/view/') && container) {
         const boxRoot: HTMLDivElement = container.parentElement.querySelector('.spot-box-root');
         if (boxRoot) {
           boxRoot.innerHTML = '';
+
+          const footer: HTMLDivElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_FOOTER);
+          if (footer) {
+            footer.style.setProperty('display', 'none', 'important');
+          }
 
           let reactElement: Root = createRoot(boxRoot);
           reactElement.render(<Wrapper data={message.data} />);
@@ -36,6 +43,10 @@ chrome.runtime.onMessage.addListener((message) => {
         }
       }
     break;
+
+    case MessageType.GENERATE_ERROR:
+      console.log(message);
+    break;
   }
 });
 
@@ -43,7 +54,7 @@ chrome.runtime.onMessage.addListener((message) => {
 // Functions
 const renderBox = (element: Element, jobDescription: string) => {
   const root: HTMLDivElement = document.createElement('div');
-  root.classList.add('spot-box-root', 'mb-[1.6rem]');
+  root.classList.add('spot-box-root');
   element.insertAdjacentElement('beforebegin', root);
   const reactElement: Root = createRoot(root);
   reactElement.render(<Box jobDescription={jobDescription} />);
@@ -56,8 +67,8 @@ new MutationObserver((mutations: MutationRecord[]) => {
     for (const element of mutation.addedNodes) {
       if (!(element instanceof HTMLElement)) continue;
 
-      if (window.location.href.includes('/jobs/view/') && element.matches(CONTAINER)) {
-        const jobDescription: HTMLDivElement = element.querySelector(CONTAINER_JOB_DESCRIPTION);
+      if (window.location.href.includes('/jobs/view/') && element.matches(LINKEDIN_JOB_DESCRIPTION_CONTAINER)) {
+        const jobDescription: HTMLDivElement = element.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTENT);
         if (jobDescription) {
           renderBox(element, jobDescription.textContent);
         }
@@ -69,9 +80,9 @@ new MutationObserver((mutations: MutationRecord[]) => {
   childList: true
 });
 
-const container = document.querySelector(CONTAINER);
+const container = document.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTAINER);
 if (window.location.href.includes('/jobs/view/') && container) {
-  const jobDescription: HTMLDivElement = container.querySelector(CONTAINER_JOB_DESCRIPTION);
+  const jobDescription: HTMLDivElement = container.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTENT);
   if (jobDescription) {
     renderBox(container, jobDescription.textContent);
   }
