@@ -4,18 +4,12 @@ import Button from '@/components/button/Button';
 import Input from '@/components/input/Input';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import supabase from '@/services/supabase';
 import Alert, { AlertProps } from '@/components/alert/Alert';
-import { useSWRConfig } from 'swr';
-
-type OnboardData = {
-  fullName: string;
-  position: string;
-};
+import { mutate } from 'swr';
+import { onboard, OnboardData } from '@/services/supabase';
 
 const Onboard: React.FC = () => {
   const navigate = useNavigate();
-  const { mutate } = useSWRConfig();
   
   const [loading, setLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertProps>();
@@ -31,12 +25,7 @@ const Onboard: React.FC = () => {
     e?.preventDefault();
 
     setLoading(true);
-    const { error } = await supabase.auth.updateUser({
-      data: {
-        fullName: onboardData.fullName,
-        position: onboardData.position
-      }
-    });
+    const { error } = await onboard(onboardData);
 
     if (error) {
       setLoading(false);
@@ -50,6 +39,7 @@ const Onboard: React.FC = () => {
 
     setLoading(false);
     mutate('/session');
+    mutate('/userData');
     navigate('/');
     reset();
   };

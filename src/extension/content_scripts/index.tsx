@@ -2,12 +2,9 @@ import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import '@/styles.css';
 import Box from '@/components/box/Box';
-import Wrapper from '@/components/wrapper/Wrapper';
-import { MessageType } from '@/types/MessageType';
 import {
   LINKEDIN_JOB_DESCRIPTION_CONTAINER,
-  LINKEDIN_JOB_DESCRIPTION_CONTENT,
-  LINKEDIN_JOB_DESCRIPTION_FOOTER
+  LINKEDIN_JOB_DESCRIPTION_CONTENT
 } from '@/utils/interfaceSelectors';
 
 
@@ -23,31 +20,6 @@ if (!font) {
 
 // Message
 chrome.runtime.onMessage.addListener((message) => {
-  switch (message.type) {
-    case MessageType.GENERATE_RESPONSE:
-      const container: HTMLElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTAINER);
-      if (window.location.href.includes('/jobs/view/') && container) {
-        const boxRoot: HTMLDivElement = container.parentElement.querySelector('.spot-box-root');
-        if (boxRoot) {
-          boxRoot.innerHTML = '';
-
-          const footer: HTMLDivElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_FOOTER);
-          if (footer) {
-            footer.style.setProperty('display', 'none', 'important');
-          }
-
-          let reactElement: Root = createRoot(boxRoot);
-          reactElement.render(<Wrapper data={message.data} />);
-
-          container.style.setProperty('display', 'none', 'important');
-        }
-      }
-    break;
-
-    case MessageType.GENERATE_ERROR:
-      console.log(message);
-    break;
-  }
 });
 
 

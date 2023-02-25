@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import useSWR from 'swr';
-import supabase from '@/services/supabase';
 import { User } from '@supabase/supabase-js';
+import { getSession } from '@/services/supabase';
 
 export const useUser = ({
   redirect = '',
@@ -10,16 +10,17 @@ export const useUser = ({
 } = {}): User | undefined => {
   const navigate = useNavigate();
 
-  const getSession = async () => {
-    const { data } = await supabase.auth.getSession();
-    if (!data.session) {
+  const fetchSession = async () => {
+    const { data, error } = await getSession();
+    
+    if (error) {
       return;
     }
-
+    
     return data.session;
   };
 
-  const { data } = useSWR('/session', getSession);
+  const { data } = useSWR('/session', fetchSession);
   useEffect(() => {
     if (!redirect) {
       return;

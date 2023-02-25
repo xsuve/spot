@@ -5,17 +5,11 @@ import Input from '@/components/input/Input';
 import Logo from '@/components/logo/Logo';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import supabase from '@/services/supabase';
 import Alert, { AlertProps } from '@/components/alert/Alert';
 import { useUser } from '@/hooks/useUser';
 import { countryList } from '@/utils/countryList';
-import Select, { SelectPropsOption } from '@/components/select/Select';
-
-type SignupData = {
-  email: string;
-  password: string;
-  country: SelectPropsOption;
-};
+import Select from '@/components/select/Select';
+import { signUp, SignupData } from '@/services/supabase';
 
 const Signup: React.FC = () => {
   const user = useUser({ redirect: '/', foundRedirect: true });
@@ -35,17 +29,7 @@ const Signup: React.FC = () => {
     e?.preventDefault();
 
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: signupData.email,
-      password: signupData.password,
-      options: {
-        data: {
-          fullName: null,
-          country: signupData.country.value,
-          position: null
-        }
-      }
-    });
+    const { error } = await signUp(signupData);
 
     if (error) {
       setLoading(false);

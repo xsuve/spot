@@ -1,0 +1,1 @@
+export const STORAGE_AUTH_KEY = 'supabase_auth_session';

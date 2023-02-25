@@ -5,18 +5,15 @@ import Input from '@/components/input/Input';
 import Logo from '@/components/logo/Logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import supabase from '@/services/supabase';
 import Alert, { AlertProps } from '@/components/alert/Alert';
 import { useUser } from '@/hooks/useUser';
-import { MessageType } from '@/types/MessageType';
-
-type LoginData = {
-  email: string;
-  password: string;
-};
+import { mutate } from 'swr';
+import { logIn, LoginData } from '@/services/supabase';
+import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+
   const user = useUser({ redirect: '/', foundRedirect: true });
   
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,14 +26,11 @@ const Login: React.FC = () => {
     formState: { errors, isValid }
   } = useForm<LoginData>({ mode: 'onChange' });
 
-  const submitLogin = async (loginData: LoginData, e: BaseSyntheticEvent | undefined) => {
+  const submitLogin = async (logInData: LoginData, e: BaseSyntheticEvent | undefined) => {
     e?.preventDefault();
 
     setLoading(true);
-    const { data: { session }, error } = await supabase.auth.signInWithPassword({
-      email: loginData.email,
-      password: loginData.password
-    });
+    const { data, error } = await logIn(logInData);
 
     if (error) {
       setLoading(false);
@@ -48,12 +42,10 @@ const Login: React.FC = () => {
       return;
     }
 
-    chrome.runtime.sendMessage({
-      type: MessageType.SET_SESSION,
-      data: { session }
-    });
+    chrome.storage.local.set({ [STORAGE_AUTH_KEY]: data.session });
 
     setLoading(false);
+    mutate('/session');
     navigate('/');
     reset();
   };

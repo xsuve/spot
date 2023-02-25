@@ -5,6 +5,7 @@ import React, { FC } from 'react';
 import Onboard from '@/pages/onboard/Onboard';
 import { CheckIcon, ChevronDoubleUpIcon, Cog6ToothIcon,  ListBulletIcon, UserIcon, LinkIcon, SwatchIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import { useUserData } from '@/hooks/useUserData';
 
 const getStarted = [
   {
@@ -35,6 +36,7 @@ const getStarted = [
 
 const Home: FC = () => {
   const user = useUser({ redirect: '/login' });
+  const userData = useUserData(user?.id);
 
   const handleIcon = (icon: string) => {
     switch (icon) {
@@ -52,7 +54,7 @@ const Home: FC = () => {
   
   return (
     <div className='h-[480px] overflow-x-auto'>
-      { user && user.user_metadata.fullName ?
+      { user && user.user_metadata.fullName && userData ?
         <>
           <Navbar />
           
@@ -77,7 +79,7 @@ const Home: FC = () => {
                   <Text type='paragraph' color='gray'>Spots</Text>
                 </div>
                 <div className='flex flex-col'>
-                  <Text type='subtitle' color='dark'>10</Text>
+                  <Text type='subtitle' color='dark'>{userData.spots}</Text>
                   <Text type='paragraph' color='gray'>0 used today</Text>
                 </div>
               </div>
