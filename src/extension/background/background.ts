@@ -44,7 +44,19 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         sendResponse({ data: null, error: 'No more Spots left.' });
         return;
       }
+
+      const invokeGenerateResponse = await invokeGenerate({
+        userCountry: getUserResponse?.data.user.user_metadata.country,
+        jobDescription: request.data.jobDescription
+      });
+
+      console.log('generateInvoke', invokeGenerateResponse);
       
+      if (invokeGenerateResponse?.error || !invokeGenerateResponse?.data) {
+        sendResponse({ data: null, error: 'Could not generate response.' });
+        return;
+      }
+
       const updateUserDataResponse = await updateUserData(getUserResponse?.data.user.id, {
         spots: getUserDataResponse?.data.data.spots - 1
       });
@@ -52,40 +64,34 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         sendResponse({ data: null, error: updateUserDataResponse?.error?.message });
         return;
       }
-
       mutate('/userData');
-
-      // const invokeGenerateResponse = await invokeGenerate({
-      //   userCountry: getUserResponse.data.user.user_metadata.country,
-      //   jobDescription: request.data.jobDescription
-      // });
-      
-      // if (invokeGenerateResponse?.error) {
-      //   sendResponse({ data: null, error: invokeGenerateResponse?.error?.message });
-      //   return;
-      // }
       
       try {
-        // const parsed = JSON.parse(JSON.stringify(invokeGenerateResponse?.data.data));
+        const parsed = JSON.parse(invokeGenerateResponse?.data.data);
+        console.log('parsed', parsed);
         
-        // const userTechnologies: string[] = ['React', 'TypeScript', 'Redux', 'CSS', 'HTML'];
-        // const technologies = parsed.programmingLanguagesAndLibraries.map((item: string) => {
-        //   return { title: item, included: userTechnologies.includes(item) };
-        // });
+        const userTechnologies: string[] = ['React', 'TypeScript', 'Redux', 'CSS', 'HTML'];
+        const technologies = parsed.programmingLanguages.map((item: string) => {
+          return { title: item, included: userTechnologies.includes(item) };
+        });
 
         sendResponse({
           data: {
-            // technologies,
-            // questions: parsed.interviewQuestions,
-            // salaryRange: parsed.salaryRangeForPosition,
-            technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
-            questions: ['Question 1', 'Question 2', 'Question 3'],
-            salaryRange: { min: 8000, max: 12000, currency: 'RON' }
+            technologies,
+            interviewQuestions: parsed.interviewQuestions,
+            positionTitle: parsed.positionTitle,
+            experienceLevel: parsed.experienceLevel,
+            salaryRangeForPosition: parsed.salaryRangeForPosition,
+            // technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
+            // interviewQuestions: ['Question 1', 'Question 2', 'Question 3'],
+            // positionTitle: 'React Developer',
+            // experienceLevel: 'Mid',
+            // salaryRangeForPosition: { min: 8000, max: 12000, currencyCode: 'RON' }
           },
           error: null
         });
       } catch (error) {
-        console.log(error);
+        console.log('generateError', error);
         
         sendResponse({ data: null, error: error.message });
       }

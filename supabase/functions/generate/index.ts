@@ -31,25 +31,49 @@ serve(async (req) => {
   const { userCountry, jobDescription } = await req.json();
 
   const prompt = `
-    Generate JSON with fields from job description:
+    Given the job description below, create a JSON object with the following properties:
+    \n\n
+    - programmingLanguages: Array of Strings with programming languages and libraries from job description.
+    \n\n
+    - interviewQuestions: Array of Strings with 5 potential interview questions from job description.
+    \n\n
+    - positionTitle: String with the position title from the job description.
+    \n\n
+    - experienceLevel: String with the experience level for the position from this options: Intern, Junior, Mid, Senior, Lead.
+    \n\n
+    - salaryRangeForPosition: Object with following properties:
     \n
-    Fields:
+    min: Number with minimum salary for the position and experience level in country ${userCountry}.
+    max: Number with maximum salary for the position and experience level in country ${userCountry}.
+    currencyCode: String with the currency code for the salary range values (e.g. USD, EUR, RON etc.).
+    \n\n
+    The job description:
     \n
-    - programmingLanguagesAndLibraries (array)
-    - interviewQuestions (array, 10)
-    - salaryRangeForPosition (object(min,max,currency)), Country: ${userCountry}
+    """${jobDescription}"""
+    \n\n
+    Example response:
     \n
-    Job description: """${jobDescription}"""
-    \n
-    JSON:
+    {
+      "programmingLanguages": ["React", "NodeJS", "MongoDB", "Jest"],
+      "interviewQuestions": ["What is your experience with React?"],
+      "positionTitle": "React Developer",
+      "experienceLevel": "Junior",
+      "salaryRangeForPosition": {
+        "min": 7000,
+        "max": 14000,
+        "currencyCode": "RON"
+      }
+    }
+    \n\n
+    The JSON object:
   `;
   const result = await createCompletion(prompt);
   try {
-    const data = JSON.parse(result);
+    const jsonData = JSON.parse(result);
     return new Response(
       JSON.stringify({
-        data: data.choices[0].text,
-        usage: data.usage,
+        data: jsonData.choices[0].text,
+        usage: jsonData.usage,
         error: null
       }),
       { headers: { 'Content-Type': 'application/json' } }

@@ -3,10 +3,14 @@ import Questions from '@/components/questions/Questions';
 import Toggle from '@/components/toggle/Toggle';
 import Technologies from '../technologies/Technologies';
 import { TechnologyItem } from '@/types/TechnologyItem';
+import { SalaryRangeForPosition } from '@/types/SalaryRangeForPosition';
 
 interface WrapperPropsData {
   technologies: TechnologyItem[];
-  questions: string[];
+  interviewQuestions: string[];
+  positionTitle: string;
+  experienceLevel: string;
+  salaryRangeForPosition: SalaryRangeForPosition;
 };
 
 interface WrapperProps {
@@ -25,7 +29,7 @@ const Wrapper: FC<WrapperProps> = ({
       <div className='spot-box-wrapper mt-[2.4rem]'>
         <Technologies data={data.technologies} />
 
-        <Questions data={data.questions} className='mt-[4.8rem]' />
+        <Questions data={data.interviewQuestions} className='mt-[4.8rem]' />
       </div>
     </div>
   );
