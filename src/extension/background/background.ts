@@ -1,4 +1,4 @@
-import { getUser, getUserData, invokeGenerate, refreshSession, updateUserData } from '@/services/supabase';
+import { getUser, getUserData, invokeGenerate, updateUserData } from '@/services/supabase';
 import { Request, RequestType, ResponseCallback } from '@/types/RequestResponse';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { mutate } from 'swr';
@@ -29,16 +29,19 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
 
       const getUserResponse = await getUser(result[STORAGE_AUTH_KEY].access_token);
       if (getUserResponse?.error) {
-        const refreshSessionResponse = await refreshSession(result[STORAGE_AUTH_KEY].refresh_token);
-        console.log('refreshSession', refreshSessionResponse);
-        // update storage session from STORAGE_AUTH_KEY
-        // sendResponse({ data: null, error: getUserResponse?.error?.message });
-        // return;
+        chrome.storage.local.remove([STORAGE_AUTH_KEY]);
+        sendResponse({ data: null, error: 'Please log in.' });
+        return;
       }
 
       const getUserDataResponse = await getUserData(getUserResponse?.data.user.id);
       if (getUserDataResponse?.error) {
         sendResponse({ data: null, error: getUserDataResponse?.error?.message });
+        return;
+      }
+
+      if (getUserDataResponse?.data.data.spots === 0) {
+        sendResponse({ data: null, error: 'No more Spots left.' });
         return;
       }
       
@@ -56,13 +59,14 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       //   userCountry: getUserResponse.data.user.user_metadata.country,
       //   jobDescription: request.data.jobDescription
       // });
+      
       // if (invokeGenerateResponse?.error) {
       //   sendResponse({ data: null, error: invokeGenerateResponse?.error?.message });
       //   return;
       // }
-
+      
       try {
-        // const parsed = JSON.parse(invokeGenerateResponse.data.data);
+        // const parsed = JSON.parse(JSON.stringify(invokeGenerateResponse?.data.data));
         
         // const userTechnologies: string[] = ['React', 'TypeScript', 'Redux', 'CSS', 'HTML'];
         // const technologies = parsed.programmingLanguagesAndLibraries.map((item: string) => {
@@ -71,16 +75,19 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
 
         sendResponse({
           data: {
-            technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
+            // technologies,
             // questions: parsed.interviewQuestions,
             // salaryRange: parsed.salaryRangeForPosition,
+            technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
             questions: ['Question 1', 'Question 2', 'Question 3'],
             salaryRange: { min: 8000, max: 12000, currency: 'RON' }
           },
           error: null
         });
       } catch (error) {
-        sendResponse({ data: null, error: error });
+        console.log(error);
+        
+        sendResponse({ data: null, error: error.message });
       }
     break;
   }

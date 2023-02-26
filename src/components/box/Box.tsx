@@ -25,6 +25,8 @@ const Box: FC<BoxProps> = ({
       }
     });
 
+    console.log(response);
+
     if (response.error) {
       console.log(response.error);
       setLoading(false);

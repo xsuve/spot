@@ -1,5 +1,5 @@
 import { SelectPropsOption } from '@/components/select/Select';
-import { createClient, Session } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 
 
 const supabase = createClient(
@@ -91,20 +91,6 @@ export const getSession = async () => {
 };
 
 
-export const setSession = async (session: Session) => {
-  const { data, error } = await supabase.auth.setSession(session);
-
-  return { data, error };
-};
-
-
-export const refreshSession = async (session: Session) => {
-  const { data, error } = await supabase.auth.refreshSession(session);
-
-  return { data, error };
-};
-
-
 export const getUser = async (jwt: string) => {
   const { data, error } = await supabase.auth.getUser(jwt);
 
@@ -119,11 +105,9 @@ export type GenerateData = {
 
 export const invokeGenerate = async (generateData: GenerateData) => {
   const { data, error } = await supabase.functions.invoke('generate', {
-    body: {
-      generateData
-    }
+    body: generateData
   });
-
+  
   return { data, error };
 };
 
