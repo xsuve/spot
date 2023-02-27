@@ -45,17 +45,17 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         return;
       }
 
-      const invokeGenerateResponse = await invokeGenerate({
-        userCountry: getUserResponse?.data.user.user_metadata.country,
-        jobDescription: request.data.jobDescription
-      });
+      // const invokeGenerateResponse = await invokeGenerate({
+      //   userCountry: getUserResponse?.data.user.user_metadata.country,
+      //   jobDescription: request.data.jobDescription
+      // });
 
-      console.log('generateInvoke', invokeGenerateResponse);
+      // console.log('generateInvoke', invokeGenerateResponse);
       
-      if (invokeGenerateResponse?.error || !invokeGenerateResponse?.data) {
-        sendResponse({ data: null, error: 'Could not generate response.' });
-        return;
-      }
+      // if (invokeGenerateResponse?.error || !invokeGenerateResponse?.data) {
+      //   sendResponse({ data: null, error: 'Could not generate response.' });
+      //   return;
+      // }
 
       const updateUserDataResponse = await updateUserData(getUserResponse?.data.user.id, {
         spots: getUserDataResponse?.data.data.spots - 1
@@ -67,26 +67,29 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       mutate('/userData');
       
       try {
-        const parsed = JSON.parse(invokeGenerateResponse?.data.data);
-        console.log('parsed', parsed);
+        // const parsed = JSON.parse(invokeGenerateResponse?.data.data);
+        // console.log('parsed', parsed);
         
-        const userTechnologies: string[] = ['React', 'TypeScript', 'Redux', 'CSS', 'HTML'];
-        const technologies = parsed.programmingLanguages.map((item: string) => {
-          return { title: item, included: userTechnologies.includes(item) };
-        });
+        // const userTechnologies: string[] = ['React', 'TypeScript', 'Redux', 'CSS', 'HTML'];
+        // const technologies = parsed.programmingLanguages.map((item: string) => {
+        //   return { title: item, included: userTechnologies.includes(item) };
+        // });
+
+        // TODO: Save job id and response.
+        console.log(request.data.jobID);
 
         sendResponse({
           data: {
-            technologies,
-            interviewQuestions: parsed.interviewQuestions,
-            positionTitle: parsed.positionTitle,
-            experienceLevel: parsed.experienceLevel,
-            salaryRangeForPosition: parsed.salaryRangeForPosition,
-            // technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
-            // interviewQuestions: ['Question 1', 'Question 2', 'Question 3'],
-            // positionTitle: 'React Developer',
-            // experienceLevel: 'Mid',
-            // salaryRangeForPosition: { min: 8000, max: 12000, currencyCode: 'RON' }
+            // technologies,
+            // interviewQuestions: parsed.interviewQuestions,
+            // positionTitle: parsed.positionTitle,
+            // experienceLevel: parsed.experienceLevel,
+            // salaryRangeForPosition: parsed.salaryRangeForPosition,
+            technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
+            interviewQuestions: ['Question 1', 'Question 2', 'Question 3'],
+            positionTitle: 'React Developer',
+            experienceLevel: 'Mid',
+            salaryRangeForPosition: { min: 8000, max: 12000, currencyCode: 'RON' }
           },
           error: null
         });
