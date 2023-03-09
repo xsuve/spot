@@ -133,3 +133,28 @@ export const updateUserData = async (uid: string, userData: any) => {
 
   return { data, error };
 };
+
+
+export const insertGenerated = async (uid: string, jobId: string, generatedData: any) => {
+  const { data, error } = await supabase
+  .from('user_generated')
+  .insert({
+    user_id: uid,
+    job_id: jobId,
+    data: generatedData
+  });
+
+  return { data, error };
+};
+
+export  const getUserGeneratedByJobId = async (userId: string, jobId: string) => {
+  const { data, error } = await supabase
+    .from('user_generated')
+    .select('user_id, job_id')
+    .eq('user_id', userId)
+    .eq('job_id', jobId)
+    .limit(1)
+    .single();
+  
+  return { data, error };
+};

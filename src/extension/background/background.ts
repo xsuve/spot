@@ -1,4 +1,4 @@
-import { getUser, getUserData, invokeGenerate, updateUserData } from '@/services/supabase';
+import { getUserGeneratedByJobId, getUser, getUserData, insertGenerated, invokeGenerate, updateUserData } from '@/services/supabase';
 import { Request, RequestType, ResponseCallback } from '@/types/RequestResponse';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { mutate } from 'swr';
@@ -31,6 +31,12 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       if (getUserResponse?.error) {
         chrome.storage.local.remove([STORAGE_AUTH_KEY]);
         sendResponse({ data: null, error: 'Please log in.' });
+        return;
+      }
+
+      const checkExists = await getUserGeneratedByJobId(getUserResponse?.data.user.id, request.data.jobId);
+      if (checkExists?.data?.job_id) {
+        sendResponse({ data: null, error: 'Already generated a response for this job.' });
         return;
       }
 
@@ -75,22 +81,31 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         //   return { title: item, included: userTechnologies.includes(item) };
         // });
 
-        // TODO: Save job id and response.
-        console.log(request.data.jobID);
+        const generatedData = {
+          // technologies,
+          // interviewQuestions: parsed.interviewQuestions,
+          // positionTitle: parsed.positionTitle,
+          // experienceLevel: parsed.experienceLevel,
+          // salaryRangeForPosition: parsed.salaryRangeForPosition,
+          technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
+          interviewQuestions: ['Question 1', 'Question 2', 'Question 3'],
+          positionTitle: 'React Developer',
+          experienceLevel: 'Mid',
+          salaryRangeForPosition: { min: 8000, max: 12000, currencyCode: 'RON' }
+        };
+
+        const insertGeneratedResponse = await insertGenerated(
+          getUserResponse?.data.user.id,
+          request.data.jobId,
+          generatedData
+        );
+        if (insertGeneratedResponse?.error) {
+          sendResponse({ data: null, error: insertGeneratedResponse?.error?.message });
+          return;
+        }
 
         sendResponse({
-          data: {
-            // technologies,
-            // interviewQuestions: parsed.interviewQuestions,
-            // positionTitle: parsed.positionTitle,
-            // experienceLevel: parsed.experienceLevel,
-            // salaryRangeForPosition: parsed.salaryRangeForPosition,
-            technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
-            interviewQuestions: ['Question 1', 'Question 2', 'Question 3'],
-            positionTitle: 'React Developer',
-            experienceLevel: 'Mid',
-            salaryRangeForPosition: { min: 8000, max: 12000, currencyCode: 'RON' }
-          },
+          data: generatedData,
           error: null
         });
       } catch (error) {
