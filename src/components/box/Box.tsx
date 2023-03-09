@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import Button from '@/components/ui/button/Button';
+import Text from '@/components/ui/text/Text';
 import { sendRequest, RequestType } from '@/types/RequestResponse';
 import { LINKEDIN_JOB_DESCRIPTION_CONTAINER, LINKEDIN_JOB_DESCRIPTION_FOOTER, SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
 import { createRoot, Root } from 'react-dom/client';
@@ -23,7 +24,7 @@ const Box: FC<BoxProps> = ({
     const jobId = jobIdParser(window.location.href);
     if (jobId === null) {
       setLoading(false);
-      // TODO: alert user
+      // TODO: Alert user
       return;
     }
 
@@ -40,7 +41,7 @@ const Box: FC<BoxProps> = ({
     if (response.error) {
       console.log(response.error);
       setLoading(false);
-      // TODO: alert user
+      // TODO: Alert user
       return;
     }
 
@@ -66,13 +67,20 @@ const Box: FC<BoxProps> = ({
   };
 
   return (
-    <div className={`bg-yellow-300/30 shadow-xl shadow-yellow-300/30 px-[2.4rem] h-[125px] w-full !grid grid-cols-3 items-center rounded-t-[0.8rem] ${className}`}>
+    <div className={`bg-yellow-300/30 px-[2.4rem] h-[125px] w-full !grid grid-cols-3 items-center rounded-t-[0.8rem] ${className}`}>
       <div className='col-span-2'>
-        <img src={chrome.runtime.getURL('assets/img/spot-logo-white.svg')} className='w-[100px] mb-[12px]' />
-        <p className='font-poppins text-[15px] font-normal text-white'>Generate a list of interview questions based on the job description.</p>
+        <img src={chrome.runtime.getURL('assets/img/spot-logo-white.svg')} className='w-[100px] mb-3' />
+        <Text type='paragraph' color='white' className='!text-[1.4rem]'>Generate a list of interview questions based on the job description.</Text>
       </div>
       <div className='flex justify-end'>
-        <Button type='button' color='yellow' size='normal' onClick={handleClick} loading={loading}>Generate</Button>
+        <Button
+          type='button'
+          color='yellow'
+          size='interface'
+          onClick={handleClick}
+          loading={loading}
+          disabled={loading}
+        >Generate</Button>
       </div>
     </div>
   );

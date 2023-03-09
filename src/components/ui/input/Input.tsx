@@ -28,12 +28,12 @@ const Input: FC<InputProps> = ({
   return (
     <div className={`text-left ${className}`}>
       { label ? <Text type='label' color='dark' className='block mb-2'>{label}</Text> : null }
-      <div className={`overflow-hidden rounded h-[45px] group border ${errors && errors[name] ? 'border-red-400 hover:border-red-400' : 'border-slate-200 hover:border-slate-300'}`}>
+      <div className={`overflow-hidden rounded h-11 group border ${errors && errors[name] ? 'border-red-400 hover:border-red-400' : 'border-slate-200 hover:border-slate-300'}`}>
         <input
           type={type}
           name={name}
           placeholder={placeholder}
-          className={`w-full h-full text-[13px] font-poppins font-normal outline-none px-4 text-slate-500 placeholder:opacity-100 group-hover:placeholder:opacity-100 ${errors && errors[name] ? 'placeholder:text-red-400 group-hover:placeholder:text-red-400' : 'placeholder:text-slate-400 group-hover:placeholder:text-slate-500'}`}
+          className={`w-full h-full text-sm font-poppins font-normal outline-none px-4 text-slate-500 placeholder:opacity-100 group-hover:placeholder:opacity-100 ${errors && errors[name] ? 'placeholder:text-red-400 group-hover:placeholder:text-red-400' : 'placeholder:text-slate-400 group-hover:placeholder:text-slate-500'}`}
           required={required}
           {...register(name, validation)}
         />

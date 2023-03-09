@@ -119,7 +119,7 @@ const Home: FC = () => {
               </div>
             </div>
             <div className='flex flex-col gap-y-2 mt-10'>
-              <Text type='label' color='dark' className='!text-[15px]'>Recent Activity</Text>
+              <Text type='label' color='dark'>Recent Activity</Text>
               <div className='flex flex-col gap-y-4 mt-2'>
                 <Link to='/'>
                   <div className='flex items-center gap-x-4'>

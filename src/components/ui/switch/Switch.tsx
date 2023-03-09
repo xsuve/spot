@@ -3,7 +3,7 @@ import React, { FC, MouseEventHandler } from 'react';
 type SwitchProps = {
   toggled?: boolean;
   disabled?: boolean;
-  onClick: MouseEventHandler<HTMLDivElement>;
+  onClick: () => void;
 };
 
 const Switch: FC<SwitchProps> = ({

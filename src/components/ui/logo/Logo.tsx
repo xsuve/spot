@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import SpotLogoBlack from '../../../public/assets/img/spot-logo-black.svg';
+import SpotLogoBlack from '@/../public/assets/img/spot-logo-black.svg';
 import { Link } from 'react-router-dom';
 
 interface LogoProps {

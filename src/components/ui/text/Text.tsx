@@ -2,10 +2,10 @@ import React, { FC, ReactNode } from 'react';
 
 type TextPropsType = 'title' | 'subtitle' | 'label' | 'paragraph';
 const TextPropsTypeMap = {
-  'title': 'font-space-grotesk text-[23px] font-medium',
-  'subtitle': 'font-space-grotesk text-[19px] font-medium',
-  'label': 'font-space-grotesk text-[14px] font-medium',
-  'paragraph': 'font-poppins text-[13px] font-light'
+  'title': 'font-space-grotesk text-2xl font-medium',
+  'subtitle': 'font-space-grotesk text-xl font-medium',
+  'label': 'font-space-grotesk text-sm font-medium',
+  'paragraph': 'font-poppins text-sm font-light'
 };
 
 type TextPropsColor = 'dark' | 'gray' | 'white' | 'red' | 'green' | 'yellow';

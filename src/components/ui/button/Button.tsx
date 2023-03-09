@@ -15,18 +15,18 @@ const ButtonIconPropsColorMap = {
   'dark': 'text-white'
 };
 
-type ButtonPropsSize = 'normal' | 'small';
+type ButtonPropsSize = 'interface' | 'normal';
 const ButtonPropsSizeMap = {
-  'normal': 'gap-x-[10px] h-[45px] px-[24px]',
-  'small': 'gap-x-[8px] h-[35px] px-[16px]'
+  'interface': 'gap-x-[8px] h-[44px] px-[24px]',
+  'normal': 'gap-x-3 h-11 px-6'
 };
 const ButtonTextPropsSizeMap = {
-  'normal': 'text-[15px]',
-  'small': 'text-[13px]'
+  'interface': 'text-[14px]',
+  'normal': 'text-sm'
 };
 const ButtonIconPropsSizeMap = {
-  'normal': 'w-[20px] h-[20px]',
-  'small': 'w-[18px] h-[18px]'
+  'interface': 'w-[16px] h-[16px]',
+  'normal': 'w-4 h-4'
 };
 
 interface ButtonProps {

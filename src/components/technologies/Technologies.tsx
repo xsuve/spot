@@ -1,4 +1,5 @@
 import { TechnologyItem } from '@/types/TechnologyItem';
+import Text from '@/components/ui/text/Text';
 import React, { FC } from 'react';
 
 interface TechnologiesProps {
@@ -12,10 +13,10 @@ const Technologies: FC<TechnologiesProps> = ({
 }) => {
   return (
     <div className={`${className}`}>
-      <h2 className='font-space-grotesk text-[2rem] font-semibold text-white mb-[24px]'>Technologies</h2>
-      <div className='flex gap-[6px]'>
+      <Text type='subtitle' color='white' className='mb-6'>Technologies</Text>
+      <div className='flex gap-2'>
         { data.map((item, index) => 
-          <div key={index} className={`${item.included ? 'bg-yellow-500/20 text-yellow-500' : 'bg-white/20 text-white/70'} rounded-md font-poppins text-[12px] font-medium px-[8px] py-[2px]`}>
+          <div key={index} className={`${item.included ? 'bg-yellow-500/20 text-yellow-500' : 'bg-white/20 text-white/70'} rounded-md font-poppins text-xs font-medium px-2 py-1`}>
             {item.title}
           </div>
         ) }
