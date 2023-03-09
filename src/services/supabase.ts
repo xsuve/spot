@@ -1,4 +1,4 @@
-import { SelectPropsOption } from '@/components/select/Select';
+import { SelectPropsOption } from '@/components/ui/select/Select';
 import { createClient } from '@supabase/supabase-js';
 
 

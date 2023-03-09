@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useController } from 'react-hook-form';
 import ReactSelect from 'react-select';
-import Text from '@/components/text/Text';
+import Text from '@/components/ui/text/Text';
 
 export type SelectPropsOption = { value: string; label: string; };
 

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import Button from '@/components/button/Button';
+import Button from '@/components/ui/button/Button';
 import { sendRequest, RequestType } from '@/types/RequestResponse';
 import { LINKEDIN_JOB_DESCRIPTION_CONTAINER, LINKEDIN_JOB_DESCRIPTION_FOOTER } from '@/utils/interfaceSelectors';
 import { createRoot, Root } from 'react-dom/client';

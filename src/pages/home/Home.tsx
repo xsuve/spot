@@ -1,5 +1,5 @@
 import Navbar from '@/components/navbar/Navbar';
-import Text from '@/components/text/Text';
+import Text from '@/components/ui/text/Text';
 import { useUser } from '@/hooks/useUser';
 import React, { FC } from 'react';
 import Onboard from '@/pages/onboard/Onboard';

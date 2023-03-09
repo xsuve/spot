@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import Switch from '@/components/switch/Switch';
+import Switch from '@/components/ui/switch/Switch';
 import {
   LINKEDIN_JOB_DESCRIPTION_CONTAINER,
   LINKEDIN_JOB_DESCRIPTION_FOOTER,

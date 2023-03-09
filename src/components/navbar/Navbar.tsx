@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import { logOut } from '@/services/supabase';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
-import Logo from '@/components/logo/Logo';
+import Logo from '@/components/ui/logo/Logo';
 import { mutate } from 'swr';
-import Text from '@/components/text/Text';
+import Text from '@/components/ui/text/Text';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 
 const Navbar: FC = () => {
