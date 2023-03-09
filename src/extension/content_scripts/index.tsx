@@ -30,23 +30,6 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
 });
 
 const handleMessage = async (request: Request, sendResponse: ResponseCallback) => {
-  switch (request.type) {
-    // case RequestType.CHECK_EXISTS:
-    //   const checkExistsResponse = await sendRequest({
-    //     type: RequestType.CHECK_EXISTS,
-    //     data: {
-    //       jobId: request.data.jobId
-    //     }
-    //   });
-
-    //   if (checkExistsResponse?.error) {
-    //     sendResponse({ data: null, error: checkExistsResponse.error });
-    //     return;
-    //   }
-
-    //   sendResponse({ data: checkExistsResponse?.data, error: null });
-    // break;
-  }
 };
 
 
@@ -94,6 +77,7 @@ new MutationObserver(async (mutations: MutationRecord[]) => {
               data: { jobId }
             });
             if (checkExistsResponse?.error) {
+              renderBox(element, jobDescription.textContent);
               return;
             }
             
