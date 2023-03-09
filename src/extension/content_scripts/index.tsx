@@ -4,7 +4,8 @@ import '@/styles.css';
 import Box from '@/components/box/Box';
 import {
   LINKEDIN_JOB_DESCRIPTION_CONTAINER,
-  LINKEDIN_JOB_DESCRIPTION_CONTENT
+  LINKEDIN_JOB_DESCRIPTION_CONTENT,
+  SPOT_BOX_ROOT_CLASSNAME
 } from '@/utils/interfaceSelectors';
 
 
@@ -26,7 +27,7 @@ chrome.runtime.onMessage.addListener((message) => {
 // Functions
 const renderBox = (element: Element, jobDescription: string) => {
   const root: HTMLDivElement = document.createElement('div');
-  root.classList.add('spot-box-root');
+  root.classList.add(SPOT_BOX_ROOT_CLASSNAME);
   element.insertAdjacentElement('beforebegin', root);
   const reactElement: Root = createRoot(root);
   reactElement.render(<Box jobDescription={jobDescription} />);

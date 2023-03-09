@@ -98,6 +98,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
           getUserResponse?.data.user.id,
           request.data.jobId,
           generatedData
+          // TODO: Add usage from invokeGenerateResponse.
         );
         if (insertGeneratedResponse?.error) {
           sendResponse({ data: null, error: insertGeneratedResponse?.error?.message });

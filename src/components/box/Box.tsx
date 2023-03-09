@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import Button from '@/components/ui/button/Button';
 import { sendRequest, RequestType } from '@/types/RequestResponse';
-import { LINKEDIN_JOB_DESCRIPTION_CONTAINER, LINKEDIN_JOB_DESCRIPTION_FOOTER } from '@/utils/interfaceSelectors';
+import { LINKEDIN_JOB_DESCRIPTION_CONTAINER, LINKEDIN_JOB_DESCRIPTION_FOOTER, SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
 import { createRoot, Root } from 'react-dom/client';
 import Wrapper from '@/components/wrapper/Wrapper';
 import { jobIdParser } from '@/utils/jobIdParser';
@@ -46,7 +46,7 @@ const Box: FC<BoxProps> = ({
 
     const container: HTMLElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTAINER);
     if (window.location.href.includes('/jobs/view/') && container) {
-      const boxRoot: HTMLDivElement = container.parentElement.querySelector('.spot-box-root');
+      const boxRoot: HTMLDivElement = container.parentElement.querySelector(SPOT_BOX_ROOT);
       if (boxRoot) {
         boxRoot.innerHTML = '';
 
