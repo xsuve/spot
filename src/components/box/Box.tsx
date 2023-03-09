@@ -4,7 +4,7 @@ import { sendRequest, RequestType } from '@/types/RequestResponse';
 import { LINKEDIN_JOB_DESCRIPTION_CONTAINER, LINKEDIN_JOB_DESCRIPTION_FOOTER } from '@/utils/interfaceSelectors';
 import { createRoot, Root } from 'react-dom/client';
 import Wrapper from '@/components/wrapper/Wrapper';
-import { jobIDParser } from '@/utils/jobIDParser';
+import { jobIdParser } from '@/utils/jobIdParser';
 
 interface BoxProps {
   jobDescription: string;
@@ -20,8 +20,8 @@ const Box: FC<BoxProps> = ({
   const handleClick = async () => {
     setLoading(true);
 
-    const jobID = jobIDParser(window.location.href);
-    if (jobID === null) {
+    const jobId = jobIdParser(window.location.href);
+    if (jobId === null) {
       setLoading(false);
       // TODO: alert user
       return;
@@ -31,7 +31,7 @@ const Box: FC<BoxProps> = ({
       type: RequestType.GENERATE,
       data: {
         jobDescription,
-        jobID
+        jobId
       }
     });
 

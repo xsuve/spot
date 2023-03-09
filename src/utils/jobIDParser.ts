@@ -1,4 +1,4 @@
-export const jobIDParser = (
+export const jobIdParser = (
   url: string
 )  => {
   const match = url.match(/\/jobs\/view\/(\d{10})/);
