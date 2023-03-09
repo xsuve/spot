@@ -112,11 +112,11 @@ export const invokeGenerate = async (generateData: GenerateData) => {
 };
 
 
-export const getUserData = async (uid: string) => {
+export const getUserData = async (userId: string) => {
   const { data, error } = await supabase
     .from('user_data')
     .select('user_id, data')
-    .eq('user_id', uid)
+    .eq('user_id', userId)
     .limit(1)
     .single();
   
@@ -124,22 +124,22 @@ export const getUserData = async (uid: string) => {
 };
 
 
-export const updateUserData = async (uid: string, userData: any) => {
+export const updateUserData = async (userId: string, userData: any) => {
   const { data, error } = await supabase
     .from('user_data')
     .update({ data: userData })
-    .eq('user_id', uid)
+    .eq('user_id', userId)
     .select('user_id, data');
 
   return { data, error };
 };
 
 
-export const insertGenerated = async (uid: string, jobId: string, generatedData: any) => {
+export const insertGenerated = async (userId: string, jobId: string, generatedData: any) => {
   const { data, error } = await supabase
   .from('user_generated')
   .insert({
-    user_id: uid,
+    user_id: userId,
     job_id: jobId,
     data: generatedData
   });

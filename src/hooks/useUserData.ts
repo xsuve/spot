@@ -6,9 +6,9 @@ interface UserData {
   spots: number;
 };
 
-export const useUserData = (uid: string): UserData | undefined => {
+export const useUserData = (userId: string): UserData | undefined => {
   const fetchUserData = async () => {
-    const { data, error } = await getUserData(uid);
+    const { data, error } = await getUserData(userId);
     
     if (error) {
       return;
@@ -17,13 +17,13 @@ export const useUserData = (uid: string): UserData | undefined => {
     return data.data;
   };
 
-  const { data } = useSWR(['/userData', uid], fetchUserData);
+  const { data } = useSWR(['/userData', userId], fetchUserData);
   useEffect(() => {
-    if (!uid) {
+    if (!userId) {
       return;
     }
     
-  }, [uid, data]);
+  }, [userId, data]);
 
   return data;
 };
