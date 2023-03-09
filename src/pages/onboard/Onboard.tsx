@@ -1,12 +1,9 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import Text from '@/components/ui/text/Text';
-import Button from '@/components/ui/button/Button';
-import Input from '@/components/ui/input/Input';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import Alert, { AlertProps } from '@/components/ui/alert/Alert';
 import { mutate } from 'swr';
 import { onboard, OnboardData } from '@/services/supabase';
+import { Text, Button, Input, Alert, AlertProps } from '@/components/ui';
 
 const Onboard: React.FC = () => {
   const navigate = useNavigate();

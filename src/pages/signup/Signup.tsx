@@ -1,15 +1,10 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import Text from '@/components/ui/text/Text';
-import Button from '@/components/ui/button/Button';
-import Input from '@/components/ui/input/Input';
-import Logo from '@/components/ui/logo/Logo';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import Alert, { AlertProps } from '@/components/ui/alert/Alert';
 import { useUser } from '@/hooks/useUser';
 import { countryList } from '@/utils/countryList';
-import Select from '@/components/ui/select/Select';
 import { signUp, SignupData } from '@/services/supabase';
+import { Text, Button, Input, Logo, Select, Alert, AlertProps } from '@/components/ui';
 
 const Signup: React.FC = () => {
   const user = useUser({ redirect: '/', foundRedirect: true });

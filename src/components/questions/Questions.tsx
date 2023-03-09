@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Text from '@/components/ui/text/Text';
+import { Text } from '@/components/ui';
 
 interface QuestionsProps {
   data: string[];

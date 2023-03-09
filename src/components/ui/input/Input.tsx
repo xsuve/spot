@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Text from '../text/Text';
+import { Text } from '@/components/ui';
 
 type InputPropsType = 'text' | 'email' | 'password';
 interface InputProps {

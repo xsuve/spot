@@ -1,15 +1,11 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import Text from '@/components/ui/text/Text';
-import Button from '@/components/ui/button/Button';
-import Input from '@/components/ui/input/Input';
-import Logo from '@/components/ui/logo/Logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import Alert, { AlertProps } from '@/components/ui/alert/Alert';
 import { useUser } from '@/hooks/useUser';
 import { mutate } from 'swr';
 import { logIn, LoginData } from '@/services/supabase';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
+import { Text, Button, Input, Logo, Alert, AlertProps } from '@/components/ui';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

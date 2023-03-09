@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react';
-import Switch from '@/components/ui/switch/Switch';
 import {
   LINKEDIN_JOB_DESCRIPTION_CONTAINER,
   LINKEDIN_JOB_DESCRIPTION_FOOTER,
   SPOT_BOX_WRAPPER
 } from '@/utils/interfaceSelectors';
+import { Switch } from '@/components/ui';
 
 const Toggle: FC = () => {
   const [toggled, setToggled] = useState(true);

@@ -1,6 +1,6 @@
-import { TechnologyItem } from '@/types/TechnologyItem';
-import Text from '@/components/ui/text/Text';
 import React, { FC } from 'react';
+import { TechnologyItem } from '@/types/TechnologyItem';
+import { Text } from '@/components/ui';
 
 interface TechnologiesProps {
   data: TechnologyItem[];

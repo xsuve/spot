@@ -5,7 +5,7 @@ import {
   XCircleIcon
 } from '@heroicons/react/24/outline';
 import React from 'react';
-import Text from '@/components/ui/text/Text';
+import { Text } from '@/components/ui';
 
 type AlertPropsType = 'success' | 'error' | 'warning' | 'info';
 const AlertPropsTypeMap = {

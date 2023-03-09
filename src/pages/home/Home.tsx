@@ -1,11 +1,11 @@
 import Navbar from '@/components/navbar/Navbar';
-import Text from '@/components/ui/text/Text';
 import { useUser } from '@/hooks/useUser';
 import React, { FC } from 'react';
 import Onboard from '@/pages/onboard/Onboard';
 import { CheckIcon, ChevronDoubleUpIcon, Cog6ToothIcon,  ListBulletIcon, UserIcon, LinkIcon, SwatchIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { useUserData } from '@/hooks/useUserData';
+import { Text } from '@/components/ui';
 
 const getStarted = [
   {
