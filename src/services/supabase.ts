@@ -150,7 +150,7 @@ export const insertGenerated = async (userId: string, jobId: string, generatedDa
 export  const getUserGeneratedByJobId = async (userId: string, jobId: string) => {
   const { data, error } = await supabase
     .from('user_generated')
-    .select('user_id, job_id')
+    .select('user_id, job_id, data')
     .eq('user_id', userId)
     .eq('job_id', jobId)
     .limit(1)

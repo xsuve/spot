@@ -30,9 +30,9 @@ const Toggle: FC = () => {
 
   return (
     <div className='flex justify-between items-center'>
-      <div className='flex justify-between items-center gap-x-[16px]'>
+      <div className='flex justify-between items-center gap-x-[2rem]'>
         <Switch onClick={handleToggle} toggled={toggled} />
-        <p className={`font-poppins text-sm font-medium text-white ${toggled ? 'opacity-50' : ''}`}>{toggled ? 'Disable' : 'Enable'} Spot</p>
+        <p className={`font-poppins !text-[1.2rem] font-medium text-white ${toggled ? 'opacity-50' : ''}`}>{toggled ? 'Disable' : 'Enable'} Spot</p>
       </div>
       <img src={chrome.runtime.getURL('assets/img/spot-logo-white.svg')} className='w-[100px]' />
     </div>

@@ -12,8 +12,8 @@ const Questions: FC<QuestionsProps> = ({
 }) => {
   return (
     <div className={`${className}`}>
-      <Text type='subtitle' color='white' className='mb-6'>Interview questions</Text>
-      <ul className='!list-decimal indent-2 pl-8'>
+      <Text type='subtitle' color='white' className='!text-[2rem] mb-[2rem]'>Interview questions</Text>
+      <ul className='!list-decimal indent-[0.5rem] pl-[3rem]'>
         { data.map(item => <li className='leading-loose'>{item}</li>) }
       </ul>
     </div>

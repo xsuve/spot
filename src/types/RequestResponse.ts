@@ -1,6 +1,7 @@
 export enum RequestType {
   SET_SESSION = 'SET_SESSION',
   REMOVE_SESSION = 'REMOVE_SESSION',
+  CHECK_EXISTS = 'CHECK_EXISTS',
   GENERATE = 'GENERATE',
 };
 
@@ -10,9 +11,9 @@ export interface Request {
 };
 
 export const sendRequest = async (request: Request) => {
-  const { data, error } = await chrome.runtime.sendMessage(request);
-  
-  return { data, error };
+  const response = await chrome.runtime.sendMessage(request);
+
+  return response;
 };
 
 export interface Response {

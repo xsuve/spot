@@ -5,7 +5,8 @@
   "author": "xsuve",
   "manifest_version": 3,
   "permissions": [
-    "storage"
+    "storage",
+    "tabs"
   ],
   "content_scripts": [
     {

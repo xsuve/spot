@@ -1,5 +1,5 @@
 import { getUserGeneratedByJobId, getUser, getUserData, insertGenerated, invokeGenerate, updateUserData } from '@/services/supabase';
-import { Request, RequestType, ResponseCallback } from '@/types/RequestResponse';
+import { Request, RequestType, Response, ResponseCallback, sendRequest } from '@/types/RequestResponse';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { mutate } from 'swr';
 
@@ -7,6 +7,21 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
   handleMessage(message, sendResponse);
   return true;
 });
+
+const _getUser = async (): Promise<Response> => {
+  const result = await chrome.storage.local.get([STORAGE_AUTH_KEY]);
+  if (!(result && result[STORAGE_AUTH_KEY])) {
+    return { data: null, error: 'Please log in.' };
+  }
+
+  const getUserResponse = await getUser(result[STORAGE_AUTH_KEY].access_token);
+  if (getUserResponse?.error) {
+    chrome.storage.local.remove([STORAGE_AUTH_KEY]);
+    return { data: null, error: 'Please log in.' };
+  }
+
+  return { data: getUserResponse.data, error: null };
+};
 
 const handleMessage = async (request: Request, sendResponse: ResponseCallback) => {
   switch (request.type) {
@@ -20,27 +35,36 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       sendResponse({ data: null, error: null });
     break;
 
+    case RequestType.CHECK_EXISTS:
+      const getUser_User = await _getUser();
+      if (getUser_User?.error) {
+        sendResponse({ data: null, error: getUser_User.error });
+        return;
+      }
+
+      const checkExists = await getUserGeneratedByJobId(getUser_User?.data.user.id, request.data.jobId);
+      if (checkExists?.error) {
+        sendResponse({ data: null, error: checkExists.error?.message });
+        return;
+      }
+
+      sendResponse({ data: checkExists?.data, error: null });
+    break;
+
     case RequestType.GENERATE:
-      const result = await chrome.storage.local.get([STORAGE_AUTH_KEY]);
-      if (!(result && result[STORAGE_AUTH_KEY])) {
-        sendResponse({ data: null, error: 'Please log in.' });
+      const generate_User = await _getUser();
+      if (generate_User?.error) {
+        sendResponse({ data: null, error: generate_User.error });
         return;
       }
 
-      const getUserResponse = await getUser(result[STORAGE_AUTH_KEY].access_token);
-      if (getUserResponse?.error) {
-        chrome.storage.local.remove([STORAGE_AUTH_KEY]);
-        sendResponse({ data: null, error: 'Please log in.' });
-        return;
-      }
-
-      const checkExists = await getUserGeneratedByJobId(getUserResponse?.data.user.id, request.data.jobId);
-      if (checkExists?.data?.job_id) {
+      const generate_checkExists = await getUserGeneratedByJobId(generate_User?.data.user.id, request.data.jobId);
+      if (generate_checkExists?.data?.job_id) {
         sendResponse({ data: null, error: 'Already generated a response for this job.' });
         return;
       }
 
-      const getUserDataResponse = await getUserData(getUserResponse?.data.user.id);
+      const getUserDataResponse = await getUserData(generate_User?.data.user.id);
       if (getUserDataResponse?.error) {
         sendResponse({ data: null, error: getUserDataResponse?.error?.message });
         return;
@@ -52,7 +76,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       }
 
       // const invokeGenerateResponse = await invokeGenerate({
-      //   userCountry: getUserResponse?.data.user.user_metadata.country,
+      //   userCountry: generate_User?.data.user.user_metadata.country,
       //   jobDescription: request.data.jobDescription
       // });
 
@@ -63,7 +87,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       //   return;
       // }
 
-      const updateUserDataResponse = await updateUserData(getUserResponse?.data.user.id, {
+      const updateUserDataResponse = await updateUserData(generate_User?.data.user.id, {
         spots: getUserDataResponse?.data.data.spots - 1
       });
       if (updateUserDataResponse?.error) {
@@ -95,7 +119,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         };
 
         const insertGeneratedResponse = await insertGenerated(
-          getUserResponse?.data.user.id,
+          generate_User?.data.user.id,
           request.data.jobId,
           generatedData
           // TODO: Add usage from invokeGenerateResponse.
