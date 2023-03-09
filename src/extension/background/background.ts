@@ -3,7 +3,7 @@ import { Request, RequestType, ResponseCallback } from '@/types/RequestResponse'
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { mutate } from 'swr';
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
   handleMessage(message, sendResponse);
   return true;
 });

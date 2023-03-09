@@ -13,7 +13,7 @@ if (!font) {
   font = document.createElement('link');
   font.classList.add('spot-fonts');
   font.rel = 'stylesheet';
-  font.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&&family=Space+Grotesk:wght@500;600&display=swap';
+  font.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Space+Grotesk:wght@500;600&display=swap';
   (document.head || document.documentElement).appendChild(font);
 }
 
