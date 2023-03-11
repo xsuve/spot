@@ -35,7 +35,7 @@ const AlertPropsTypeMap = {
   }
 };
 
-export interface AlertProps {
+export type AlertProps = {
   type: AlertPropsType;
   title: string;
   text: string;

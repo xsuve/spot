@@ -5,7 +5,7 @@ import { Text } from '@/components/ui';
 
 export type SelectPropsOption = { value: string; label: string; };
 
-export interface SelectProps {
+export type SelectProps = {
   name: string;
   placeholder?: string;
   label?: string;

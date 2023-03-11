@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Text } from '@/components/ui';
 
-interface QuestionsProps {
+type QuestionsProps = {
   data: string[];
   className?: string;
 };

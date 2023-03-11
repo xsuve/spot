@@ -29,7 +29,7 @@ const ButtonIconPropsSizeMap = {
   'normal': 'w-4 h-4'
 };
 
-interface ButtonProps {
+type ButtonProps = {
   type: ButtonPropsType;
   children: JSX.Element | string;
   color: ButtonPropsColor;

@@ -18,7 +18,7 @@ const TextPropsColorMap = {
   'yellow': 'text-yellow-500'
 };
 
-interface TextProps {
+type TextProps = {
   type: TextPropsType;
   color: TextPropsColor;
   children: ReactNode;

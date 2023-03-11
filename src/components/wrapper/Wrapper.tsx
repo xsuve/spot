@@ -5,7 +5,7 @@ import Technologies from '../technologies/Technologies';
 import { TechnologyItem } from '@/types/TechnologyItem';
 import { SalaryRangeForPosition } from '@/types/SalaryRangeForPosition';
 
-interface WrapperPropsData {
+type WrapperPropsData = {
   technologies: TechnologyItem[];
   interviewQuestions: string[];
   positionTitle: string;
@@ -13,7 +13,7 @@ interface WrapperPropsData {
   salaryRangeForPosition: SalaryRangeForPosition;
 };
 
-interface WrapperProps {
+type WrapperProps = {
   data: WrapperPropsData;
   className?: string;
 };

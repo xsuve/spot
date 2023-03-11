@@ -5,7 +5,7 @@ export enum RequestType {
   GENERATE = 'GENERATE',
 };
 
-export interface Request {
+export type Request = {
   type: RequestType;
   data: any | null;
 };
@@ -16,7 +16,7 @@ export const sendRequest = async (request: Request) => {
   return response;
 };
 
-export interface Response {
+export type Response = {
   data: any | null;
   error: string | null;
 };

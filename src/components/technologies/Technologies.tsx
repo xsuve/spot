@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { TechnologyItem } from '@/types/TechnologyItem';
 import { Text } from '@/components/ui';
 
-interface TechnologiesProps {
+type TechnologiesProps = {
   data: TechnologyItem[];
   className?: string;
 };

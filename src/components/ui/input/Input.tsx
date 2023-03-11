@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Text } from '@/components/ui';
 
 type InputPropsType = 'text' | 'email' | 'password';
-interface InputProps {
+type InputProps = {
   type: InputPropsType;
   name: string;
   placeholder?: string;

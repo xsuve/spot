@@ -1,4 +1,4 @@
-export interface TechnologyItem {
+export type TechnologyItem = {
   title: string;
   included: boolean;
 };

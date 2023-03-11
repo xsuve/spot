@@ -6,7 +6,7 @@ import { createRoot, Root } from 'react-dom/client';
 import Wrapper from '@/components/wrapper/Wrapper';
 import { jobIdParser } from '@/utils/jobIdParser';
 
-interface BoxProps {
+type BoxProps = {
   jobDescription: string;
   className?: string;
 };
