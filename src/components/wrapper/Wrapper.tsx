@@ -2,19 +2,10 @@ import React, { FC } from 'react';
 import Questions from '@/components/questions/Questions';
 import Toggle from '@/components/toggle/Toggle';
 import Technologies from '../technologies/Technologies';
-import { TechnologyItem } from '@/types/TechnologyItem';
-import { SalaryRangeForPosition } from '@/types/SalaryRangeForPosition';
-
-type WrapperPropsData = {
-  technologies: TechnologyItem[];
-  interviewQuestions: string[];
-  positionTitle: string;
-  experienceLevel: string;
-  salaryRangeForPosition: SalaryRangeForPosition;
-};
+import { GenerateData } from '@/typings';
 
 type WrapperProps = {
-  data: WrapperPropsData;
+  data: GenerateData;
   className?: string;
 };
 

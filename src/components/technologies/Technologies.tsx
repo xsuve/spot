@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { TechnologyItem } from '@/types/TechnologyItem';
 import { Text } from '@/components/ui';
+import { TechnologyItem } from '@/typings';
 
 type TechnologiesProps = {
   data: TechnologyItem[];
