@@ -1,20 +1,30 @@
 import { useEffect } from 'react';
 import useSWR from 'swr';
-import { getUserData } from '@/services/supabase';
+import { getUserData, getUserGenerated } from '@/services/supabase';
+import { GenerateData } from '@/typings';
 
-interface UserData {
+type UserData = {
   spots: number;
+  generated: {
+    job_id: string;
+    created_at: string;
+    data: GenerateData;
+  }[];
 };
 
 export const useUserData = (userId: string): UserData | undefined => {
   const fetchUserData = async () => {
-    const { data, error } = await getUserData(userId);
-    
-    if (error) {
+    const getUserDataResponse = await getUserData(userId);
+    if (getUserDataResponse?.error) {
       return;
     }
 
-    return data.data;
+    const getUserGeneratedResponse = await getUserGenerated(userId);
+    if (getUserGeneratedResponse?.error) {
+      return;
+    }
+
+    return { ...getUserDataResponse.data.data, generated: [...getUserGeneratedResponse.data] };
   };
 
   const { data } = useSWR(['/userData', userId], fetchUserData);

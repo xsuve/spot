@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Questions from '@/components/questions/Questions';
 import Toggle from '@/components/toggle/Toggle';
-import Technologies from '../technologies/Technologies';
+import Technologies from '@/components/technologies/Technologies';
 import { GenerateData } from '@/typings';
 
 type WrapperProps = {

@@ -6,6 +6,7 @@ import { CheckIcon, ChevronDoubleUpIcon, Cog6ToothIcon,  ListBulletIcon, UserIco
 import { Link } from 'react-router-dom';
 import { useUserData } from '@/hooks/useUserData';
 import { Text } from '@/components/ui';
+import { DateTime } from 'luxon';
 
 const getStarted = [
   {
@@ -37,6 +38,8 @@ const getStarted = [
 const Home: FC = () => {
   const user = useUser({ redirect: '/login' });
   const userData = useUserData(user?.id);
+  console.log(userData);
+  
 
   const handleIcon = (icon: string) => {
     switch (icon) {
@@ -121,17 +124,21 @@ const Home: FC = () => {
             <div className='flex flex-col gap-y-2 mt-10'>
               <Text type='label' color='dark'>Recent Activity</Text>
               <div className='flex flex-col gap-y-4 mt-2'>
-                <Link to='/'>
-                  <div className='flex items-center gap-x-4'>
-                    <div className='w-9 h-9 flex justify-center items-center shrink-0 rounded-full bg-indigo-100'>
-                      <ListBulletIcon className='w-5 h-5 text-indigo-600' />
+                { userData.generated.map((item, index) => (
+                  <Link to={`https://linkedin.com/jobs/view/${item.job_id}`} target='_blank' key={index}>
+                    <div className='flex items-center gap-x-4'>
+                      <div className='w-9 h-9 flex justify-center items-center shrink-0 rounded-full bg-indigo-100'>
+                        <ListBulletIcon className='w-5 h-5 text-indigo-600' />
+                      </div>
+                      <div className='flex flex-col gap-y-1 text-left'>
+                        <Text type='label' color='dark'>{item.data.positionTitle}</Text>
+                        <Text type='paragraph' color='gray' className='!text-xs block'>
+                          {DateTime.fromISO(item.created_at).toFormat('MMMM dd, yyyy')}
+                        </Text>
+                      </div>
                     </div>
-                    <div className='flex flex-col gap-y-1 text-left'>
-                      <Text type='label' color='dark'>Mid Frontend Developer</Text>
-                      <Text type='paragraph' color='gray' className='!text-xs block'>18 February, 2023</Text>
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                )) }
               </div>
             </div>
           </div>
