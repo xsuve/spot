@@ -17,6 +17,7 @@ const Navbar: FC = () => {
     mutate('/session');
     navigate('/login');
   };
+  
   return (
     <div className='fixed top-0 left-0 bg-white w-full h-[56px] px-6 flex justify-between items-center'>
       <Logo />

@@ -2,57 +2,17 @@ import Navbar from '@/components/navbar/Navbar';
 import { useUser } from '@/hooks/useUser';
 import React, { FC } from 'react';
 import Onboard from '@/pages/onboard/Onboard';
-import { CheckIcon, ChevronDoubleUpIcon, Cog6ToothIcon,  ListBulletIcon, UserIcon, LinkIcon, SwatchIcon } from '@heroicons/react/24/outline';
+import { Cog6ToothIcon,  ListBulletIcon, LinkIcon, SwatchIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { useUserData } from '@/hooks/useUserData';
 import { Text } from '@/components/ui';
 import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 import { DateTime } from 'luxon';
-
-const getStarted = [
-  {
-    id: 1,
-    title: 'Welcome',
-    status: 'done',
-    icon: 'check'
-  },
-  {
-    id: 2,
-    title: 'Import your CV',
-    status: 'ongoing',
-    icon: 'user'
-  },
-  {
-    id: 3,
-    title: 'Generate interview questions',
-    status: 'todo',
-    icon: 'list-bullet'
-  },
-  {
-    id: 4,
-    title: 'Upgrade your Plan',
-    status: 'todo',
-    icon: 'chevron-double-up'
-  }
-];
+import GetStarted from '@/components/get-started/GetStarted';
 
 const Home: FC = () => {
   const user = useUser({ redirect: '/login' });
-  const userData = useUserData(user?.id);  
-
-  const handleIcon = (icon: string) => {
-    switch (icon) {
-      case 'user':
-        return <UserIcon />;
-      case 'chevron-double-up':
-        return <ChevronDoubleUpIcon />;
-      case 'list-bullet':
-        return <ListBulletIcon />;
-      case 'check':
-      default:
-        return <CheckIcon />;
-    }
-  };
+  const userData = useUserData(user?.id);
 
   if (!user || !userData) {
     return <LoadingScreen />;
@@ -106,25 +66,7 @@ const Home: FC = () => {
         </div>
         <div className='flex flex-col gap-y-2 mt-10'>
           <Text type='label' color='dark'>Get Started</Text>
-          <div className='flex flex-col gap-y-[26px] mt-2 get-started-items'>
-            { getStarted.map(item => (
-              <div key={item.id} className='flex items-center gap-x-4'>
-                <div className={`
-                  relative
-                  border-2 rounded-full
-                  flex justify-center items-center
-                  get-started-item status-${item.status}
-                `}>
-                  <div className='w-5 h-5 border-2 rounded-full flex justify-center items-center get-started-item-icon'>
-                    {handleIcon(item.icon)}
-                  </div>
-                </div>
-                <Link to='/'>
-                  <Text type='paragraph' color={item.status === 'ongoing' ? 'yellow' : 'gray'}>{item.title}</Text>
-                </Link>
-              </div>
-            )) }
-          </div>
+          <GetStarted />
         </div>
         <div className='flex flex-col gap-y-2 mt-10'>
           <Text type='label' color='dark'>Recent Activity</Text>

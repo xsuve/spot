@@ -137,12 +137,12 @@ export const updateUserData = async (userId: string, userData: any) => {
 
 export const insertGenerated = async (userId: string, jobId: string, generatedData: any) => {
   const { data, error } = await supabase
-  .from('user_generated')
-  .insert({
-    user_id: userId,
-    job_id: jobId,
-    data: generatedData
-  });
+    .from('user_generated')
+    .insert({
+      user_id: userId,
+      job_id: jobId,
+      data: generatedData
+    });
 
   return { data, error };
 };
