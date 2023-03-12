@@ -47,7 +47,7 @@ const GetStarted: FC = () => {
   };
   
   return (
-    <div className='flex flex-col gap-y-[26px] mt-2 get-started-items'>
+    <div className='flex flex-col gap-y-[26px] get-started-items'>
       { getStarted.map(item => (
         <div key={item.id} className='flex items-center gap-x-4'>
           <div className={`
@@ -62,9 +62,9 @@ const GetStarted: FC = () => {
           </div>
           { item.url
             ? <Link to={item.url}>
-                <Text type='paragraph' color={item.status === 'ongoing' ? 'yellow' : 'gray'}>{item.title}</Text>
+                <Text type='paragraph' color={item.status === 'ongoing' ? 'vermilion' : 'gray'}>{item.title}</Text>
               </Link>
-            : <Text type='paragraph' color={item.status === 'ongoing' ? 'yellow' : 'gray'}>{item.title}</Text>
+            : <Text type='paragraph' color={item.status === 'ongoing' ? 'vermilion' : 'gray'}>{item.title}</Text>
           }
         </div>
       )) }

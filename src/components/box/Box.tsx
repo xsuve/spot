@@ -74,7 +74,7 @@ const Box: FC<BoxProps> = ({
       <div className='flex justify-end'>
         <Button
           type='button'
-          color='yellow'
+          color='vermilion'
           size='interface'
           onClick={handleClick}
           loading={loading}

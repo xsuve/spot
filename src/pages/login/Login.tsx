@@ -6,6 +6,7 @@ import { mutate } from 'swr';
 import { logIn, LoginData } from '@/services/supabase';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { Text, Button, Input, Logo, Alert, AlertProps } from '@/components/ui';
+import Layout from '@/components/layout/Layout';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -47,8 +48,8 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className='p-5 flex flex-col items-start gap-y-8'>
-      <Logo />
+    <Layout>
+      <Logo size='small' />
 
       <div className='flex flex-col gap-y-1.5'>
         <Text type='title' color='dark'>Log into Spot</Text>
@@ -100,7 +101,7 @@ const Login: React.FC = () => {
           </div>
         </div>
         <div className='w-full'>
-          <Button type='submit' size='normal' color='dark' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
+          <Button type='submit' size='normal' color='vermilion' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
           <div className='mt-6 flex flex-col gap-y-1.5 items-start'>
             <Text type='paragraph' color='gray'>Don't have an account? </Text>
             <Link to='/signup'>
@@ -109,8 +110,8 @@ const Login: React.FC = () => {
           </div>
         </div>
       </form>
-
-    </div>
+      
+    </Layout>
   );
 };
 

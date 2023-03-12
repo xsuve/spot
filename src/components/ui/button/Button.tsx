@@ -3,14 +3,14 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 type ButtonPropsType = 'submit' | 'button';
 
-type ButtonPropsColor = 'yellow' | 'white' | 'dark';
+type ButtonPropsColor = 'vermilion' | 'white' | 'dark';
 const ButtonPropsColorMap = {
-  'yellow': 'bg-yellow-500 text-white',
+  'vermilion': 'bg-vermilion text-white',
   'white': 'bg-white border border-slate-200 text-slate-700',
   'dark': 'bg-slate-700 border border-slate-700 text-white'
 };
 const ButtonIconPropsColorMap = {
-  'yellow': 'text-white',
+  'vermilion': 'text-white',
   'white': 'text-slate-700',
   'dark': 'text-white'
 };

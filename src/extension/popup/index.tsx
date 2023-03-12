@@ -11,7 +11,7 @@ import '@/styles.css';
 
 const Popup: FC = () => {
   return (
-    <div className='w-[360px] bg-white'>
+    <div className='w-[360px]'>
       
       <MemoryRouter>
         <Routes>

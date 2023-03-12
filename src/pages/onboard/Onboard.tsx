@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { mutate } from 'swr';
 import { onboard, OnboardData } from '@/services/supabase';
 import { Text, Button, Input, Alert, AlertProps } from '@/components/ui';
+import Layout from '@/components/layout/Layout';
 
 const Onboard: React.FC = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const Onboard: React.FC = () => {
   };
 
   return (
-    <div className='p-5 flex flex-col items-start gap-y-8'>
+    <Layout>
       <div className='flex flex-col gap-y-1.5'>
         <Text type='title' color='dark'>Let's complete your account</Text>
         <Text type='paragraph' color='gray'>We need more info about you before you can start using Spot.</Text>
@@ -79,11 +80,11 @@ const Onboard: React.FC = () => {
           </>
         </div>
         <div className='w-full'>
-          <Button type='submit' size='normal' color='dark' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
+          <Button type='submit' size='normal' color='vermilion' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
         </div>
       </form>
 
-    </div>
+    </Layout>
   );
 };
 

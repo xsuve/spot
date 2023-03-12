@@ -8,14 +8,14 @@ const TextPropsTypeMap = {
   'paragraph': 'font-poppins text-sm font-light'
 };
 
-type TextPropsColor = 'dark' | 'gray' | 'white' | 'red' | 'green' | 'yellow';
+type TextPropsColor = 'dark' | 'gray' | 'white' | 'red' | 'green' | 'vermilion';
 const TextPropsColorMap = {
   'dark': 'text-slate-700',
   'gray': 'text-slate-400',
   'white': 'text-white',
   'red': 'text-red-400',
   'green': 'text-green-400',
-  'yellow': 'text-yellow-500'
+  'vermilion': 'text-vermilion'
 };
 
 type TextProps = {

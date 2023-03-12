@@ -5,6 +5,7 @@ import { useUser } from '@/hooks/useUser';
 import { countryList } from '@/utils/countryList';
 import { signUp, SignupData } from '@/services/supabase';
 import { Text, Button, Input, Logo, Select, Alert, AlertProps } from '@/components/ui';
+import Layout from '@/components/layout/Layout';
 
 const Signup: React.FC = () => {
   const user = useUser({ redirect: '/', foundRedirect: true });
@@ -46,8 +47,8 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className='p-5 flex flex-col items-start gap-y-8'>
-      <Logo />
+    <Layout>
+      <Logo size='small' />
 
       <div className='flex flex-col gap-y-1.5'>
         <Text type='title' color='dark'>Sign up on Spot</Text>
@@ -105,7 +106,7 @@ const Signup: React.FC = () => {
           </>
         </div>
         <div className='w-full'>
-          <Button type='submit' size='normal' color='dark' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
+          <Button type='submit' size='normal' color='vermilion' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
           <div className='mt-6 flex flex-col gap-y-1.5 items-start'>
             <Text type='paragraph' color='gray'>Already have an account? </Text>
             <Link to='/login'>
@@ -115,7 +116,7 @@ const Signup: React.FC = () => {
         </div>
       </form>
 
-    </div>
+    </Layout>
   );
 };
 
