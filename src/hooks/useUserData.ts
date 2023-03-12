@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import useSWR from 'swr';
 import { getUserData, getUserGenerated } from '@/services/supabase';
 import { GenerateData } from '@/typings';
@@ -27,13 +26,7 @@ export const useUserData = (userId: string): UserData | undefined => {
     return { ...getUserDataResponse.data.data, generated: [...getUserGeneratedResponse.data] };
   };
 
-  const { data } = useSWR(['/userData', userId], fetchUserData);
-  useEffect(() => {
-    if (!userId) {
-      return;
-    }
-    
-  }, [userId, data]);
+  const { data } = useSWR(userId ? ['/userData', userId] : null, fetchUserData);
 
   return data;
 };
