@@ -32,7 +32,7 @@ const Home: FC = () => {
             <Text type='title' color='dark'>{user.user_metadata.fullName}</Text>
             <Text type='paragraph' color='gray'>{user.user_metadata.position}</Text>
           </div>
-          <Link to='/settings'>
+          <Link to='/profile'>
             <div className='w-7 h-7 flex justify-center items-center bg-slate-100 rounded-full'>
               <Cog6ToothIcon className='w-5 h-5 text-slate-500' />
             </div>
