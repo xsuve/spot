@@ -76,9 +76,12 @@ const Box: FC<BoxProps> = ({
         </div>
       : <div className='flex flex-col gap-y-[32px]'>
           <div className='flex justify-between gap-x-[16px]'>
-            <Text type='title' color='white' className='!text-[2rem]'>{generateData.positionTitle}</Text>
+            <div className='flex gap-x-[16px]'>
+              <Text type='title' color='white' className='!text-[2rem]'>{generateData.positionTitle}</Text>
+              <Text type='title' color='white' className='self-center !text-[1.8rem] !text-white/40'>{generateData.experienceLevel}-level</Text>
+            </div>
             <div className='flex items-center gap-x-[8px]'>
-              <Text type='paragraph' color='white' className='!text-[1.2rem] leading-[1.5]'>Powered by</Text>
+              <Text type='paragraph' color='white' className='!text-[1.2rem] leading-[1.5] !text-white/70'>Powered by</Text>
               <img src={chrome.runtime.getURL('assets/img/spot-icon-background.svg')} className='w-[24px]' />
             </div>
           </div>
