@@ -26,7 +26,7 @@ const ButtonTextPropsSizeMap = {
 };
 const ButtonIconPropsSizeMap = {
   'interface': 'w-[16px] h-[16px]',
-  'normal': 'w-4 h-4'
+  'normal': 'w-5 h-5'
 };
 
 type ButtonProps = {

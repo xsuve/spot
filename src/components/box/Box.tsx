@@ -1,18 +1,19 @@
 import React, { FC, useState } from 'react';
 import { Button, Text } from '@/components/ui';
 import { sendRequest, RequestType } from '@/types/RequestResponse';
-import { LINKEDIN_JOB_DESCRIPTION_CONTAINER, LINKEDIN_JOB_DESCRIPTION_FOOTER, SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
-import { createRoot, Root } from 'react-dom/client';
-import Wrapper from '@/components/wrapper/Wrapper';
+import { SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
 import { jobIdParser } from '@/utils/jobIdParser';
+import { GenerateData, TechnologyItem } from '@/typings';
 
 type BoxProps = {
-  jobDescription: string;
+  jobDescription?: string;
+  generateData?: GenerateData;
   className?: string;
 };
 
 const Box: FC<BoxProps> = ({
-  jobDescription,
+  jobDescription = null,
+  generateData = null,
   className = ''
 }) => {
   const [loading, setLoading] = useState(false);
@@ -44,43 +45,71 @@ const Box: FC<BoxProps> = ({
       return;
     }
 
-    const container: HTMLElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTAINER);
-    if (window.location.href.includes('/jobs/view/') && container) {
-      const boxRoot: HTMLDivElement = container.parentElement.querySelector(SPOT_BOX_ROOT);
-      if (boxRoot) {
-        boxRoot.innerHTML = '';
-
-        const footer: HTMLDivElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION_FOOTER);
-        if (footer) {
-          footer.style.setProperty('display', 'none', 'important');
-        }
-
-        let reactElement: Root = createRoot(boxRoot);
-        reactElement.render(<Wrapper data={response.data} />);
-
-        container.style.setProperty('display', 'none', 'important');
-      }
+    const spotBoxRoot: HTMLElement = document.querySelector(SPOT_BOX_ROOT);
+    if (window.location.href.includes('/jobs/view/') && spotBoxRoot) {
+      //
     }
 
     setLoading(false);
   };
 
   return (
-    <div className={`bg-yellow-300/30 px-[2.4rem] h-[125px] w-full !grid grid-cols-3 items-center rounded-t-[0.8rem] ${className}`}>
-      <div className='col-span-2'>
-        <img src={chrome.runtime.getURL('assets/img/spot-logo-white.svg')} className='w-[100px] mb-3' />
-        <Text type='paragraph' color='white' className='!text-[1.4rem]'>Generate a list of interview questions based on the job description.</Text>
-      </div>
-      <div className='flex justify-end'>
-        <Button
-          type='button'
-          color='vermilion'
-          size='interface'
-          onClick={handleClick}
-          loading={loading}
-          disabled={loading}
-        >Generate</Button>
-      </div>
+    <div className={`${jobDescription ? 'bg-aquamarine' : 'bg-linkedin-dark'} p-[2.4rem] w-full rounded-[0.8rem] mb-[16px] ${className}`}>
+      { jobDescription
+      ? <div className='!grid grid-cols-2 items-center'>
+          <div>
+            <img src={chrome.runtime.getURL('assets/img/spot-icon-background.svg')} className='w-[24px] mb-[16px]' />
+            <Text type='title' color='white' className='!text-[2rem] mb-[8px] leading-[1.25]'>Better prepare yourself for the next interview with Spot.</Text>
+            <Text type='paragraph' color='white' className='!text-[1.4rem] mb-[32px] leading-[1.5]'>Targeted AI generated interview questions and job insights based on the job description.</Text>
+            <Button
+              type='button'
+              color='vermilion'
+              size='interface'
+              onClick={handleClick}
+              loading={loading}
+              disabled={loading}
+            >Try Spot!</Button>
+          </div>
+          <div className='flex justify-end'>
+            {/*  */}
+          </div>
+        </div>
+      : <div className='flex flex-col gap-y-[32px]'>
+          <div className='flex justify-between gap-x-[16px]'>
+            <Text type='title' color='white' className='!text-[2rem]'>{generateData.positionTitle}</Text>
+            <div className='flex items-center gap-x-[8px]'>
+              <Text type='paragraph' color='white' className='!text-[1.2rem] leading-[1.5]'>Powered by</Text>
+              <img src={chrome.runtime.getURL('assets/img/spot-icon-background.svg')} className='w-[24px]' />
+            </div>
+          </div>
+          <div className='flex justify-between items-start gap-x-[16px]'>
+            <div>
+              <Text type='title' color='white' className='!text-[1.8rem] mb-[16px] leading-[1.25]'>Technologies</Text>
+              <div className='flex gap-[0.8rem]'>
+                { generateData.technologies.map((item: TechnologyItem, index: number) => 
+                  <div key={index} className={`${item.included ? 'bg-creamy text-vermilion' : 'bg-white/20 text-white/70'} rounded-md font-poppins !text-[1.2rem] font-medium px-[8px] py-[4px]`}>
+                    {item.title}
+                  </div>
+                ) }
+              </div>
+            </div>
+            <div>
+              <Text type='title' color='white' className='!text-[1.8rem] mb-[16px] leading-[1.25]'>Salary range</Text>
+            </div>
+            <div>&nbsp;</div>
+          </div>
+          <div>
+            <Text type='title' color='white' className='!text-[1.8rem] mb-[8px] leading-[1.25]'>Interview questions</Text>
+            <ul className='!list-decimal indent-[0.5rem] pl-[3rem]'>
+              { generateData.interviewQuestions.map((item: string) => 
+                <li className='leading-loose'>
+                  <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.5]'>{item}</Text>
+                </li>
+              ) }
+            </ul>
+          </div>
+        </div>
+      }
     </div>
   );
 };

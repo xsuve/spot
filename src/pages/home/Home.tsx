@@ -93,12 +93,12 @@ const Home: FC = () => {
         </div>
       </div>
 
-      <div className='flex flex-col gap-y-4 mt-8'>
+      <div className='flex flex-col gap-y-2 mt-8'>
         <Text type='label' color='dark'>Get Started</Text>
         <GetStarted />
       </div>
 
-      <div className='flex flex-col gap-y-4 mt-8'>
+      <div className='flex flex-col gap-y-2 mt-8'>
         <Text type='label' color='dark'>Recent Activity</Text>
         <div className='flex flex-col gap-y-4'>
           { userData.generated.map((item, index) => (
