@@ -39,7 +39,7 @@ const Home: FC = () => {
   return (
     <Layout isHome>
 
-      <div className='bg-aquamarine rounded-[50%] w-[560px] h-[560px] absolute -top-[360px] -left-[100px] px-[100px] pt-[376px] pb-[76px] flex flex-col justify-between items-end'>
+      <div className='bg-aquamarine rounded-[50%] w-[700px] h-[510px] absolute -top-[300px] -left-[170px] px-[170px] pt-[315px] pb-[90px] -z-10 flex flex-col justify-between items-end'>
         <div className='flex justify-between items-center gap-x-4 w-full px-4'>
           <Logo size='small' color='background' />
           <div className='flex justify-between items-center gap-x-4'>
@@ -52,7 +52,7 @@ const Home: FC = () => {
           </div>
         </div>
 
-        <div className='flex justify-between items-center gap-x-4 w-full px-8'>
+        <div className='flex justify-between items-center gap-x-4 w-full px-4'>
           <div className='flex flex-col gap-y-1'>
             <Text type='title' color='white'>{user.user_metadata.fullName}</Text>
             <Text type='paragraph' color='white'>{user.user_metadata.position}</Text>
@@ -60,7 +60,7 @@ const Home: FC = () => {
           <Link to='/profile'>
             <div className='flex justify-between items-center gap-x-2'>
               <Text type='paragraph' color='white' className='!text-xs opacity-60'>Profile</Text>
-              <ChevronRightIcon className='w-5 h-5 text-white opacity-60' />
+              <ChevronRightIcon className='w-4 h-4 text-white opacity-60' />
             </div>
           </Link>
         </div>
@@ -76,7 +76,7 @@ const Home: FC = () => {
           </div>
           <div className='flex flex-col'>
             <Text type='subtitle' color='dark'>{userData.spots}</Text>
-            <Text type='paragraph' color='gray'>0 used today</Text>
+            <Text type='paragraph' color='gray' className='!text-xs'>0 used today</Text>
           </div>
         </div>
         <div className='flex flex-col w-full justify-between gap-y-4 bg-creamy rounded-2xl p-4'>
@@ -88,7 +88,7 @@ const Home: FC = () => {
           </div>
           <div className='flex flex-col'>
             <Text type='subtitle' color='dark'>{userData.generated.length || 0}</Text>
-            <Text type='paragraph' color='gray'>23 last week</Text>
+            <Text type='paragraph' color='gray' className='!text-xs'>23 last week</Text>
           </div>
         </div>
       </div>

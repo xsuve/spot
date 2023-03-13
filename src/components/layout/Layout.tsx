@@ -11,7 +11,7 @@ const Layout: FC<LayoutProps> = ({
 }) => {
   return (
     <div className={`bg-white ${isHome ? 'h-[500px] overflow-y-auto' : 'p-4'}`}>
-      <div className={`relative p-4 ${isHome ? 'pt-[200px]' : 'bg-creamy flex flex-col items-start gap-y-8'}`}>
+      <div className={`overflow-hidden z-20 relative p-4 ${isHome ? 'pt-[135px]' : 'bg-creamy flex flex-col items-start gap-y-8'}`}>
         {children}
       </div>
     </div>
