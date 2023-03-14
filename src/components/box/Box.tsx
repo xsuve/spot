@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, Text } from '@/components/ui';
 import { sendRequest, RequestType } from '@/types/RequestResponse';
 import { SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
 import { jobIdParser } from '@/utils/jobIdParser';
 import { GenerateData, TechnologyItem } from '@/typings';
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 type BoxProps = {
   jobDescription?: string;
@@ -53,13 +54,23 @@ const Box: FC<BoxProps> = ({
     setLoading(false);
   };
 
+  const [f, setF] = useState(0);
+  useEffect(() => {
+    if (!generateData?.salaryForPosition) return;
+
+    const k: number = generateData.salaryForPosition.max - generateData.salaryForPosition.min;
+    const p: number = Math.round(k / 11);
+    const f: number = Math.round((generateData.salaryForPosition.suitable - generateData.salaryForPosition.min) / p) + 1;
+    setF(f);
+  }, []);
+
   return (
     <div className={`${jobDescription ? 'bg-aquamarine' : 'bg-linkedin-dark'} p-[2.4rem] w-full rounded-[0.8rem] mb-[16px] ${className}`}>
       { jobDescription
       ? <div className='!grid grid-cols-2 items-center'>
           <div>
             <img src={chrome.runtime.getURL('assets/img/spot-icon-background.svg')} className='w-[24px] mb-[16px]' />
-            <Text type='title' color='white' className='!text-[2rem] mb-[8px] leading-[1.25]'>Better prepare yourself for the next interview with Spot.</Text>
+            <Text type='title' color='white' className='!text-[2rem] mb-[8px] leading-[1.25]'>Better prepare for your next interview with Spot.</Text>
             <Text type='paragraph' color='white' className='!text-[1.4rem] mb-[32px] leading-[1.5]'>Targeted AI generated interview questions and job insights based on the job description.</Text>
             <Button
               type='button'
@@ -75,7 +86,7 @@ const Box: FC<BoxProps> = ({
           </div>
         </div>
       : <div className='flex flex-col gap-y-[32px]'>
-          <div className='flex justify-between gap-x-[16px]'>
+          <div className='flex justify-between gap-x-[32px]'>
             <div className='flex gap-x-[16px]'>
               <Text type='title' color='white' className='!text-[2rem]'>{generateData.positionTitle}</Text>
               <Text type='title' color='white' className='self-center !text-[1.8rem] !text-white/40'>{generateData.experienceLevel}-level</Text>
@@ -85,25 +96,58 @@ const Box: FC<BoxProps> = ({
               <img src={chrome.runtime.getURL('assets/img/spot-icon-background.svg')} className='w-[24px]' />
             </div>
           </div>
-          <div className='flex justify-between items-start gap-x-[16px]'>
-            <div>
-              <Text type='title' color='white' className='!text-[1.8rem] mb-[16px] leading-[1.25]'>Technologies</Text>
-              <div className='flex gap-[0.8rem]'>
+          <div className='!grid grid-cols-3 gap-x-[32px]'>
+            <div className='col-span-2'>
+              <div className='flex flex-col gap-y-[4px]'>
+                <Text type='title' color='white' className='!text-[1.8rem] leading-[1.25]'>Technologies</Text>
+                <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.25]'>Job required technologies and libraries, included based on your skills.</Text>
+              </div>
+              <div className='flex gap-[8px] mt-[16px]'>
                 { generateData.technologies.map((item: TechnologyItem, index: number) => 
-                  <div key={index} className={`${item.included ? 'bg-creamy text-vermilion' : 'bg-white/20 text-white/70'} rounded-md font-poppins !text-[1.2rem] font-medium px-[8px] py-[4px]`}>
+                  <div key={index} className={`${item.included ? 'bg-creamy text-vermilion' : 'bg-white/20 text-white/70'} rounded-[6px] font-poppins !text-[1.2rem] font-medium px-[8px] py-[4px]`}>
                     {item.title}
                   </div>
                 ) }
               </div>
             </div>
             <div>
-              <Text type='title' color='white' className='!text-[1.8rem] mb-[16px] leading-[1.25]'>Salary range</Text>
+              <div className='flex justify-between gap-x-[16px]'>
+                <div className='flex flex-col gap-y-[4px]'>
+                  <Text type='title' color='white' className='!text-[1.8rem] leading-[1.25]'>Salary info</Text>
+                  <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.25]'>Suitable: {generateData.salaryForPosition.suitable} {generateData.salaryForPosition.currencyCode}</Text>
+                </div>
+                <InformationCircleIcon className='w-[20px] h-[20px] text-white/70' />
+              </div>
+              <div className='flex flex-col gap-y-[16px] mt-[16px]'>
+                <div className='flex items-center justify-between'>
+                  <div className={`bg-red-400 ${f < 1 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-orange-400 ${f < 2 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-amber-400 ${f < 3 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-yellow-400 ${f < 4 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-lime-400 ${f < 5 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-green-400 ${f < 6 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-emerald-400 ${f < 7 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-teal-400 ${f < 8 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-cyan-400 ${f < 9 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-sky-400 ${f < 10 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-blue-400 ${f < 11 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                </div>
+                <div className='flex justify-between'>
+                  <div className='flex flex-col justify-start gap-y-[4px] text-left'>
+                    <Text type='paragraph' color='white' className='!text-[1.2rem] !text-white/70'>min</Text>
+                    <Text type='label' color='white' className='!text-[1.2rem]'>{generateData.salaryForPosition.min} {generateData.salaryForPosition.currencyCode}</Text>
+                  </div>
+                  <div className='flex flex-col justify-end gap-y-[4px] text-right'>
+                    <Text type='paragraph' color='white' className='!text-[1.2rem] !text-white/70'>max</Text>
+                    <Text type='label' color='white' className='!text-[1.2rem]'>{generateData.salaryForPosition.max} {generateData.salaryForPosition.currencyCode}</Text>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>&nbsp;</div>
           </div>
           <div>
             <Text type='title' color='white' className='!text-[1.8rem] mb-[8px] leading-[1.25]'>Interview questions</Text>
-            <ul className='!list-decimal indent-[0.5rem] pl-[3rem]'>
+            <ul className='!list-decimal indent-[0.5rem] pl-[2rem]'>
               { generateData.interviewQuestions.map((item: string) => 
                 <li className='leading-loose'>
                   <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.5]'>{item}</Text>

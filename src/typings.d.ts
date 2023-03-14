@@ -1,4 +1,5 @@
-export type SalaryRangeForPosition = {
+export type SalaryForPosition = {
+  suitable: number;
   min: number;
   max: number;
   currencyCode: string;
@@ -14,5 +15,5 @@ export type GenerateData = {
   interviewQuestions: string[];
   positionTitle: string;
   experienceLevel: string;
-  salaryRangeForPosition: SalaryRangeForPosition;
+  salaryForPosition: SalaryForPosition;
 };

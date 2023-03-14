@@ -1,5 +1,5 @@
 import { getUserGeneratedByJobId, getUser, getUserData, insertGenerated, invokeGenerate, updateUserData } from '@/services/supabase';
-import { Request, RequestType, Response, ResponseCallback, sendRequest } from '@/types/RequestResponse';
+import { Request, RequestType, Response, ResponseCallback } from '@/types/RequestResponse';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { mutate } from 'swr';
 
@@ -110,12 +110,26 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
           // interviewQuestions: parsed.interviewQuestions,
           // positionTitle: parsed.positionTitle,
           // experienceLevel: parsed.experienceLevel,
-          // salaryRangeForPosition: parsed.salaryRangeForPosition,
-          technologies: [{ title: 'React', included: true }, { title: 'HTML', included: true }, { title: 'Redux', included: false }],
-          interviewQuestions: ['Question 1', 'Question 2', 'Question 3'],
+          // salaryForPosition: parsed.salaryForPosition,
+          technologies: [
+            { title: 'HTML', included: true },
+            { title: 'CSS', included: true },
+            { title: 'JavaScript', included: true },
+            { title: 'React', included: true },
+            { title: 'Redux', included: false },
+            { title: 'Mocha', included: false },
+            { title: 'Jest', included: true }
+          ],
+          interviewQuestions: [
+            'What is your experience with React.js?',
+            'How do you approach testing in React.js projects?',
+            'Can you walk us through a recent project you worked on using React.js?',
+            'What is your experience with Redux and Flux?',
+            'How do you optimize the performance of React.js applications?'
+          ],
           positionTitle: 'React Developer',
           experienceLevel: 'Mid',
-          salaryRangeForPosition: { min: 8000, max: 12000, currencyCode: 'RON' }
+          salaryForPosition: { suitable: 10000, min: 7000, max: 14000, currencyCode: 'RON' }
         };
 
         const insertGeneratedResponse = await insertGenerated(

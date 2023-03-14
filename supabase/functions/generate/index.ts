@@ -41,8 +41,9 @@ serve(async (req) => {
     \n\n
     - experienceLevel: String with the experience level for the position from this options: Intern, Junior, Mid, Senior, Lead.
     \n\n
-    - salaryRangeForPosition: Object with following properties:
+    - salaryForPosition: Object with following properties:
     \n
+    suitable: Number with the suitable salary for the position and experience level in country ${userCountry}.
     min: Number with minimum salary for the position and experience level in country ${userCountry}.
     max: Number with maximum salary for the position and experience level in country ${userCountry}.
     currencyCode: String with the currency code for the salary range values (e.g. USD, EUR, RON etc.).
@@ -58,7 +59,8 @@ serve(async (req) => {
       "interviewQuestions": ["What is your experience with React?"],
       "positionTitle": "React Developer",
       "experienceLevel": "Junior",
-      "salaryRangeForPosition": {
+      "salaryForPosition": {
+        "suitable": 10000,
         "min": 7000,
         "max": 14000,
         "currencyCode": "RON"
