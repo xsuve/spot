@@ -37,7 +37,7 @@ const Home: FC = () => {
   }
   
   return (
-    <Layout isHome>
+    <Layout type='home'>
 
       <div className='bg-aquamarine rounded-[50%] w-[700px] h-[510px] absolute -top-[300px] -left-[170px] px-[170px] pt-[315px] pb-[90px] -z-10 flex flex-col justify-between items-end'>
         <div className='flex justify-between items-center gap-x-4 w-full px-4'>
@@ -48,7 +48,7 @@ const Home: FC = () => {
                 <Cog6ToothIcon className='w-4 h-4 text-vermilion' />
               </div>
             </Link>
-            <ArrowRightOnRectangleIcon className='w-5 h-5 text-white opacity-60 cursor-pointer' onClick={handleLogOut} />
+            <ArrowRightOnRectangleIcon className='w-5 h-5 text-white opacity-70 cursor-pointer' onClick={handleLogOut} />
           </div>
         </div>
 
@@ -59,8 +59,8 @@ const Home: FC = () => {
           </div>
           <Link to='/profile'>
             <div className='flex justify-between items-center gap-x-2'>
-              <Text type='paragraph' color='white' className='!text-xs opacity-60'>Profile</Text>
-              <ChevronRightIcon className='w-4 h-4 text-white opacity-60' />
+              <Text type='paragraph' color='white' className='!text-xs opacity-70'>Profile</Text>
+              <ChevronRightIcon className='w-4 h-4 text-white opacity-70' />
             </div>
           </Link>
         </div>

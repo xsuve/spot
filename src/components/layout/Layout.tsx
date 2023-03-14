@@ -1,17 +1,24 @@
 import React, { FC, ReactNode } from 'react';
 
+type LayoutPropsType = 'login' | 'home' | 'app';
+const LayoutPropsTypeMap = {
+  'login': ['p-4', 'bg-creamy rounded-2xl flex flex-col items-start gap-y-8'],
+  'home': ['h-[500px] overflow-y-auto', 'pt-[135px] px-4 pb-4'],
+  'app': ['h-[500px] overflow-y-auto', '']
+};
+
 type LayoutProps = {
-  isHome?: boolean;
+  type: LayoutPropsType;
   children: ReactNode;
 };
 
 const Layout: FC<LayoutProps> = ({
-  isHome = false,
+  type,
   children
 }) => {
   return (
-    <div className={`bg-white ${isHome ? 'h-[500px] overflow-y-auto' : 'p-4'}`}>
-      <div className={`overflow-hidden z-20 relative p-4 ${isHome ? 'pt-[135px]' : 'bg-creamy rounded-2xl flex flex-col items-start gap-y-8'}`}>
+    <div className={`bg-white ${LayoutPropsTypeMap[type][0]}`}>
+      <div className={`overflow-hidden z-20 relative ${LayoutPropsTypeMap[type][1]}`}>
         {children}
       </div>
     </div>

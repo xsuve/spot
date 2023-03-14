@@ -47,7 +47,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <Layout type='login'>
       <Logo size='small' />
 
       <div className='flex flex-col gap-y-1.5'>

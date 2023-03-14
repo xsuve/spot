@@ -67,8 +67,8 @@ const Box: FC<BoxProps> = ({
   return (
     <div className={`${jobDescription ? 'bg-aquamarine' : 'bg-linkedin-dark'} p-[2.4rem] w-full rounded-[0.8rem] mb-[16px] ${className}`}>
       { jobDescription
-      ? <div className='!grid grid-cols-2 items-center'>
-          <div>
+      ? <div className='!grid grid-cols-5 items-center'>
+          <div className='col-span-3'>
             <img src={chrome.runtime.getURL('assets/img/spot-icon-background.svg')} className='w-[24px] mb-[16px]' />
             <Text type='title' color='white' className='!text-[2rem] mb-[8px] leading-[1.25]'>Better prepare for your next interview with Spot.</Text>
             <Text type='paragraph' color='white' className='!text-[1.4rem] mb-[32px] leading-[1.5]'>Targeted AI generated interview questions and job insights based on the job description.</Text>
@@ -81,15 +81,15 @@ const Box: FC<BoxProps> = ({
               disabled={loading}
             >Try Spot!</Button>
           </div>
-          <div className='flex justify-end'>
+          <div className='col-span-2 flex justify-end'>
             {/*  */}
           </div>
         </div>
       : <div className='flex flex-col gap-y-[32px]'>
           <div className='flex justify-between gap-x-[32px]'>
-            <div className='flex gap-x-[16px]'>
+            <div className='flex items-center gap-x-[16px]'>
               <Text type='title' color='white' className='!text-[2rem]'>{generateData.positionTitle}</Text>
-              <Text type='title' color='white' className='self-center !text-[1.8rem] !text-white/40'>{generateData.experienceLevel}-level</Text>
+              <Text type='title' color='white' className='!text-[1.8rem] !text-white/40'>{generateData.experienceLevel}-level</Text>
             </div>
             <div className='flex items-center gap-x-[8px]'>
               <Text type='paragraph' color='white' className='!text-[1.2rem] leading-[1.5] !text-white/70'>Powered by</Text>
@@ -104,7 +104,7 @@ const Box: FC<BoxProps> = ({
               </div>
               <div className='flex gap-[8px] mt-[16px]'>
                 { generateData.technologies.map((item: TechnologyItem, index: number) => 
-                  <div key={index} className={`${item.included ? 'bg-creamy text-vermilion' : 'bg-white/20 text-white/70'} rounded-[6px] font-poppins !text-[1.2rem] font-medium px-[8px] py-[4px]`}>
+                  <div key={index} className={`${item.included ? 'bg-creamy text-vermilion' : 'bg-white/20 text-white/70'} rounded-[6px] font-poppins !text-[1.2rem] font-medium px-[8px] py-[4px] flex items-center`}>
                     {item.title}
                   </div>
                 ) }
