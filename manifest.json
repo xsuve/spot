@@ -43,6 +43,7 @@
         "https://www.linkedin.com/*"
       ],
       "resources": [
+        "https://fonts.googleapis.com/*",
         "assets/*"
       ]
     }
