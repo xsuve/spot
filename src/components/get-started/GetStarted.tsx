@@ -12,20 +12,27 @@ const getStarted = [
   },
   {
     id: 2,
-    title: 'Import your CV',
+    title: 'Setup your profile',
     status: 'ongoing',
     icon: 'user',
-    url: '/cv'
+    link: {
+      url: '/profile',
+      blank: false
+    }
   },
   {
     id: 3,
-    title: 'Generate interview questions',
+    title: 'Generate your first response',
     status: 'todo',
-    icon: 'list-bullet'
+    icon: 'list-bullet',
+    link: {
+      url: 'https://linkedin.com/jobs',
+      blank: true
+    }
   },
   {
     id: 4,
-    title: 'Upgrade your Plan',
+    title: 'Upgrade your plan',
     status: 'todo',
     icon: 'chevron-double-up'
   }
@@ -60,8 +67,8 @@ const GetStarted: FC = () => {
               {handleIcon(item.icon)}
             </div>
           </div>
-          { item.url
-            ? <Link to={item.url}>
+          { item.link
+            ? <Link to={item.link.url} target={item.link.blank ? '_blank' : null}>
                 <Text type='paragraph' color={item.status === 'ongoing' ? 'vermilion' : 'gray'}>{item.title}</Text>
               </Link>
             : <Text type='paragraph' color={item.status === 'ongoing' ? 'vermilion' : 'gray'}>{item.title}</Text>
