@@ -75,7 +75,7 @@ const Home: FC = () => {
             <Text type='paragraph' color='gray'>Spots</Text>
           </div>
           <div className='flex flex-col'>
-            <Text type='subtitle' color='dark'>{userData.spots}</Text>
+            <Text type='subtitle' color='dark' className='!text-xl'>{userData.spots}</Text>
             <Text type='paragraph' color='gray' className='!text-xs'>0 used today</Text>
           </div>
         </div>
@@ -87,7 +87,7 @@ const Home: FC = () => {
             <Text type='paragraph' color='gray'>Generated</Text>
           </div>
           <div className='flex flex-col'>
-            <Text type='subtitle' color='dark'>{userData.generated.length || 0}</Text>
+            <Text type='subtitle' color='dark' className='!text-xl'>{userData.generated.length || 0}</Text>
             <Text type='paragraph' color='gray' className='!text-xs'>23 last week</Text>
           </div>
         </div>
