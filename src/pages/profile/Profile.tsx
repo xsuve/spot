@@ -1,10 +1,10 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
-import { Badge, Logo, Text } from '@/components/ui';
-import { ChevronLeftIcon, Cog6ToothIcon, PencilSquareIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { Badge, Text } from '@/components/ui';
+import {  PencilSquareIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useUser } from '@/hooks/useUser';
 import { useUserData } from '@/hooks/useUserData';
+import Navbar from '@/components/navbar/Navbar';
 
 const Profile: React.FC = () => {
   const user = useUser({ redirect: '/login' });
@@ -13,22 +13,7 @@ const Profile: React.FC = () => {
   return (
     <Layout type='app'>
 
-      <div className='bg-aquamarine flex justify-between items-center p-4 rounded-b-2xl'>
-        <div className='flex items-center gap-x-4'>
-          <Link to='/'>
-            <div className='flex justify-between items-center gap-x-2'>
-              <ChevronLeftIcon className='w-4 h-4 text-white opacity-70' />
-              <Text type='paragraph' color='white' className='!text-xs opacity-70'>Home</Text>
-            </div>
-          </Link>
-          <Logo size='small' color='background' />
-        </div>
-        <Link to='/settings'>
-          <div className='w-6 h-6 flex justify-center items-center bg-creamy rounded-full'>
-            <Cog6ToothIcon className='w-4 h-4 text-vermilion' />
-          </div>
-        </Link>
-      </div>
+      <Navbar />
 
       <div className='p-4 mt-4'>
         <Text type='title' color='dark'>Your profile</Text>
