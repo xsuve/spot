@@ -4,7 +4,8 @@ import Input from './input/Input';
 import Logo from './logo/Logo';
 import Select from './select/Select';
 import Switch from './switch/Switch';
-import Text from './text/Text';
+import Text, { TextPropsColor } from './text/Text';
+import Badge from './badge/Badge';
 
 export {
   Alert, AlertProps,
@@ -13,5 +14,6 @@ export {
   Logo,
   Select,
   Switch,
-  Text
+  Text, TextPropsColor,
+  Badge
 };

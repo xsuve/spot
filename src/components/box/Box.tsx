@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button, Text } from '@/components/ui';
+import { Badge, Button, Text } from '@/components/ui';
 import { sendRequest, RequestType } from '@/types/RequestResponse';
 import { SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
 import { jobIdParser } from '@/utils/jobIdParser';
@@ -102,11 +102,9 @@ const Box: FC<BoxProps> = ({
                 <Text type='title' color='white' className='!text-[1.8rem] leading-[1.25]'>Technologies</Text>
                 <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.25]'>Job required technologies and libraries, included based on your skills.</Text>
               </div>
-              <div className='flex gap-[8px] mt-[16px]'>
+              <div className='flex flex-wrap items-start gap-[12px] mt-[16px]'>
                 { generateData.technologies.map((item: TechnologyItem, index: number) => 
-                  <div key={index} className={`${item.included ? 'bg-creamy text-vermilion' : 'bg-white/20 text-white/70'} rounded-[6px] font-poppins !text-[1.2rem] font-medium px-[8px] py-[4px] flex items-center`}>
-                    {item.title}
-                  </div>
+                  <Badge key={index} text={item.title} color={item.included ? 'vermilion' : 'gray'} />
                 ) }
               </div>
             </div>

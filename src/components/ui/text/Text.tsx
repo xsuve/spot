@@ -8,7 +8,7 @@ const TextPropsTypeMap = {
   'paragraph': 'font-poppins text-sm font-light'
 };
 
-type TextPropsColor = 'dark' | 'gray' | 'white' | 'red' | 'green' | 'vermilion';
+export type TextPropsColor = 'dark' | 'gray' | 'white' | 'red' | 'green' | 'vermilion';
 const TextPropsColorMap = {
   'dark': 'text-slate-700',
   'gray': 'text-slate-400',
