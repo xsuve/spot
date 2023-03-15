@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
-import { Logo, Text } from '@/components/ui';
+import { Badge, Logo, Text } from '@/components/ui';
 import { ChevronLeftIcon, Cog6ToothIcon, PencilSquareIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { useUser } from '@/hooks/useUser';
@@ -31,29 +31,44 @@ const Profile: React.FC = () => {
       </div>
 
       <div className='p-4 mt-4'>
-        <div className='flex justify-between items-center'>
-          <Text type='title' color='dark'>Your profile</Text>
-          <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
-        </div>
+        <Text type='title' color='dark'>Your profile</Text>
         <div className='mt-8'>
           <div className='flex flex-col gap-y-2'>
-            <Text type='label' color='dark'>Experience</Text>
-            <Text type='paragraph' color='gray'>{user?.user_metadata.position}</Text>
+            <div className='flex justify-between items-center'>
+              <Text type='subtitle' color='dark'>Experience</Text>
+              <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
+            </div>
+            <Text type='paragraph' color='dark'>{user?.user_metadata.position}</Text>
+            <Text type='paragraph' color='gray'>3 years</Text>
           </div>
         </div>
         <div className='mt-8'>
           <div className='flex flex-col gap-y-2'>
-            <Text type='label' color='dark'>Technical skills</Text>
-            <div className='flex gap-2'>
-              { ['HTML', 'CSS', 'JavaScript', 'React'].map((item: string, index: number) => 
-                <div key={index} className={`bg-creamy text-vermilion rounded-md font-poppins text-xs font-medium px-2 py-1 flex items-center`}>
-                  {item}
-                </div>
-              ) }
-              <div className={`bg-creamy text-vermilion rounded-md font-poppins text-xs font-medium px-2 py-1 flex items-center cursor-pointer`}>
-                <PlusIcon className='w-4 h-4 text-vermilion' />
-              </div>
+            <div className='flex justify-between items-center'>
+              <Text type='subtitle' color='dark'>Technical skills</Text>
+              <PlusIcon className='w-4 h-4 text-vermilion cursor-pointer' />
             </div>
+            <div className='flex flex-wrap items-start gap-3'>
+              { [
+                { title: 'HTML', years: 5 },
+                { title: 'CSS', years: 5 },
+                { title: 'JavaScript', years: 4 },
+                { title: 'React', years: 2 },
+                { title: 'Redux', years: 1 }
+              ].map((item, index: number) => 
+                <Badge key={index} text={item.title} color='vermilion' chip={item.years} />
+              ) }
+            </div>
+          </div>
+        </div>
+        <div className='mt-8'>
+          <div className='flex flex-col gap-y-2'>
+            <div className='flex justify-between items-center'>
+              <Text type='subtitle' color='dark'>Education</Text>
+              <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
+            </div>
+            <Text type='paragraph' color='dark'>B.S. in Computer Science</Text>
+            <Text type='paragraph' color='gray'>4 years</Text>
           </div>
         </div>
       </div>
