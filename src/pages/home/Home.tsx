@@ -99,7 +99,12 @@ const Home: FC = () => {
       </div>
 
       <div className='flex flex-col gap-y-2 mt-8'>
-        <Text type='label' color='dark'>Recent Activity</Text>
+        <div className='flex justify-between items-center'>
+          <Text type='label' color='dark'>Recent Activity</Text>
+          <Link to='/generated'>
+            <Text type='paragraph' color='gray' className='!text-xs'>See all</Text>
+          </Link>
+        </div>
         <div className='flex flex-col gap-y-4'>
           { userData.generated.map((item, index) => (
             <Link to={`https://linkedin.com/jobs/view/${item.job_id}`} target='_blank' key={index}>

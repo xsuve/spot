@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Badge, Text } from '@/components/ui';
 import {  PencilSquareIcon, PlusIcon } from '@heroicons/react/24/outline';
@@ -21,10 +22,14 @@ const Profile: React.FC = () => {
           <div className='flex flex-col gap-y-2'>
             <div className='flex justify-between items-center'>
               <Text type='subtitle' color='dark'>Experience</Text>
-              <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
+              <Link to='/edit?section=experience'>
+                <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
+              </Link>
             </div>
-            <Text type='paragraph' color='dark'>{user?.user_metadata.position}</Text>
-            <Text type='paragraph' color='gray'>3 years</Text>
+            <div className='flex flex-col gap-y-1'>
+              <Text type='paragraph' color='dark'>{user?.user_metadata.position}</Text>
+              <Text type='paragraph' color='gray'>1-2 years of experience</Text>
+            </div>
           </div>
         </div>
         <div className='mt-8'>
@@ -52,8 +57,10 @@ const Profile: React.FC = () => {
               <Text type='subtitle' color='dark'>Education</Text>
               <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
             </div>
-            <Text type='paragraph' color='dark'>B.S. in Computer Science</Text>
-            <Text type='paragraph' color='gray'>4 years</Text>
+            <div className='flex flex-col gap-y-1'>
+              <Text type='paragraph' color='dark'>B.S. in Computer Science</Text>
+              <Text type='paragraph' color='gray'>4 years</Text>
+            </div>
           </div>
         </div>
       </div>
