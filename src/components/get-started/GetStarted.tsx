@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Text } from '@/components/ui';
-import { CheckIcon, ChevronDoubleUpIcon, ListBulletIcon, UserIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, ChevronDoubleUpIcon, SwatchIcon, UserIcon } from '@heroicons/react/24/outline';
 
 const getStarted = [
   {
@@ -22,9 +22,9 @@ const getStarted = [
   },
   {
     id: 3,
-    title: 'Generate your first response',
+    title: 'Generate your first query',
     status: 'todo',
-    icon: 'list-bullet',
+    icon: 'swatch',
     link: {
       url: 'https://linkedin.com/jobs',
       blank: true
@@ -45,8 +45,8 @@ const GetStarted: FC = () => {
         return <UserIcon />;
       case 'chevron-double-up':
         return <ChevronDoubleUpIcon />;
-      case 'list-bullet':
-        return <ListBulletIcon />;
+      case 'swatch':
+        return <SwatchIcon />;
       case 'check':
       default:
         return <CheckIcon />;

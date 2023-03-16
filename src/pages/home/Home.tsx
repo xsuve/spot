@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useUser } from '@/hooks/useUser';
 import Onboard from '@/pages/onboard/Onboard';
-import { Cog6ToothIcon,  ListBulletIcon, LinkIcon, SwatchIcon, ChevronRightIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import { Cog6ToothIcon,  ListBulletIcon, SparklesIcon, ChevronRightIcon, ArrowRightOnRectangleIcon, SwatchIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserData } from '@/hooks/useUserData';
 import { Logo, Text } from '@/components/ui';
@@ -70,7 +70,7 @@ const Home: FC = () => {
         <div className='flex flex-col w-full justify-between gap-y-4 bg-creamy rounded-2xl p-4'>
           <div className='flex items-center gap-x-2'>
             <div className='w-6 h-6 rounded-full bg-white flex justify-center items-center'>
-              <SwatchIcon className='w-4 h-4 text-vermilion' />
+              <SparklesIcon className='w-4 h-4 text-vermilion' />
             </div>
             <Text type='paragraph' color='gray'>Spots</Text>
           </div>
@@ -82,7 +82,7 @@ const Home: FC = () => {
         <div className='flex flex-col w-full justify-between gap-y-4 bg-creamy rounded-2xl p-4'>
           <div className='flex items-center gap-x-2'>
             <div className='w-6 h-6 rounded-full bg-white flex justify-center items-center'>
-              <LinkIcon className='w-4 h-4 text-vermilion' />
+              <SwatchIcon className='w-4 h-4 text-vermilion' />
             </div>
             <Text type='paragraph' color='gray'>Queries</Text>
           </div>
