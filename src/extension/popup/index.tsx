@@ -12,7 +12,7 @@ import '@/styles.css';
 
 const Popup: FC = () => {
   return (
-    <div className='w-[360px]'>
+    <div className='w-[360px] h-[500px] overflow-y-auto bg-white'>
       
       <MemoryRouter>
         <Routes>

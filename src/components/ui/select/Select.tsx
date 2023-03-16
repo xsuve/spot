@@ -55,6 +55,7 @@ const Select: FC<SelectProps> = ({
             primary: '#CBD5E1'
           }
         })}
+        maxMenuHeight={150}
         classNames={{
           control: () => `!rounded !h-11 group !border !border-slate-200 !hover:border-slate-300 !shadow-none`,
           valueContainer: () => `!px-4`,
