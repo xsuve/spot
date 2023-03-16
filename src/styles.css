@@ -48,7 +48,7 @@
   @apply text-white;
 }
 .get-started-item.status-ongoing .get-started-item-icon {
-  @apply bg-vermilion/20 border-white;
+  @apply bg-vermilion/10 border-white;
 }
 .get-started-item.status-ongoing .get-started-item-icon svg {
   @apply text-vermilion;

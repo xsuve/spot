@@ -27,8 +27,13 @@ const Profile: React.FC = () => {
               </Link>
             </div>
             <div className='flex flex-col gap-y-1'>
-              <Text type='paragraph' color='dark'>{user?.user_metadata.position}</Text>
-              <Text type='paragraph' color='gray'>1-2 years of experience</Text>
+              <Text type='paragraph' color='dark'>{userData.position}</Text>
+              <Text type='paragraph' color='gray'>
+                { userData.yearsOfExperience === '0'
+                  ? 'No experience'
+                  : `${userData.yearsOfExperience} years of experience`
+                }
+              </Text>
             </div>
           </div>
         </div>
