@@ -49,7 +49,12 @@ const Login: React.FC = () => {
 
   return (
     <Layout type='login'>
-      <Logo size='small' />
+      <div className='w-full flex justify-between items-center'>
+        <Logo size='small' />
+        <Link to='/signup'>
+          <Text type='label' color='dark'>Sign up</Text>
+        </Link>
+      </div>
 
       <div className='flex flex-col gap-y-1.5'>
         <Text type='title' color='dark'>Log into Spot</Text>
@@ -102,12 +107,6 @@ const Login: React.FC = () => {
         </div>
         <div className='w-full'>
           <Button type='submit' size='normal' color='vermilion' className='w-full' loading={loading} disabled={!isValid || loading}>Continue</Button>
-          <div className='mt-6 flex flex-col gap-y-1.5 items-start'>
-            <Text type='paragraph' color='gray'>Don't have an account? </Text>
-            <Link to='/signup'>
-              <Text type='label' color='dark'>Sign up</Text>
-            </Link>
-          </div>
         </div>
       </form>
       
