@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
           <div className='flex flex-col gap-y-2'>
             <div className='flex justify-between items-center'>
               <Text type='subtitle' color='dark'>Experience</Text>
-              <Link to='/edit?section=experience'>
+              <Link to='/edit-experience'>
                 <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
               </Link>
             </div>

@@ -1,5 +1,5 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Alert, AlertProps, Button, Input, Select, Text } from '@/components/ui';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
@@ -10,11 +10,7 @@ type ExperienceData = {
   yearsOfExperience: string;
 };
 
-const Edit: React.FC = () => {
-  const params = useParams();
-  console.log(params);
-
-
+const EditExperience: React.FC = () => {
   const navigate = useNavigate();
   
   const [loading, setLoading] = useState<boolean>(false);
@@ -108,4 +104,4 @@ const Edit: React.FC = () => {
   );
 };
 
-export default Edit;
+export default EditExperience;
