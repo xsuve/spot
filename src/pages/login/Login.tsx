@@ -3,10 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useUser } from '@/hooks/useUser';
 import { mutate } from 'swr';
-import { logIn, LoginData } from '@/services/supabase';
+import { logIn } from '@/services/supabase';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { Text, Button, Input, Logo, Alert, AlertProps } from '@/components/ui';
 import Layout from '@/components/layout/Layout';
+
+type LoginFormData = {
+  email: string;
+  password: string;
+};
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -21,13 +26,16 @@ const Login: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors, isValid }
-  } = useForm<LoginData>({ mode: 'onChange' });
+  } = useForm<LoginFormData>({ mode: 'onChange' });
 
-  const submitLogin = async (logInData: LoginData, e: BaseSyntheticEvent | undefined) => {
+  const submitLogin = async (logInFormData: LoginFormData, e: BaseSyntheticEvent | undefined) => {
     e?.preventDefault();
 
     setLoading(true);
-    const { data, error } = await logIn(logInData);
+    const { data, error } = await logIn({
+      email: logInFormData.email,
+      password: logInFormData.password
+    });
 
     if (error) {
       setLoading(false);

@@ -1,13 +1,14 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
-import { Alert, AlertProps, Button, Input, Select, Text } from '@/components/ui';
+import { Alert, AlertProps, Button, Select, SelectPropsOption, Text } from '@/components/ui';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useForm } from 'react-hook-form';
+import { jobPositions, yearsOfExperience } from '@/utils/selectOptions';
 
-type ExperienceData = {
-  position: string;
-  yearsOfExperience: string;
+type ExperienceFormData = {
+  position: SelectPropsOption;
+  yearsOfExperience: SelectPropsOption;
 };
 
 const EditExperience: React.FC = () => {
@@ -22,11 +23,11 @@ const EditExperience: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors, isValid }
-  } = useForm<ExperienceData>({ mode: 'onChange' });
+  } = useForm<ExperienceFormData>({ mode: 'onChange' });
 
-  const submitUpdateExperience = async (experienceData: ExperienceData, e: BaseSyntheticEvent | undefined) => {
+  const submitUpdateExperience = async (experienceFormData: ExperienceFormData, e: BaseSyntheticEvent | undefined) => {
     e?.preventDefault();
-    console.log(experienceData);
+    console.log(experienceFormData);
     
 
     setLoading(true);
@@ -61,16 +62,16 @@ const EditExperience: React.FC = () => {
 
       <form className='w-full flex flex-col gap-y-6' onSubmit={handleSubmit(submitUpdateExperience)} autoComplete='off' noValidate>
         <div className='w-full flex flex-col gap-y-6'>
-          <Input
-            type='text'
+          <Select
             name='position'
-            placeholder='Your position (eg. React Developer)'
+            placeholder='Your position'
             label='Position'
             errors={errors}
-            register={register}
+            control={control}
             validation={{
-              required: 'This field is required.'
+              required: 'This field is required.',
             }}
+            options={jobPositions}
             required
           />
           <Select
@@ -82,13 +83,7 @@ const EditExperience: React.FC = () => {
             validation={{
               required: 'This field is required.',
             }}
-            options={[
-              { label: 'No experience', value: '0' },
-              { label: '0-2 years', value: '0-2' },
-              { label: '2-5 years', value: '2-5' },
-              { label: '5-10 years', value: '5-10' },
-              { label: '10+ years', value: '10+' }
-            ]}
+            options={yearsOfExperience}
             required
           />
           <>

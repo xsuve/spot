@@ -2,10 +2,16 @@ import React, { BaseSyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useUser } from '@/hooks/useUser';
-import { countryList } from '@/utils/countryList';
-import { signUp, SignupData } from '@/services/supabase';
-import { Text, Button, Input, Logo, Select, Alert, AlertProps } from '@/components/ui';
+import { countryList } from '@/utils/selectOptions';
+import { signUp } from '@/services/supabase';
+import { Text, Button, Input, Logo, Select, SelectPropsOption, Alert, AlertProps } from '@/components/ui';
 import Layout from '@/components/layout/Layout';
+
+type SignUpFormData = {
+  email: string;
+  password: string;
+  country: SelectPropsOption;
+};
 
 const Signup: React.FC = () => {
   const user = useUser({ redirect: '/', foundRedirect: true });
@@ -19,13 +25,17 @@ const Signup: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors, isValid }
-  } = useForm<SignupData>({ mode: 'onChange' });
+  } = useForm<SignUpFormData>({ mode: 'onChange' });
 
-  const submitSignup = async (signupData: SignupData, e: BaseSyntheticEvent | undefined) => {
+  const submitSignup = async (signUpFormData: SignUpFormData, e: BaseSyntheticEvent | undefined) => {
     e?.preventDefault();
 
     setLoading(true);
-    const { error } = await signUp(signupData);
+    const { error } = await signUp({
+      email: signUpFormData.email,
+      password: signUpFormData.password,
+      country: signUpFormData.country.value
+    });
 
     if (error) {
       setLoading(false);

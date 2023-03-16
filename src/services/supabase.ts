@@ -1,4 +1,3 @@
-import { SelectPropsOption } from '@/components/ui/select/Select';
 import { createClient } from '@supabase/supabase-js';
 
 
@@ -13,21 +12,20 @@ const supabase = createClient(
 );
 
 
-export type SignupData = {
+export type SignUpData = {
   email: string;
   password: string;
-  country: SelectPropsOption;
+  country: string;
 };
 
-export const signUp = async (signupData: SignupData) => {
+export const signUp = async (signUpData: SignUpData) => {
   const { data, error } = await supabase.auth.signUp({
-    email: signupData.email,
-    password: signupData.password,
+    email: signUpData.email,
+    password: signUpData.password,
     options: {
       data: {
         fullName: null,
-        country: signupData.country.value,
-        position: null
+        country: signUpData.country
       }
     }
   });
@@ -39,22 +37,30 @@ export const signUp = async (signupData: SignupData) => {
 export type OnboardData = {
   fullName: string;
   position: string;
+  yearsOfExperience: string;
 };
 
-export const onboard = async (onboardData: OnboardData) => {
-  const { data, error } = await supabase.auth.updateUser({
+export const onboard = async (onboardData: OnboardData): Promise<any> => {
+  const response = await supabase.auth.updateUser({
     data: {
-      fullName: onboardData.fullName,
-      position: onboardData.position
+      fullName: onboardData.fullName
     }
   });
 
-  await supabase
+  if (response.error) {
+    return { data: null, error: response.error };
+  }
+
+  const { data, error } = await supabase
     .from('user_data')
     .insert({
-      user_id: data.user.id,
+      user_id: response.data.user.id,
       data: {
-        spots: 5
+        spots: 5,
+        position: onboardData.position,
+        yearsOfExperience: onboardData.yearsOfExperience,
+        skills: [],
+        education: null
       }
     });
 

@@ -2,9 +2,16 @@ import React, { BaseSyntheticEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { mutate } from 'swr';
-import { onboard, OnboardData } from '@/services/supabase';
-import { Text, Button, Input, Alert, AlertProps } from '@/components/ui';
+import { onboard } from '@/services/supabase';
+import { Text, Button, Input, Select, SelectPropsOption, Alert, AlertProps } from '@/components/ui';
 import Layout from '@/components/layout/Layout';
+import { jobPositions, yearsOfExperience } from '@/utils/selectOptions';
+
+type OnboardFormData = {
+  fullName: string;
+  position: SelectPropsOption;
+  yearsOfExperience: SelectPropsOption;
+};
 
 const Onboard: React.FC = () => {
   const navigate = useNavigate();
@@ -14,16 +21,21 @@ const Onboard: React.FC = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     formState: { errors, isValid }
-  } = useForm<OnboardData>({ mode: 'onChange' });
+  } = useForm<OnboardFormData>({ mode: 'onChange' });
 
-  const submitOnboard = async (onboardData: OnboardData, e: BaseSyntheticEvent | undefined) => {
+  const submitOnboard = async (onboardFormData: OnboardFormData, e: BaseSyntheticEvent | undefined) => {
     e?.preventDefault();
 
     setLoading(true);
-    const { error } = await onboard(onboardData);
+    const { error } = await onboard({
+      fullName: onboardFormData.fullName,
+      position: onboardFormData.position.value,
+      yearsOfExperience: onboardFormData.yearsOfExperience.value
+    });
 
     if (error) {
       setLoading(false);
@@ -63,16 +75,28 @@ const Onboard: React.FC = () => {
             }}
             required
           />
-          <Input
-            type='text'
+          <Select
             name='position'
-            placeholder='Your position (eg. React Developer)'
+            placeholder='Your position'
             label='Position'
             errors={errors}
-            register={register}
+            control={control}
             validation={{
-              required: 'This field is required.'
+              required: 'This field is required.',
             }}
+            options={jobPositions}
+            required
+          />
+          <Select
+            name='yearsOfExperience'
+            placeholder='Years of experience'
+            label='Years of experience'
+            errors={errors}
+            control={control}
+            validation={{
+              required: 'This field is required.',
+            }}
+            options={yearsOfExperience}
             required
           />
           <>

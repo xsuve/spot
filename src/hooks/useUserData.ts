@@ -4,6 +4,10 @@ import { QueryData } from '@/typings';
 
 type UserData = {
   spots: number;
+  position: string;
+  yearsOfExperience: string;
+  skills: string[];
+  education: object;
   queries: {
     job_id: string;
     created_at: string;
