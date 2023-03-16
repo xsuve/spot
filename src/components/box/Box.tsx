@@ -3,18 +3,18 @@ import { Badge, Button, Text } from '@/components/ui';
 import { sendRequest, RequestType } from '@/types/RequestResponse';
 import { SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
 import { jobIdParser } from '@/utils/jobIdParser';
-import { GenerateData, TechnologyItem } from '@/typings';
+import { QueryData, TechnologyItem } from '@/typings';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 type BoxProps = {
   jobDescription?: string;
-  generateData?: GenerateData;
+  queryData?: QueryData;
   className?: string;
 };
 
 const Box: FC<BoxProps> = ({
   jobDescription = null,
-  generateData = null,
+  queryData = null,
   className = ''
 }) => {
   const [loading, setLoading] = useState(false);
@@ -56,11 +56,11 @@ const Box: FC<BoxProps> = ({
 
   const [f, setF] = useState(0);
   useEffect(() => {
-    if (!generateData?.salaryForPosition) return;
+    if (!queryData?.salaryForPosition) return;
 
-    const k: number = generateData.salaryForPosition.max - generateData.salaryForPosition.min;
+    const k: number = queryData.salaryForPosition.max - queryData.salaryForPosition.min;
     const p: number = Math.round(k / 11);
-    const f: number = Math.round((generateData.salaryForPosition.suitable - generateData.salaryForPosition.min) / p) + 1;
+    const f: number = Math.round((queryData.salaryForPosition.suitable - queryData.salaryForPosition.min) / p) + 1;
     setF(f);
   }, []);
 
@@ -88,8 +88,8 @@ const Box: FC<BoxProps> = ({
       : <div className='flex flex-col gap-y-[32px]'>
           <div className='flex justify-between gap-x-[32px]'>
             <div className='flex items-center gap-x-[16px]'>
-              <Text type='title' color='white' className='!text-[2rem]'>{generateData.positionTitle}</Text>
-              <Text type='title' color='white' className='!text-[1.8rem] !text-white/40'>{generateData.experienceLevel}-level</Text>
+              <Text type='title' color='white' className='!text-[2rem]'>{queryData.positionTitle}</Text>
+              <Text type='title' color='white' className='!text-[1.8rem] !text-white/40'>{queryData.experienceLevel}-level</Text>
             </div>
             <div className='flex items-center gap-x-[8px]'>
               <Text type='paragraph' color='white' className='!text-[1.2rem] leading-[1.5] !text-white/70'>Powered by</Text>
@@ -103,7 +103,7 @@ const Box: FC<BoxProps> = ({
                 <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.25]'>Job required technologies and libraries, included based on your skills.</Text>
               </div>
               <div className='flex flex-wrap items-start gap-[12px] mt-[16px]'>
-                { generateData.technologies.map((item: TechnologyItem, index: number) => 
+                { queryData.technologies.map((item: TechnologyItem, index: number) => 
                   <Badge key={index} text={item.title} color={item.included ? 'vermilion' : 'gray'} />
                 ) }
               </div>
@@ -112,7 +112,7 @@ const Box: FC<BoxProps> = ({
               <div className='flex justify-between gap-x-[16px]'>
                 <div className='flex flex-col gap-y-[4px]'>
                   <Text type='title' color='white' className='!text-[1.8rem] leading-[1.25]'>Salary info</Text>
-                  <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.25]'>Suitable: {generateData.salaryForPosition.suitable} {generateData.salaryForPosition.currencyCode}</Text>
+                  <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.25]'>Suitable: {queryData.salaryForPosition.suitable} {queryData.salaryForPosition.currencyCode}</Text>
                 </div>
                 <InformationCircleIcon className='w-[20px] h-[20px] text-white/70' />
               </div>
@@ -133,11 +133,11 @@ const Box: FC<BoxProps> = ({
                 <div className='flex justify-between'>
                   <div className='flex flex-col justify-start gap-y-[4px] text-left'>
                     <Text type='paragraph' color='white' className='!text-[1.2rem] !text-white/70'>min</Text>
-                    <Text type='label' color='white' className='!text-[1.2rem]'>{generateData.salaryForPosition.min} {generateData.salaryForPosition.currencyCode}</Text>
+                    <Text type='label' color='white' className='!text-[1.2rem]'>{queryData.salaryForPosition.min} {queryData.salaryForPosition.currencyCode}</Text>
                   </div>
                   <div className='flex flex-col justify-end gap-y-[4px] text-right'>
                     <Text type='paragraph' color='white' className='!text-[1.2rem] !text-white/70'>max</Text>
-                    <Text type='label' color='white' className='!text-[1.2rem]'>{generateData.salaryForPosition.max} {generateData.salaryForPosition.currencyCode}</Text>
+                    <Text type='label' color='white' className='!text-[1.2rem]'>{queryData.salaryForPosition.max} {queryData.salaryForPosition.currencyCode}</Text>
                   </div>
                 </div>
               </div>
@@ -146,7 +146,7 @@ const Box: FC<BoxProps> = ({
           <div>
             <Text type='title' color='white' className='!text-[1.8rem] mb-[8px] leading-[1.25]'>Interview questions</Text>
             <ul className='!list-decimal indent-[0.5rem] pl-[2rem]'>
-              { generateData.interviewQuestions.map((item: string) => 
+              { queryData.interviewQuestions.map((item: string) => 
                 <li className='leading-loose'>
                   <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.5]'>{item}</Text>
                 </li>

@@ -1,13 +1,13 @@
 import useSWR from 'swr';
-import { getUserData, getUserGenerated } from '@/services/supabase';
-import { GenerateData } from '@/typings';
+import { getUserData, getUserQueries } from '@/services/supabase';
+import { QueryData } from '@/typings';
 
 type UserData = {
   spots: number;
-  generated: {
+  queries: {
     job_id: string;
     created_at: string;
-    data: GenerateData;
+    data: QueryData;
   }[];
 };
 
@@ -18,12 +18,12 @@ export const useUserData = (userId: string): UserData | undefined => {
       return;
     }
 
-    const getUserGeneratedResponse = await getUserGenerated(userId);
-    if (getUserGeneratedResponse?.error) {
+    const getUserQueriesResponse = await getUserQueries(userId);
+    if (getUserQueriesResponse?.error) {
       return;
     }
 
-    return { ...getUserDataResponse.data.data, generated: [...getUserGeneratedResponse.data] };
+    return { ...getUserDataResponse.data.data, queries: [...getUserQueriesResponse.data] };
   };
 
   const { data } = useSWR(userId ? ['/userData', userId] : null, fetchUserData);

@@ -1,4 +1,4 @@
-import { getUserGeneratedByJobId, getUser, getUserData, insertGenerated, invokeGenerate, updateUserData } from '@/services/supabase';
+import { getUserQueriesByJobId, getUser, getUserData, insertQuery, invokeGenerate, updateUserData } from '@/services/supabase';
 import { Request, RequestType, Response, ResponseCallback } from '@/types/RequestResponse';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { mutate } from 'swr';
@@ -42,7 +42,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         return;
       }
 
-      const checkExists = await getUserGeneratedByJobId(getUser_User?.data.user.id, request.data.jobId);
+      const checkExists = await getUserQueriesByJobId(getUser_User?.data.user.id, request.data.jobId);
       if (checkExists?.error) {
         sendResponse({ data: null, error: checkExists.error?.message });
         return;
@@ -58,7 +58,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         return;
       }
 
-      const generate_checkExists = await getUserGeneratedByJobId(generate_User?.data.user.id, request.data.jobId);
+      const generate_checkExists = await getUserQueriesByJobId(generate_User?.data.user.id, request.data.jobId);
       if (generate_checkExists?.data?.job_id) {
         sendResponse({ data: null, error: 'Already generated a response for this job.' });
         return;
@@ -105,7 +105,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         //   return { title: item, included: userTechnologies.includes(item) };
         // });
 
-        const generatedData = {
+        const queryData = {
           // technologies,
           // interviewQuestions: parsed.interviewQuestions,
           // positionTitle: parsed.positionTitle,
@@ -132,19 +132,19 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
           salaryForPosition: { suitable: 10000, min: 7000, max: 14000, currencyCode: 'RON' }
         };
 
-        const insertGeneratedResponse = await insertGenerated(
+        const insertQueryResponse = await insertQuery(
           generate_User?.data.user.id,
           request.data.jobId,
-          generatedData
+          queryData
           // TODO: Add usage from invokeGenerateResponse.
         );
-        if (insertGeneratedResponse?.error) {
-          sendResponse({ data: null, error: insertGeneratedResponse?.error?.message });
+        if (insertQueryResponse?.error) {
+          sendResponse({ data: null, error: insertQueryResponse?.error?.message });
           return;
         }
 
         sendResponse({
-          data: generatedData,
+          data: queryData,
           error: null
         });
       } catch (error) {

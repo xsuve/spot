@@ -98,14 +98,14 @@ export const getUser = async (jwt: string) => {
 };
 
 
-export type GenerateData = {
+export type QueryRequestData = {
   userCountry: string;
   jobDescription: string;
 };
 
-export const invokeGenerate = async (generateData: GenerateData) => {
+export const invokeGenerate = async (queryRequestData: QueryRequestData) => {
   const { data, error } = await supabase.functions.invoke('generate', {
-    body: generateData
+    body: queryRequestData
   });
   
   return { data, error };
@@ -135,30 +135,30 @@ export const updateUserData = async (userId: string, userData: any) => {
 };
 
 
-export const insertGenerated = async (userId: string, jobId: string, generatedData: any) => {
+export const insertQuery = async (userId: string, jobId: string, queryData: any) => {
   const { data, error } = await supabase
-    .from('user_generated')
+    .from('user_queries')
     .insert({
       user_id: userId,
       job_id: jobId,
-      data: generatedData
+      data: queryData
     });
 
   return { data, error };
 };
 
-export  const getUserGenerated = async (userId: string) => {
+export  const getUserQueries = async (userId: string) => {
   const { data, error } = await supabase
-    .from('user_generated')
+    .from('user_queries')
     .select('job_id, data, created_at')
     .eq('user_id', userId);
   
   return { data, error };
 };
 
-export  const getUserGeneratedByJobId = async (userId: string, jobId: string) => {
+export  const getUserQueriesByJobId = async (userId: string, jobId: string) => {
   const { data, error } = await supabase
-    .from('user_generated')
+    .from('user_queries')
     .select('job_id, data')
     .eq('user_id', userId)
     .eq('job_id', jobId)

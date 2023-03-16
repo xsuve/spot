@@ -84,10 +84,10 @@ const Home: FC = () => {
             <div className='w-6 h-6 rounded-full bg-white flex justify-center items-center'>
               <LinkIcon className='w-4 h-4 text-vermilion' />
             </div>
-            <Text type='paragraph' color='gray'>Generated</Text>
+            <Text type='paragraph' color='gray'>Queries</Text>
           </div>
           <div className='flex flex-col'>
-            <Text type='subtitle' color='dark' className='!text-xl'>{userData.generated.length || 0}</Text>
+            <Text type='subtitle' color='dark' className='!text-xl'>{userData.queries.length || 0}</Text>
             <Text type='paragraph' color='gray' className='!text-xs'>23 last week</Text>
           </div>
         </div>
@@ -101,12 +101,12 @@ const Home: FC = () => {
       <div className='flex flex-col gap-y-2 mt-8'>
         <div className='flex justify-between items-center'>
           <Text type='label' color='dark'>Recent Activity</Text>
-          <Link to='/generated'>
+          <Link to='/queries'>
             <Text type='paragraph' color='gray' className='!text-xs'>See all</Text>
           </Link>
         </div>
         <div className='flex flex-col gap-y-4'>
-          { userData.generated.map((item, index) => (
+          { userData.queries.map((item, index) => (
             <Link to={`https://linkedin.com/jobs/view/${item.job_id}`} target='_blank' key={index}>
               <div className='flex items-center gap-x-4 p-4 bg-creamy rounded-2xl'>
                 <div className='w-9 h-9 flex justify-center items-center shrink-0 rounded-full bg-white'>

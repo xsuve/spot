@@ -10,7 +10,7 @@ export type TechnologyItem = {
   included: boolean;
 };
 
-export type GenerateData = {
+export type QueryData = {
   technologies: TechnologyItem[];
   interviewQuestions: string[];
   positionTitle: string;
