@@ -56,6 +56,7 @@ const Select: FC<SelectProps> = ({
           }
         })}
         maxMenuHeight={126}
+        menuPlacement='auto'
         classNames={{
           control: () => `!rounded !h-11 group !border !border-slate-200 !hover:border-slate-300 !shadow-none`,
           valueContainer: () => `!px-4`,
