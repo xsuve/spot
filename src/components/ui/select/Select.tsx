@@ -55,7 +55,7 @@ const Select: FC<SelectProps> = ({
             primary: '#CBD5E1'
           }
         })}
-        maxMenuHeight={150}
+        maxMenuHeight={126}
         classNames={{
           control: () => `!rounded !h-11 group !border !border-slate-200 !hover:border-slate-300 !shadow-none`,
           valueContainer: () => `!px-4`,
@@ -64,7 +64,7 @@ const Select: FC<SelectProps> = ({
           singleValue: () => `!text-sm !mx-0 font-poppins font-light !text-slate-500`,
           indicatorSeparator: () => `!bg-slate-200 !group-hover:bg-slate-300`,
           indicatorsContainer: () => `!text-slate-200 !group-hover:text-slate-300`,
-          menu: () => `!rounded !shadow-none !border !border-slate-200`,
+          menu: () => `!rounded !shadow-none !border !border-slate-200 !overflow-hidden`,
           menuList: () => `!py-0`,
           option: () => `!text-sm font-poppins font-light !text-slate-600`,
           noOptionsMessage: () => `!text-[11px] font-poppins font-light !text-slate-400 !text-left`
