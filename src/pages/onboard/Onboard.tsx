@@ -20,7 +20,6 @@ const Onboard: React.FC = () => {
   const [alert, setAlert] = useState<AlertProps>();
 
   const {
-    register,
     control,
     handleSubmit,
     reset,
@@ -69,7 +68,7 @@ const Onboard: React.FC = () => {
             placeholder='Your full name'
             label='Full name'
             errors={errors}
-            register={register}
+            control={control}
             validation={{
               required: 'This field is required.'
             }}

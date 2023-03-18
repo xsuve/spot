@@ -20,7 +20,7 @@ const Login: React.FC = () => {
   const [alert, setAlert] = useState<AlertProps>();
 
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     formState: { errors, isValid }
@@ -81,7 +81,7 @@ const Login: React.FC = () => {
             placeholder='Your email address'
             label='Email address'
             errors={errors}
-            register={register}
+            control={control}
             validation={{
               required: 'This field is required.',
               pattern: {
@@ -97,7 +97,7 @@ const Login: React.FC = () => {
             placeholder='Your password'
             label='Password'
             errors={errors}
-            register={register}
+            control={control}
             validation={{
               required: 'This field is required.',
               minLength: {
