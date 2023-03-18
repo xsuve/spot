@@ -4,17 +4,17 @@ import Layout from '@/components/layout/Layout';
 import { Alert, AlertProps, Button, Select, SelectPropsOption, Text } from '@/components/ui';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useForm } from 'react-hook-form';
-import { jobPositions, yearsOfExperience } from '@/utils/selectOptions';
+import { educationTitles, educationYears } from '@/utils/selectOptions';
 import { updateUserData } from '@/services/supabase';
 import { useUser } from '@/hooks/useUser';
 import { mutate } from 'swr';
 
-type ExperienceFormData = {
-  position: SelectPropsOption;
-  yearsOfExperience: SelectPropsOption;
+type EducationFormData = {
+  title: SelectPropsOption;
+  years: SelectPropsOption;
 };
 
-const EditExperience: React.FC = () => {
+const EditEducation: React.FC = () => {
   const navigate = useNavigate();
   
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,19 +25,19 @@ const EditExperience: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors, isValid }
-  } = useForm<ExperienceFormData>({ mode: 'onChange' });
+  } = useForm<EducationFormData>({ mode: 'onChange' });
 
   const { user, data } = useUser();
 
-  const submitUpdateExperience = async (experienceFormData: ExperienceFormData, e: BaseSyntheticEvent | undefined) => {
+  const submitUpdateEducation = async (educationFormData: EducationFormData, e: BaseSyntheticEvent | undefined) => {
     e?.preventDefault();
 
     setLoading(true);
     const { error } = await updateUserData(user.id, {
       ...data,
-      experience: {
-        position: experienceFormData.position.value,
-        yearsOfExperience: experienceFormData.yearsOfExperience.value
+      education: {
+        title: educationFormData.title.value,
+        years: educationFormData.years.value
       }
     });
 
@@ -68,36 +68,36 @@ const EditExperience: React.FC = () => {
       </Link>
 
       <div className='flex flex-col gap-y-1.5'>
-        <Text type='title' color='dark'>Update experience</Text>
-        <Text type='paragraph' color='gray'>Set your job experience with the main job title and years of experience.</Text>
+        <Text type='title' color='dark'>Update education</Text>
+        <Text type='paragraph' color='gray'>Set your latest education or graduation degree with the title and years.</Text>
       </div>
 
-      <form className='w-full flex flex-col gap-y-6' onSubmit={handleSubmit(submitUpdateExperience)} autoComplete='off' noValidate>
+      <form className='w-full flex flex-col gap-y-6' onSubmit={handleSubmit(submitUpdateEducation)} autoComplete='off' noValidate>
         <div className='w-full flex flex-col gap-y-6'>
           <Select
-            name='position'
-            placeholder='Job position'
-            label='Position'
-            selected={data.experience ? jobPositions.find(item => item.value === data.experience.position) : null}
+            name='title'
+            placeholder='Education title'
+            label='Title'
+            selected={data.education ? educationTitles.find(item => item.value === data.education.title) : null}
             errors={errors}
             control={control}
             validation={{
               required: 'This field is required.',
             }}
-            options={jobPositions}
+            options={educationTitles}
             required
           />
           <Select
-            name='yearsOfExperience'
-            placeholder='Years of experience'
-            label='Years of experience'
-            selected={data.experience ? yearsOfExperience.find(item => item.value === data.experience.yearsOfExperience) : null}
+            name='years'
+            placeholder='Education years'
+            label='Years'
+            selected={data.education ? educationYears.find(item => item.value === data.education.years) : null}
             errors={errors}
             control={control}
             validation={{
               required: 'This field is required.',
             }}
-            options={yearsOfExperience}
+            options={educationYears}
             required
           />
           <>
@@ -113,4 +113,4 @@ const EditExperience: React.FC = () => {
   );
 };
 
-export default EditExperience;
+export default EditEducation;

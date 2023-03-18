@@ -14,10 +14,15 @@ type UserDataEducation = {
   years: string;
 };
 
+type UserDataSkill = {
+  title: string;
+  yearsOfExperience: number;
+};
+
 export type UserData = {
   spots: number;
   experience: UserDataExperience;
-  skills: string[];
+  skills: UserDataSkill[];
   education: UserDataEducation;
 };
 

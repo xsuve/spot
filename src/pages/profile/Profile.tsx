@@ -25,13 +25,18 @@ const Profile: React.FC = () => {
               </Link>
             </div>
             <div className='flex flex-col gap-y-1'>
-              <Text type='paragraph' color='dark'>{data.experience.position}</Text>
-              <Text type='paragraph' color='gray'>
-                { data.experience.yearsOfExperience === '0'
-                  ? 'No experience'
-                  : `${data.experience.yearsOfExperience} years of experience`
-                }
-              </Text>
+              { data.experience
+                ? <>
+                    <Text type='paragraph' color='dark'>{data.experience.position}</Text>
+                    <Text type='paragraph' color='gray'>
+                      { data.experience.yearsOfExperience === '0'
+                        ? 'No experience'
+                        : `${data.experience.yearsOfExperience} years of experience`
+                      }
+                    </Text>
+                  </>
+                : <Text type='paragraph' color='gray'>Experience not set yet.</Text>
+              }
             </div>
           </div>
         </div>
@@ -42,15 +47,12 @@ const Profile: React.FC = () => {
               <PlusIcon className='w-4 h-4 text-vermilion cursor-pointer' />
             </div>
             <div className='flex flex-wrap items-start gap-3'>
-              { [
-                { title: 'HTML', years: 5 },
-                { title: 'CSS', years: 5 },
-                { title: 'JavaScript', years: 4 },
-                { title: 'React', years: 2 },
-                { title: 'Redux', years: 1 }
-              ].map((item, index: number) => 
-                <Badge key={index} text={item.title} color='vermilion' chip={item.years} />
-              ) }
+              { data.skills.length > 0
+                ? data.skills.map((item, index: number) => 
+                    <Badge key={index} text={item.title} color='vermilion' chip={item.yearsOfExperience} />
+                  )
+                : <Text type='paragraph' color='gray'>Skills not set yet.</Text>
+              }
             </div>
           </div>
         </div>
@@ -58,11 +60,18 @@ const Profile: React.FC = () => {
           <div className='flex flex-col gap-y-2'>
             <div className='flex justify-between items-center'>
               <Text type='subtitle' color='dark'>Education</Text>
-              <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
+              <Link to='/edit-education'>
+                <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' />
+              </Link>
             </div>
             <div className='flex flex-col gap-y-1'>
-              <Text type='paragraph' color='dark'>B.S. in Computer Science</Text>
-              <Text type='paragraph' color='gray'>4 years</Text>
+              { data.education
+                ? <>
+                    <Text type='paragraph' color='dark'>{data.education.title}</Text>
+                    <Text type='paragraph' color='gray'>{data.education.years} years</Text>
+                  </>
+                : <Text type='paragraph' color='gray'>Education not set yet.</Text>
+              }
             </div>
           </div>
         </div>
