@@ -41,37 +41,48 @@ const renderBox = (element: Element, jobDescription: string = null, queryData: Q
   reactElement.render(<Box jobDescription={jobDescription} queryData={queryData} />);
 };
 
+const handleChecks = async (element: HTMLElement) => {
+  const jobDescriptionContent: HTMLDivElement = element.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTENT);
+  if (jobDescriptionContent) {
+    const jobId = jobIdParser(window.location.href);
+    if (jobId) {
+      const checkExistsResponse = await sendRequest({
+        type: RequestType.CHECK_EXISTS,
+        data: { jobId }
+      });
+      if (checkExistsResponse?.error) {
+        renderBox(element, jobDescriptionContent.textContent, null);
+        return;
+      }
+      
+      renderBox(element, null, checkExistsResponse?.data.data);
+      return;
+    }
+    
+    renderBox(element, jobDescriptionContent.textContent, null);
+  }
+};
+
 
 // DOM
-new MutationObserver(async (mutations: MutationRecord[]) => {
-  for (const mutation of mutations) {
-    for (const element of mutation.addedNodes) {
-      if (!(element instanceof HTMLElement)) continue;
+(async () => {
+  const container: HTMLElement = document.querySelector(LINKEDIN_JOB_DESCRIPTION);
+  if (window.location.href.includes('/jobs/view/') && container) {
+    handleChecks(container);
+  }
 
-      if (window.location.href.includes('/jobs/view/') && element.matches(LINKEDIN_JOB_DESCRIPTION)) {
-        const jobDescriptionContent: HTMLDivElement = element.querySelector(LINKEDIN_JOB_DESCRIPTION_CONTENT);
-        if (jobDescriptionContent) {
-          const jobId = jobIdParser(window.location.href);
-          if (jobId) {
-            const checkExistsResponse = await sendRequest({
-              type: RequestType.CHECK_EXISTS,
-              data: { jobId }
-            });
-            if (checkExistsResponse?.error) {
-              renderBox(element, jobDescriptionContent.textContent, null);
-              return;
-            }
-            
-            renderBox(element, null, checkExistsResponse?.data.data);
-            return;
-          }
-          
-          renderBox(element, jobDescriptionContent.textContent, null);
+  new MutationObserver(async (mutations: MutationRecord[]) => {
+    for (const mutation of mutations) {
+      for (const element of mutation.addedNodes) {
+        if (!(element instanceof HTMLElement)) continue;
+  
+        if (window.location.href.includes('/jobs/view/') && element.matches(LINKEDIN_JOB_DESCRIPTION)) {
+          handleChecks(element);
         }
       }
     }
-  }
-}).observe(document.body, {
-  subtree: true,
-  childList: true
-});
+  }).observe(document.body, {
+    subtree: true,
+    childList: true
+  });
+})();
