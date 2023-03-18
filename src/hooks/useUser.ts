@@ -2,16 +2,23 @@ import useSWR from 'swr';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 import { getSession, getUserData, getUserQueries } from '@/services/supabase';
 import { QueryData } from '@/typings';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
+type UserDataExperience = {
+  position: string;
+  yearsOfExperience: string;
+};
+
+type UserDataEducation = {
+  title: string;
+  years: string;
+};
 
 export type UserData = {
   spots: number;
-  position: string;
-  yearsOfExperience: string;
+  experience: UserDataExperience;
   skills: string[];
-  education: object;
+  education: UserDataEducation;
 };
 
 export type User = {

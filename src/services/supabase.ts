@@ -57,8 +57,10 @@ export const onboard = async (onboardData: OnboardData): Promise<any> => {
       user_id: response.data.user.id,
       data: {
         spots: 5,
-        position: onboardData.position,
-        yearsOfExperience: onboardData.yearsOfExperience,
+        experience: {
+          position: onboardData.position,
+          yearsOfExperience: onboardData.yearsOfExperience
+        },
         skills: [],
         education: null
       }

@@ -35,8 +35,10 @@ const EditExperience: React.FC = () => {
     setLoading(true);
     const { error } = await updateUserData(user.id, {
       ...data,
-      position: experienceFormData.position.value,
-      yearsOfExperience: experienceFormData.yearsOfExperience.value
+      experience: {
+        position: experienceFormData.position.value,
+        yearsOfExperience: experienceFormData.yearsOfExperience.value
+      }
     });
 
     if (error) {
@@ -73,7 +75,7 @@ const EditExperience: React.FC = () => {
             name='position'
             placeholder='Your position'
             label='Position'
-            selected={jobPositions.find(item => item.value === data.position)}
+            selected={jobPositions.find(item => item.value === data.experience.position)}
             errors={errors}
             control={control}
             validation={{
@@ -86,7 +88,7 @@ const EditExperience: React.FC = () => {
             name='yearsOfExperience'
             placeholder='Years of experience'
             label='Years of experience'
-            selected={yearsOfExperience.find(item => item.value === data.yearsOfExperience)}
+            selected={yearsOfExperience.find(item => item.value === data.experience.yearsOfExperience)}
             errors={errors}
             control={control}
             validation={{

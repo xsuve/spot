@@ -25,11 +25,11 @@ const Profile: React.FC = () => {
               </Link>
             </div>
             <div className='flex flex-col gap-y-1'>
-              <Text type='paragraph' color='dark'>{data.position}</Text>
+              <Text type='paragraph' color='dark'>{data.experience.position}</Text>
               <Text type='paragraph' color='gray'>
-                { data.yearsOfExperience === '0'
+                { data.experience.yearsOfExperience === '0'
                   ? 'No experience'
-                  : `${data.yearsOfExperience} years of experience`
+                  : `${data.experience.yearsOfExperience} years of experience`
                 }
               </Text>
             </div>

@@ -56,7 +56,7 @@ const Home: FC = () => {
         <div className='flex justify-between items-center gap-x-4 w-full px-4'>
           <div className='flex flex-col gap-y-1'>
             <Text type='title' color='white'>{user.user_metadata.fullName}</Text>
-            <Text type='paragraph' color='white'>{data.position}</Text>
+            <Text type='paragraph' color='white'>{data.experience.position}</Text>
           </div>
           <Link to='/profile'>
             <div className='flex justify-between items-center gap-x-2'>
