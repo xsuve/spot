@@ -88,6 +88,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       // }
 
       const updateUserDataResponse = await updateUserData(generate_User?.data.user.id, {
+        ...getUserDataResponse?.data.data,
         spots: getUserDataResponse?.data.data.spots - 1
       });
       if (updateUserDataResponse?.error) {
