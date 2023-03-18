@@ -1,11 +1,11 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useUser } from '@/hooks/useUser';
 import { countryList } from '@/utils/selectOptions';
 import { signUp } from '@/services/supabase';
 import { Text, Button, Input, Logo, Select, SelectPropsOption, Alert, AlertProps } from '@/components/ui';
 import Layout from '@/components/layout/Layout';
+import { useUser } from '@/hooks/useUser';
 
 type SignUpFormData = {
   email: string;
@@ -14,8 +14,6 @@ type SignUpFormData = {
 };
 
 const Signup: React.FC = () => {
-  const user = useUser({ redirect: '/', foundRedirect: true });
-  
   const [loading, setLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertProps>();
 
@@ -55,6 +53,12 @@ const Signup: React.FC = () => {
     });
     reset();
   };
+
+  const { user } = useUser();
+  
+  if (user) {
+    return <Navigate to='/' replace />;
+  }
 
   return (
     <Layout type='login'>

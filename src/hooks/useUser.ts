@@ -1,35 +1,60 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import useSWR from 'swr';
-import { User } from '@supabase/supabase-js';
-import { getSession } from '@/services/supabase';
+import { User as SupabaseUser } from '@supabase/supabase-js';
+import { getSession, getUserData, getUserQueries } from '@/services/supabase';
+import { QueryData } from '@/typings';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export const useUser = ({
-  redirect = '',
-  foundRedirect = false
-} = {}): User | undefined => {
-  const navigate = useNavigate();
 
-  const fetchSession = async () => {
-    const { data, error } = await getSession();
-    
-    if (error) {
-      return;
+export type UserData = {
+  spots: number;
+  position: string;
+  yearsOfExperience: string;
+  skills: string[];
+  education: object;
+};
+
+export type User = {
+  isLoading: boolean;
+  user: SupabaseUser | undefined;
+  data: UserData | undefined;
+  queries: {
+    job_id: string;
+    created_at: string;
+    data: QueryData;
+  }[] | undefined;
+};
+
+
+export const useUser = (): User => {
+  const [loading, setLoading] = useState(false);
+
+  const fetchUser = async () => {
+    setLoading(true);
+
+    const getSessionResponse = await getSession();
+    let user, data, queries;
+
+    if (getSessionResponse?.data?.session?.user) {
+      user = getSessionResponse.data.session.user;
+
+      if (user?.user_metadata?.fullName) {
+        const getUserDataResponse = await getUserData(user.id);
+        const getUserQueriesResponse = await getUserQueries(user.id);
+
+        if (!getUserDataResponse?.error && !getUserQueriesResponse?.error) {
+          data = getUserDataResponse?.data?.data;
+          queries = getUserQueriesResponse?.data;
+        }
+      }
     }
-    
-    return data.session;
+
+    setLoading(false);
+
+    return { isLoading: loading, user, data, queries };
   };
 
-  const { data } = useSWR('/session', fetchSession);
-  useEffect(() => {
-    if (!redirect) {
-      return;
-    }
-    
-    if ((redirect && !foundRedirect && !data?.user) || (foundRedirect && data?.user)) {
-      navigate(redirect);
-    }
-  }, [data?.user, foundRedirect, redirect]);
-
-  return data?.user;
+  const { data, isLoading } = useSWR('/user', fetchUser);
+  
+  return data || { isLoading: isLoading, user: undefined, data: undefined, queries: undefined };
 };

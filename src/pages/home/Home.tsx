@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
 import { useUser } from '@/hooks/useUser';
-import Onboard from '@/pages/onboard/Onboard';
 import { Cog6ToothIcon,  ListBulletIcon, SparklesIcon, ChevronRightIcon, ArrowRightOnRectangleIcon, SwatchIcon } from '@heroicons/react/24/outline';
-import { Link, useNavigate } from 'react-router-dom';
-import { useUserData } from '@/hooks/useUserData';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Logo, Text } from '@/components/ui';
 import LoadingScreen from '@/components/loading-screen/LoadingScreen';
 import { DateTime } from 'luxon';
@@ -21,19 +19,22 @@ const Home: FC = () => {
 
     chrome.storage.local.remove([STORAGE_AUTH_KEY]);
     
-    mutate('/session');
-    navigate('/login');
+    mutate('/user');
+    navigate('/login', { replace: true });
   };
 
-  const user = useUser({ redirect: '/login' });
-  const userData = useUserData(user?.id);
-
-  if (!user || !userData) {
+  const { isLoading, user, data, queries } = useUser();
+  
+  if (isLoading) {
     return <LoadingScreen />;
   }
 
-  if (!user.user_metadata.fullName) {
-    return <Onboard />;
+  if (!isLoading && !user) {
+    return <Navigate to='/login' replace />;
+  }
+
+  if (!user?.user_metadata?.fullName) {
+    return <Navigate to='/onboard' replace />;
   }
   
   return (
@@ -55,7 +56,7 @@ const Home: FC = () => {
         <div className='flex justify-between items-center gap-x-4 w-full px-4'>
           <div className='flex flex-col gap-y-1'>
             <Text type='title' color='white'>{user.user_metadata.fullName}</Text>
-            <Text type='paragraph' color='white'>{user.user_metadata.position}</Text>
+            <Text type='paragraph' color='white'>{data.position}</Text>
           </div>
           <Link to='/profile'>
             <div className='flex justify-between items-center gap-x-2'>
@@ -75,7 +76,7 @@ const Home: FC = () => {
             <Text type='paragraph' color='gray'>Spots</Text>
           </div>
           <div className='flex flex-col'>
-            <Text type='subtitle' color='dark' className='!text-xl'>{userData.spots}</Text>
+            <Text type='subtitle' color='dark' className='!text-xl'>{data.spots}</Text>
             <Text type='paragraph' color='gray' className='!text-xs'>0 used today</Text>
           </div>
         </div>
@@ -87,7 +88,7 @@ const Home: FC = () => {
             <Text type='paragraph' color='gray'>Queries</Text>
           </div>
           <div className='flex flex-col'>
-            <Text type='subtitle' color='dark' className='!text-xl'>{userData.queries.length || 0}</Text>
+            <Text type='subtitle' color='dark' className='!text-xl'>{queries.length || 0}</Text>
             <Text type='paragraph' color='gray' className='!text-xs'>23 last week</Text>
           </div>
         </div>
@@ -106,7 +107,7 @@ const Home: FC = () => {
           </Link>
         </div>
         <div className='flex flex-col gap-y-4'>
-          { userData.queries.map((item, index) => (
+          { queries.map((item, index) => (
             <Link to={`https://linkedin.com/jobs/view/${item.job_id}`} target='_blank' key={index}>
               <div className='flex items-center gap-x-4 p-4 bg-creamy rounded-2xl'>
                 <div className='w-9 h-9 flex justify-center items-center shrink-0 rounded-full bg-white'>

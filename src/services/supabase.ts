@@ -125,7 +125,7 @@ export const getUserData = async (userId: string) => {
     .eq('user_id', userId)
     .limit(1)
     .single();
-  
+    
   return { data, error };
 };
 

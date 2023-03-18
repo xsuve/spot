@@ -1,12 +1,12 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useUser } from '@/hooks/useUser';
 import { mutate } from 'swr';
 import { logIn } from '@/services/supabase';
 import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
 import { Text, Button, Input, Logo, Alert, AlertProps } from '@/components/ui';
 import Layout from '@/components/layout/Layout';
+import { useUser } from '@/hooks/useUser';
 
 type LoginFormData = {
   email: string;
@@ -15,8 +15,6 @@ type LoginFormData = {
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-
-  const user = useUser({ redirect: '/', foundRedirect: true });
   
   const [loading, setLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertProps>();
@@ -50,10 +48,16 @@ const Login: React.FC = () => {
     chrome.storage.local.set({ [STORAGE_AUTH_KEY]: data.session });
 
     setLoading(false);
-    mutate('/session');
+    mutate('/user');
     navigate('/');
     reset();
   };
+
+  const { user } = useUser();
+  
+  if (user) {
+    return <Navigate to='/' replace />;
+  }
 
   return (
     <Layout type='login'>

@@ -47,15 +47,15 @@ const Onboard: React.FC = () => {
       return;
     }
 
+    mutate('/user', true);
     setLoading(false);
-    mutate('/session');
-    mutate('/userData');
-    navigate('/');
     reset();
+    navigate('/', { replace: true });
   };
 
   return (
     <Layout type='login'>
+      
       <div className='flex flex-col gap-y-1.5'>
         <Text type='title' color='dark'>Let's complete your account</Text>
         <Text type='paragraph' color='gray'>We need more info about you before you can start using Spot.</Text>

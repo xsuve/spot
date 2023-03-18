@@ -7,6 +7,7 @@ import Profile from '@/pages/profile/Profile';
 import EditExperience from '@/pages/edit-experience/EditExperience';
 import Settings from '@/pages/settings/Settings';
 import Login from '@/pages/login/Login';
+import Onboard from '@/pages/onboard/Onboard';
 import Signup from '@/pages/signup/Signup';
 
 import '@/styles.css';
@@ -23,6 +24,7 @@ const Popup: FC = () => {
           <Route path='/settings' element={<Settings />} />
 
           <Route path='/login' element={<Login />} />
+          <Route path='/onboard' element={<Onboard />} />
           <Route path='/signup' element={<Signup />} />
         </Routes>
       </MemoryRouter>

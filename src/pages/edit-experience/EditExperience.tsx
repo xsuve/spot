@@ -44,7 +44,7 @@ const EditExperience: React.FC = () => {
     // }
 
     // setLoading(false);
-    // mutate('/userData');
+    // mutate('/user');
     navigate('/profile');
     reset();
   };

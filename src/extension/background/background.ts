@@ -94,7 +94,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         sendResponse({ data: null, error: updateUserDataResponse?.error?.message });
         return;
       }
-      mutate('/userData');
+      mutate('/user');
       
       try {
         // const parsed = JSON.parse(invokeGenerateResponse?.data.data);

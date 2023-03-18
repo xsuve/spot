@@ -4,12 +4,10 @@ import Layout from '@/components/layout/Layout';
 import { Badge, Text } from '@/components/ui';
 import {  PencilSquareIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useUser } from '@/hooks/useUser';
-import { useUserData } from '@/hooks/useUserData';
 import Navbar from '@/components/navbar/Navbar';
 
 const Profile: React.FC = () => {
-  const user = useUser({ redirect: '/login' });
-  const userData = useUserData(user?.id);
+  const { data } = useUser();
   
   return (
     <Layout type='app'>
@@ -27,11 +25,11 @@ const Profile: React.FC = () => {
               </Link>
             </div>
             <div className='flex flex-col gap-y-1'>
-              <Text type='paragraph' color='dark'>{userData.position}</Text>
+              <Text type='paragraph' color='dark'>{data.position}</Text>
               <Text type='paragraph' color='gray'>
-                { userData.yearsOfExperience === '0'
+                { data.yearsOfExperience === '0'
                   ? 'No experience'
-                  : `${userData.yearsOfExperience} years of experience`
+                  : `${data.yearsOfExperience} years of experience`
                 }
               </Text>
             </div>
