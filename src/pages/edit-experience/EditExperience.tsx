@@ -5,6 +5,9 @@ import { Alert, AlertProps, Button, Select, SelectPropsOption, Text } from '@/co
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useForm } from 'react-hook-form';
 import { jobPositions, yearsOfExperience } from '@/utils/selectOptions';
+import { updateUserData } from '@/services/supabase';
+import { useUser } from '@/hooks/useUser';
+import { mutate } from 'swr';
 
 type ExperienceFormData = {
   position: SelectPropsOption;
@@ -18,39 +21,43 @@ const EditExperience: React.FC = () => {
   const [alert, setAlert] = useState<AlertProps>();
   
   const {
-    register,
     control,
     handleSubmit,
     reset,
     formState: { errors, isValid }
   } = useForm<ExperienceFormData>({ mode: 'onChange' });
 
+  const { user, data } = useUser();
+
   const submitUpdateExperience = async (experienceFormData: ExperienceFormData, e: BaseSyntheticEvent | undefined) => {
     e?.preventDefault();
-    console.log(experienceFormData);
-    
 
     setLoading(true);
-    // const { error } = await onboard(onboardData);
+    const { error } = await updateUserData(user.id, {
+      ...data,
+      position: experienceFormData.position.value,
+      yearsOfExperience: experienceFormData.yearsOfExperience.value
+    });
 
-    // if (error) {
-    //   setLoading(false);
-    //   setAlert({
-    //     type: 'error',
-    //     title: 'Error at update.',
-    //     text: error.message
-    //   });
-    //   return;
-    // }
+    if (error) {
+      setLoading(false);
+      setAlert({
+        type: 'error',
+        title: 'Error at update.',
+        text: error.message
+      });
+      return;
+    }
 
-    // setLoading(false);
-    // mutate('/user');
-    navigate('/profile');
+    mutate('/user');
+    setLoading(false);
     reset();
+    navigate('/profile');
   };
   
   return (
     <Layout type='login'>
+
       <Link to='/profile'>
         <div className='flex items-center gap-x-2'>
           <ChevronLeftIcon className='w-4 h-4 text-slate-400' />
@@ -66,6 +73,7 @@ const EditExperience: React.FC = () => {
             name='position'
             placeholder='Your position'
             label='Position'
+            selected={jobPositions.find(item => item.value === data.position)}
             errors={errors}
             control={control}
             validation={{
@@ -78,6 +86,7 @@ const EditExperience: React.FC = () => {
             name='yearsOfExperience'
             placeholder='Years of experience'
             label='Years of experience'
+            selected={yearsOfExperience.find(item => item.value === data.yearsOfExperience)}
             errors={errors}
             control={control}
             validation={{
