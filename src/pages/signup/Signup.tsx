@@ -62,6 +62,7 @@ const Signup: React.FC = () => {
 
   return (
     <Layout type='login'>
+      
       <div className='w-full flex justify-between items-center'>
         <Logo size='small' />
         <Link to='/login'>

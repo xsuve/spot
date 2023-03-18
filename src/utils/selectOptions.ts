@@ -6,7 +6,7 @@ export const countryList = [
 
 export const jobPositions = [
   { label: 'Frontend Developer', value: 'Frontend Developer' },
-  { label: 'Backend Developer', value: 'Frontend Developer' },
+  { label: 'Backend Developer', value: 'Backend Developer' },
 ];
 
 export const yearsOfExperience = [

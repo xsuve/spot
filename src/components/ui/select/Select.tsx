@@ -7,6 +7,7 @@ export type SelectPropsOption = { value: string; label: string; };
 
 export type SelectProps = {
   name: string;
+  selected?: SelectPropsOption;
   placeholder?: string;
   label?: string;
   control?: any;
@@ -19,6 +20,7 @@ export type SelectProps = {
 
 const Select: FC<SelectProps> = ({
   name,
+  selected = undefined,
   placeholder = '',
   label = undefined,
   control = undefined,
@@ -31,7 +33,8 @@ const Select: FC<SelectProps> = ({
   const { field } = useController({
     name,
     control,
-    rules: validation
+    rules: validation,
+    defaultValue: selected
   });
 
   return (
@@ -40,6 +43,8 @@ const Select: FC<SelectProps> = ({
       <ReactSelect
         ref={field.ref}
         name={field.name}
+        value={field.value}
+        defaultValue={selected}
         onChange={field.onChange}
         onBlur={field.onBlur}
         placeholder={placeholder}
