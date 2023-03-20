@@ -33,7 +33,10 @@ serve(async (req) => {
   const prompt = `
     Given the job description below, create a JSON object with the following properties:
     \n\n
-    - programmingLanguages: Array of Strings with programming languages and libraries from job description.
+    - programmingLanguages: Array of Objects with programming languages and libraries from job description. Each object will have the following properties:
+    \n
+    title: The title of the technology.
+    yearsOfExperience: The years of experience required for the technology (-1 if not specified).
     \n\n
     - interviewQuestions: Array of Strings with 5 potential interview questions from job description.
     \n\n
@@ -55,7 +58,12 @@ serve(async (req) => {
     Example response:
     \n
     {
-      "programmingLanguages": ["React", "NodeJS", "MongoDB", "Jest"],
+      "programmingLanguages": [
+        { "title": "React", "yearsOfExperience": 3 },
+        { "title": "NodeJS", "yearsOfExperience": 2 },
+        { "title": "MongoDB", "yearsOfExperience": -1 },
+        { "title": "Jest", "yearsOfExperience": -1 }
+      ],
       "interviewQuestions": ["What is your experience with React?"],
       "positionTitle": "React Developer",
       "experienceLevel": "Junior",
