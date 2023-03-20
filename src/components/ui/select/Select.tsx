@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useController } from 'react-hook-form';
 import ReactSelect from 'react-select';
 import { Text } from '@/components/ui';
@@ -7,13 +7,15 @@ export type SelectPropsOption = { value: string; label: string; };
 
 export type SelectProps = {
   name: string;
-  selected?: SelectPropsOption;
+  selected?: SelectPropsOption | SelectPropsOption[];
   placeholder?: string;
   label?: string;
   control?: any;
   errors?: any;
   validation?:any;
   required?: boolean;
+  isMulti?: boolean;
+  onChange?: (selected: SelectPropsOption[]) => void;
   className?: string;
   options: SelectPropsOption[]; 
 };
@@ -27,6 +29,8 @@ const Select: FC<SelectProps> = ({
   errors = undefined,
   validation = undefined,
   required = false,
+  isMulti = false,
+  onChange = undefined,
   className = '',
   options
 }) => {
@@ -37,6 +41,10 @@ const Select: FC<SelectProps> = ({
     defaultValue: selected
   });
 
+  useEffect(() => {
+    field.onChange(selected);
+  }, [selected]);
+
   return (
     <div className={`text-left ${className}`}>
       { label ? <Text type='label' color='dark' className='block mb-2'>{label}</Text> : null }
@@ -45,11 +53,15 @@ const Select: FC<SelectProps> = ({
         name={field.name}
         value={field.value}
         defaultValue={selected}
-        onChange={field.onChange}
+        onChange={(newValue) => {
+          field.onChange(newValue);
+          onChange(newValue);
+        }}
         onBlur={field.onBlur}
         placeholder={placeholder}
         options={options}
         required={required}
+        isMulti={isMulti}
         theme={(theme) => ({
           ...theme,
           colors: {
@@ -62,6 +74,7 @@ const Select: FC<SelectProps> = ({
         })}
         maxMenuHeight={126}
         menuPlacement='auto'
+        controlShouldRenderValue={!isMulti}
         classNames={{
           control: () => `!rounded !h-11 group !border !border-slate-200 !hover:border-slate-300 !shadow-none`,
           valueContainer: () => `!px-4`,

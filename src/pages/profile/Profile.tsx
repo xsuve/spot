@@ -44,7 +44,9 @@ const Profile: React.FC = () => {
           <div className='flex flex-col gap-y-2'>
             <div className='flex justify-between items-center'>
               <Text type='subtitle' color='dark'>Technical skills</Text>
-              <PlusIcon className='w-4 h-4 text-vermilion cursor-pointer' />
+              <Link to='/edit-skills'>
+                <PlusIcon className='w-4 h-4 text-vermilion cursor-pointer' />
+              </Link>
             </div>
             <div className='flex flex-wrap items-start gap-3'>
               { data.skills.length > 0

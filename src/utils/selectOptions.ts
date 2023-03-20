@@ -29,3 +29,9 @@ export const educationYears = [
   { label: '5 years', value: '5' },
   { label: '6 years', value: '6' }
 ];
+
+export const technologies = [
+  { label: 'HTML', value: 'HTML' },
+  { label: 'CSS', value: 'CSS' },
+  { label: 'JavaScript', value: 'JavaScript' }
+];

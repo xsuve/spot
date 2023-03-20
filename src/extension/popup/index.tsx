@@ -5,6 +5,7 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import Home from '@/pages/home/Home';
 import Profile from '@/pages/profile/Profile';
 import EditExperience from '@/pages/edit-experience/EditExperience';
+import EditSkills from '@/pages/edit-skills/EditSkills';
 import EditEducation from '@/pages/edit-education/EditEducation';
 import Settings from '@/pages/settings/Settings';
 import Login from '@/pages/login/Login';
@@ -22,6 +23,7 @@ const Popup: FC = () => {
           <Route path='/' element={<Home />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/edit-experience' element={<EditExperience />} />
+          <Route path='/edit-skills' element={<EditSkills />} />
           <Route path='/edit-education' element={<EditEducation />} />
           <Route path='/settings' element={<Settings />} />
 
