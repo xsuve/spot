@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useState } from 'react';
 import { Text, TextPropsColor } from '@/components/ui';
-import { MinusIcon, PencilSquareIcon, PlusIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 type BadgePropsColor = 'vermilion' | 'gray' | 'white';
 const BadgePropsColorMap = {
@@ -56,14 +56,14 @@ const Badge: FC<BadgeProps> = ({
   return (
     <div className={`flex ${onRemove ? 'w-full justify-between gap-x-3' : ''} ${className}`}>
       <div className={`rounded-[6px] flex items-center`}>
-        <div className={`${BadgePropsColorMap[color]['background']} ${chip || onRemove ? 'rounded-l-[6px]' : 'rounded-[6px]'} h-[28px] px-[8px] flex items-center`}>
+        <div className={`${BadgePropsColorMap[color]['background']} ${(chip && chip !== -1) || onRemove ? 'rounded-l-[6px]' : 'rounded-[6px]'} h-[28px] px-[8px] flex items-center`}>
           <Text type='paragraph' color={BadgePropsColorMap[color]['text'] as TextPropsColor} className='!text-[12px] !font-medium'>{text}</Text>
         </div>
-        { chip || onRemove
+        { (chip && chip !== -1) || onRemove
           ? <div
               className={`${BadgePropsColorMap[color]['chipBackground']} rounded-r-[6px] h-[28px] px-[8px] flex items-center`}
             >
-              { chip && <Text type='paragraph' color={BadgePropsColorMap[color]['chipText'] as TextPropsColor} className='!text-[12px] !font-medium'>{chip}</Text> }
+              { (chip && chip !== -1) && <Text type='paragraph' color={BadgePropsColorMap[color]['chipText'] as TextPropsColor} className='!text-[12px] !font-medium'>{chip}</Text> }
               { onRemove && <Text type='paragraph' color={BadgePropsColorMap[color]['chipText'] as TextPropsColor} className='!text-[12px] !font-medium'>{YOF}</Text> }
             </div>
           : null

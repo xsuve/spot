@@ -9,7 +9,7 @@ import {
 } from '@/utils/interfaceSelectors';
 import { jobIdParser } from '@/utils/jobIdParser';
 import { sendRequest, Request, RequestType, ResponseCallback } from '@/types/RequestResponse';
-import { QueryData } from '@/typings';
+import { BoxData } from '@/typings';
 
 
 let font: HTMLLinkElement = document.querySelector('.spot-fonts');
@@ -33,12 +33,12 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
 
 
 // Functions
-const renderBox = (element: Element, jobDescription: string = null, queryData: QueryData = null) => {
+const renderBox = (element: Element, jobDescription: string = null, boxData: BoxData = null) => {
   const root: HTMLDivElement = document.createElement('div');
   root.classList.add(SPOT_BOX_ROOT_CLASSNAME);
   element.insertAdjacentElement('beforebegin', root);
   const reactElement: Root = createRoot(root);
-  reactElement.render(<Box jobDescription={jobDescription} queryData={queryData} />);
+  reactElement.render(<Box jobDescription={jobDescription} boxData={boxData} />);
 };
 
 const handleChecks = async (element: HTMLElement) => {
@@ -50,12 +50,13 @@ const handleChecks = async (element: HTMLElement) => {
         type: RequestType.CHECK_EXISTS,
         data: { jobId }
       });
+      
       if (checkExistsResponse?.error) {
         renderBox(element, jobDescriptionContent.textContent, null);
         return;
       }
       
-      renderBox(element, null, checkExistsResponse?.data.data);
+      renderBox(element, null, checkExistsResponse?.data);
       return;
     }
     

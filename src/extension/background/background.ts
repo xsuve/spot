@@ -42,13 +42,22 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         return;
       }
 
+      const checkExists_getUserData = await getUserData(getUser_User?.data.user.id);
+      if (checkExists_getUserData?.error) {
+        sendResponse({ data: null, error: checkExists_getUserData?.error?.message });
+        return;
+      }
+
       const checkExists = await getUserQueriesByJobId(getUser_User?.data.user.id, request.data.jobId);
       if (checkExists?.error) {
         sendResponse({ data: null, error: checkExists.error?.message });
         return;
       }
 
-      sendResponse({ data: checkExists?.data, error: null });
+      sendResponse({ data: {
+        queryData: checkExists?.data.data,
+        userSkills: checkExists_getUserData?.data?.data?.skills
+      }, error: null });
     break;
 
     case RequestType.GENERATE:
@@ -100,26 +109,21 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       try {
         // const parsed = JSON.parse(invokeGenerateResponse?.data.data);
         // console.log('parsed', parsed);
-        
-        // const userTechnologies: string[] = ['React', 'TypeScript', 'Redux', 'CSS', 'HTML'];
-        // const technologies = parsed.programmingLanguages.map((item: string) => {
-        //   return { title: item, included: userTechnologies.includes(item) };
-        // });
 
         const queryData = {
-          // technologies,
+          // technologies: parsed.programmingLanguages,
           // interviewQuestions: parsed.interviewQuestions,
           // positionTitle: parsed.positionTitle,
           // experienceLevel: parsed.experienceLevel,
           // salaryForPosition: parsed.salaryForPosition,
           technologies: [
-            { title: 'HTML', included: true },
-            { title: 'CSS', included: true },
-            { title: 'JavaScript', included: true },
-            { title: 'React', included: true },
-            { title: 'Redux', included: false },
-            { title: 'Mocha', included: false },
-            { title: 'Jest', included: true }
+            { title: 'HTML', yearsOfExperience: 4 },
+            { title: 'CSS', yearsOfExperience: 4 },
+            { title: 'JavaScript', yearsOfExperience: 3 },
+            { title: 'React', yearsOfExperience: 2 },
+            { title: 'Redux', yearsOfExperience: -1 },
+            { title: 'Mocha', yearsOfExperience: -1 },
+            { title: 'Jest', yearsOfExperience: -1 }
           ],
           interviewQuestions: [
             'What is your experience with React.js?',

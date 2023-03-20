@@ -33,5 +33,6 @@ export const educationYears = [
 export const technologies = [
   { label: 'HTML', value: 'HTML' },
   { label: 'CSS', value: 'CSS' },
-  { label: 'JavaScript', value: 'JavaScript' }
+  { label: 'JavaScript', value: 'JavaScript' },
+  { label: 'React', value: 'React' }
 ];

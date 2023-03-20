@@ -7,7 +7,7 @@ export type SalaryForPosition = {
 
 export type TechnologyItem = {
   title: string;
-  included: boolean;
+  yearsOfExperience: number;
 };
 
 export type QueryData = {
@@ -16,4 +16,9 @@ export type QueryData = {
   positionTitle: string;
   experienceLevel: string;
   salaryForPosition: SalaryForPosition;
+};
+
+export type BoxData = {
+  queryData: QueryData;
+  userSkills: TechnologyItem[];
 };
