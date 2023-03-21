@@ -11,6 +11,7 @@ import Settings from '@/pages/settings/Settings';
 import Login from '@/pages/login/Login';
 import Onboard from '@/pages/onboard/Onboard';
 import Signup from '@/pages/signup/Signup';
+import Queries from '@/pages/queries/Queries';
 
 import '@/styles.css';
 
@@ -26,6 +27,7 @@ const Popup: FC = () => {
           <Route path='/edit-skills' element={<EditSkills />} />
           <Route path='/edit-education' element={<EditEducation />} />
           <Route path='/settings' element={<Settings />} />
+          <Route path='/queries' element={<Queries />} />
 
           <Route path='/login' element={<Login />} />
           <Route path='/onboard' element={<Onboard />} />

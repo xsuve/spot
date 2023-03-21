@@ -5,7 +5,7 @@ import Navbar from '@/components/navbar/Navbar';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 
-const Settings: React.FC = () => {  
+const Settings: React.FC = () => {
   return (
     <Layout type='app'>
 
@@ -15,9 +15,7 @@ const Settings: React.FC = () => {
         <Text type='title' color='dark'>Settings</Text>
         <div className='mt-8'>
           <div className='flex flex-col gap-y-2'>
-            <div className='flex justify-between items-center'>
               <Text type='subtitle' color='dark'>Subscription</Text>
-            </div>
             <div className='bg-creamy rounded-2xl p-4'>
               <div className='flex flex-col gap-y-4'>
                 <div className='flex justify-between items-center'>
@@ -40,10 +38,7 @@ const Settings: React.FC = () => {
 
         <div className='mt-8'>
           <div className='flex flex-col gap-y-2'>
-            <div className='flex justify-between items-center'>
-              <Text type='subtitle' color='dark'>Notifications</Text>
-              {/* <PencilSquareIcon className='w-4 h-4 text-vermilion cursor-pointer' /> */}
-            </div>
+            <Text type='subtitle' color='dark'>Notifications</Text>
             //
           </div>
         </div>
