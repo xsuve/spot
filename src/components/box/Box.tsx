@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
+import { createRoot, Root } from 'react-dom/client';
 import { Badge, Button, Text } from '@/components/ui';
 import { sendRequest, RequestType } from '@/types/RequestResponse';
-import { SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
 import { jobIdParser } from '@/utils/jobIdParser';
 import { BoxData, TechnologyItem } from '@/typings';
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
+import { InformationCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { SPOT_BOX_ROOT } from '@/utils/interfaceSelectors';
 
 type BoxProps = {
   jobDescription?: string;
@@ -18,14 +19,16 @@ const Box: FC<BoxProps> = ({
   className = ''
 }) => {
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   const handleClick = async () => {
     setLoading(true);
+    setAlert(null);
 
     const jobId = jobIdParser(window.location.href);
     if (jobId === null) {
       setLoading(false);
-      // TODO: Alert user
+      setAlert('Could not get the job ID.');
       return;
     }
 
@@ -37,21 +40,28 @@ const Box: FC<BoxProps> = ({
       }
     });
 
-    console.log(response);
-
-    if (response.error) {
-      console.log(response.error);
+    if (response?.error) {
       setLoading(false);
-      // TODO: Alert user
+      setAlert(response?.error);
       return;
     }
 
-    const spotBoxRoot: HTMLElement = document.querySelector(SPOT_BOX_ROOT);
-    if (window.location.href.includes('/jobs/view/') && spotBoxRoot) {
-      //
+    if (response?.data) {
+      const spotBoxRoot: HTMLElement = document.querySelector(SPOT_BOX_ROOT);
+      if (window.location.href.includes('/jobs/view/') && spotBoxRoot) {
+        spotBoxRoot.innerHTML = '';
+
+        const reactElement: Root = createRoot(spotBoxRoot);
+        reactElement.render(<Box jobDescription='' boxData={response?.data} />);
+      }
+    } else {
+      setLoading(false);
+      setAlert('Query data could not be loaded.');
+      return;
     }
 
     setLoading(false);
+    setAlert(null);
   };
 
   const [f, setF] = useState(0);
@@ -72,14 +82,23 @@ const Box: FC<BoxProps> = ({
             <img src={chrome.runtime.getURL('assets/img/spot-icon-background.svg')} className='w-[24px] mb-[16px]' />
             <Text type='title' color='white' className='!text-[2rem] mb-[8px] leading-[1.25]'>Better prepare for your next interview with Spot.</Text>
             <Text type='paragraph' color='white' className='!text-[1.4rem] mb-[32px] leading-[1.5]'>Targeted AI generated interview questions and job insights based on the job description.</Text>
-            <Button
-              type='button'
-              color='vermilion'
-              size='interface'
-              onClick={handleClick}
-              loading={loading}
-              disabled={loading}
-            >Try Spot!</Button>
+            <div className='flex items-center gap-x-[32px]'>  
+              <Button
+                type='button'
+                color='vermilion'
+                size='interface'
+                onClick={handleClick}
+                loading={loading}
+                disabled={loading}
+              >Try Spot!</Button>
+              { alert
+                ? <div className='flex items-center gap-x-[8px]'>
+                    <ExclamationTriangleIcon className='w-[20px] h-[20px] text-white' />
+                    <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.5]'>{alert}</Text>
+                  </div>
+                : null
+              }
+            </div>
           </div>
           <div className='col-span-2 flex justify-end'>
             {/*  */}

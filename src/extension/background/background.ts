@@ -149,7 +149,10 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         }
 
         sendResponse({
-          data: queryData,
+          data: {
+            queryData,
+            userSkills: getUserDataResponse?.data?.data?.skills
+          },
           error: null
         });
       } catch (error) {
