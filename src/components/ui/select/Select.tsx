@@ -55,7 +55,9 @@ const Select: FC<SelectProps> = ({
         defaultValue={selected}
         onChange={(newValue) => {
           field.onChange(newValue);
-          onChange(newValue);
+          if (onChange) {
+            onChange(newValue);
+          }
         }}
         onBlur={field.onBlur}
         placeholder={placeholder}
