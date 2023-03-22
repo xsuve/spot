@@ -105,7 +105,7 @@ const Box: FC<BoxProps> = ({
             backgroundImage: `url('${chrome.runtime.getURL("assets/img/box.svg")}')`
           }}></div>
         </div>
-      : <div className='flex flex-col gap-y-[32px]'>
+      : <div className='flex flex-col gap-y-[32px] p-[2.4rem]'>
           <div className='flex justify-between gap-x-[32px]'>
             <div className='flex items-center gap-x-[16px]'>
               <Text type='title' color='white' className='!text-[2rem]'>{boxData.queryData.positionTitle}</Text>
