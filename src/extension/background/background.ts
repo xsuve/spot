@@ -84,17 +84,17 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         return;
       }
 
-      // const invokeGenerateResponse = await invokeGenerate({
-      //   userCountry: generate_User?.data.user.user_metadata.country,
-      //   jobDescription: request.data.jobDescription
-      // });
+      const invokeGenerateResponse = await invokeGenerate({
+        userCountry: generate_User?.data.user.user_metadata.country,
+        jobDescription: request.data.jobDescription
+      });
 
       // console.log('generateInvoke', invokeGenerateResponse);
       
-      // if (invokeGenerateResponse?.error || !invokeGenerateResponse?.data) {
-      //   sendResponse({ data: null, error: 'Could not generate response.' });
-      //   return;
-      // }
+      if (invokeGenerateResponse?.error || !invokeGenerateResponse?.data) {
+        sendResponse({ data: null, error: 'Could not generate response.' });
+        return;
+      }
 
       const updateUserDataResponse = await updateUserData(generate_User?.data.user.id, {
         ...getUserDataResponse?.data.data,
@@ -107,16 +107,17 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       mutate('/user');
       
       try {
-        // const parsed = JSON.parse(invokeGenerateResponse?.data.data);
-        // console.log('parsed', parsed);
+        const replaced = invokeGenerateResponse?.data.data.replace(/“|”/g, '\"');
+
+        const parsed = JSON.parse(replaced);
 
         const queryData = {
-          // technologies: parsed.programmingLanguages,
-          // interviewQuestions: parsed.interviewQuestions,
-          // positionTitle: parsed.positionTitle,
-          // experienceLevel: parsed.experienceLevel,
-          // salaryForPosition: parsed.salaryForPosition,
-          technologies: [
+          technologies: parsed.programmingLanguages,
+          interviewQuestions: parsed.interviewQuestions,
+          positionTitle: parsed.positionTitle,
+          experienceLevel: parsed.experienceLevel,
+          salaryForPosition: parsed.salaryForPosition,
+          /*technologies: [
             { title: 'HTML', yearsOfExperience: 4 },
             { title: 'CSS', yearsOfExperience: 4 },
             { title: 'JavaScript', yearsOfExperience: 3 },
@@ -134,15 +135,15 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
           ],
           positionTitle: 'React Developer',
           experienceLevel: 'Mid',
-          salaryForPosition: { suitable: 10000, min: 7000, max: 14000, currencyCode: 'RON' }
+          salaryForPosition: { suitable: 10000, min: 7000, max: 14000, currencyCode: 'RON' }*/
         };
 
-        const insertQueryResponse = await insertQuery(
-          generate_User?.data.user.id,
-          request.data.jobId,
-          queryData
-          // TODO: Add usage from invokeGenerateResponse.
-        );
+        const insertQueryResponse = await insertQuery({
+          userId: generate_User?.data.user.id,
+          jobId: request.data.jobId,
+          queryData,
+          usage: invokeGenerateResponse?.data?.usage
+        });
         if (insertQueryResponse?.error) {
           sendResponse({ data: null, error: insertQueryResponse?.error?.message });
           return;
@@ -158,7 +159,7 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
       } catch (error) {
         console.log('generateError', error);
         
-        sendResponse({ data: null, error: error.message });
+        sendResponse({ data: null, error: 'Could not generate response.' });
       }
     break;
   }

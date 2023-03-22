@@ -143,13 +143,14 @@ export const updateUserData = async (userId: string, userData: any) => {
 };
 
 
-export const insertQuery = async (userId: string, jobId: string, queryData: any) => {
+export const insertQuery = async (insertData: any) => {
   const { data, error } = await supabase
     .from('user_queries')
     .insert({
-      user_id: userId,
-      job_id: jobId,
-      data: queryData
+      user_id: insertData.userId,
+      job_id: insertData.jobId,
+      data: insertData.queryData,
+      usage: insertData.usage
     });
 
   return { data, error };
