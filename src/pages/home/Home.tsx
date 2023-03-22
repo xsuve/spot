@@ -111,7 +111,7 @@ const Home: FC = () => {
         </div>
         <div className='flex flex-col gap-y-4'>
           { queries.length > 0
-            ? queries.map((item, index) => (
+            ? queries.slice(0, 5).map((item, index) => (
                 <Link to={`https://linkedin.com/jobs/view/${item.job_id}`} target='_blank' key={index}>
                   <div className='flex items-center gap-x-4 p-4 bg-creamy rounded-2xl'>
                     <div className='w-9 h-9 flex justify-center items-center shrink-0 rounded-full bg-white'>
