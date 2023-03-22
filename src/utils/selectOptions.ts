@@ -5,8 +5,39 @@ export const countryList = [
 ];
 
 export const jobPositions = [
-  { label: 'Frontend Developer', value: 'Frontend Developer' },
-  { label: 'Backend Developer', value: 'Backend Developer' },
+  { label: 'Front-End Developer', value: 'Front-End Developer' },
+  { label: 'Back-End Developer', value: 'Back-End Developer' },
+  { label: 'Full-Stack Developer', value: 'Full-Stack Developer' },
+  { label: 'Web Developer', value: 'Web Developer' },
+  { label: 'SQL Developer', value: 'SQL Developer' },
+  { label: 'Data Analyst', value: 'Data Analyst' },
+  { label: 'Business Intelligence Analyst', value: 'Business Intelligence Analyst' },
+  { label: 'Database Administrator', value: 'Database Administrator' },
+  { label: 'Java Developer', value: 'Java Developer' },
+  { label: 'C# Developer', value: 'C# Developer' },
+  { label: 'C/C++ Developer', value: 'C/C++ Developer' },
+  { label: 'DevOps Engineer', value: 'DevOps Engineer' },
+  { label: 'Software Developer', value: 'Software Developer' },
+  { label: 'Machine Learning Engineer', value: 'Machine Learning Engineer' },
+  { label: 'RPA Developer', value: 'RPA Developer' },
+  { label: 'Cloud Engineer', value: 'Cloud Engineer' },
+  { label: 'Data Scientist', value: 'Data Scientist' },
+  { label: 'Data Engineer', value: 'Data Engineer' },
+  { label: 'QA Engineer', value: 'QA Engineer' },
+  { label: 'Python Developer', value: 'Python Developer' },
+  { label: 'NodeJS Developer', value: 'NodeJS Developer' },
+  { label: '.NET Developer', value: '.NET Developer' },
+  { label: 'iOS Developer', value: 'iOS Developer' },
+  { label: 'Android Developer', value: 'Android Developer' },
+  { label: 'React Native Developer', value: 'React Native Developer' },
+  { label: 'Go Developer', value: 'Go Developer' },
+  { label: 'Ruby on Rails Developer', value: 'Ruby on Rails Developer' },
+  { label: 'PHP Developer', value: 'PHP Developer' },
+  { label: 'Scala Developer', value: 'Scala Developer' },
+  { label: 'Perl Developer', value: 'Perl Developer' },
+  { label: 'Haskell Developer', value: 'Haskell Developer' },
+  { label: 'Rust Developer', value: 'Rust Developer' },
+  { label: 'Product Manager', value: 'Product Manager' },
 ];
 
 export const yearsOfExperience = [
@@ -18,7 +49,16 @@ export const yearsOfExperience = [
 ];
 
 export const educationTitles = [
-  { label: 'B.S. in Computer Science', value: 'B.S. in Computer Science' }
+  { label: 'B.S. in Computer Science', value: 'B.S. in Computer Science' },
+  { label: 'B.S. in Computer Engineering', value: 'B.S. in Computer Engineering' },
+  { label: 'B.S. in Information Technology', value: 'B.S. in Information Technology' },
+  { label: 'B.S. in Software Engineering', value: 'B.S. in Software Engineering' },
+  { label: 'B.S. in Information Systems', value: 'B.S. in Information Systems' },
+  { label: 'B.S. in Cybersecurity', value: 'B.S. in Cybersecurity' },
+  { label: 'B.S. in Data Science', value: 'B.S. in Data Science' },
+  { label: 'B.S. in Artificial Intelligence', value: 'B.S. in Artificial Intelligence' },
+  { label: 'B.S. in Web Development', value: 'B.S. in Web Development' },
+  { label: 'B.S. in Computer Graphics & Game Design', value: 'B.S. in Computer Graphics & Game Design' }
 ];
 
 export const educationYears = [
@@ -33,6 +73,39 @@ export const educationYears = [
 export const technologies = [
   { label: 'HTML', value: 'HTML' },
   { label: 'CSS', value: 'CSS' },
+  { label: 'SCSS', value: 'SCSS' },
   { label: 'JavaScript', value: 'JavaScript' },
-  { label: 'React', value: 'React' }
+  { label: 'TypeScript', value: 'TypeScript' },
+  { label: 'React', value: 'React' },
+  { label: 'Python', value: 'Python' },
+  { label: 'NodeJS', value: 'NodeJS' },
+  { label: 'Express', value: 'Express' },
+  { label: 'Deno', value: 'Deno' },
+  { label: 'Java', value: 'Java' },
+  { label: 'PHP', value: 'PHP' },
+  { label: 'C++', value: 'C++' },
+  { label: 'C', value: 'C' },
+  { label: 'C#', value: 'C#' },
+  { label: '.NET', value: '.NET' },
+  { label: 'Golang', value: 'Golang' },
+  { label: 'Scala', value: 'Scala' },
+  { label: 'Perl', value: 'Perl' },
+  { label: 'Shell', value: 'Shell' },
+  { label: 'Haskell', value: 'Haskell' },
+  { label: 'Rust', value: 'Rust' },
+  { label: 'Ruby on Rails', value: 'Ruby on Rails' },
+  { label: 'Lua', value: 'Lua' },
+  { label: 'Swift', value: 'Swift' },
+  { label: 'Kotlin', value: 'Kotlin' },
+  { label: 'Flutter', value: 'Flutter' },
+  { label: 'Dart', value: 'Dart' },
+  { label: 'React Native', value: 'React Native' },
+  { label: 'SQL', value: 'SQL' },
+  { label: 'MySQL', value: 'MySQL' },
+  { label: 'MongoDB', value: 'MongoDB' },
+  { label: 'PostgresSQL', value: 'PostgresSQL' },
+  { label: 'Redis', value: 'Redis' },
+  { label: 'AWS', value: 'AWS' },
+  { label: 'Linux', value: 'Linux' },
+  { label: 'MATLAB', value: 'MATLAB' },
 ];
