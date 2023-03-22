@@ -23,7 +23,7 @@ const Home: FC = () => {
     navigate('/login', { replace: true });
   };
 
-  const { isLoading, user, data, queries } = useUser();
+  const { isLoading, user, data, queries, queriesData } = useUser();
   
   if (isLoading) {
     return <LoadingScreen />;
@@ -77,7 +77,7 @@ const Home: FC = () => {
           </div>
           <div className='flex flex-col'>
             <Text type='subtitle' color='dark' className='!text-xl'>{data.spots}</Text>
-            <Text type='paragraph' color='gray' className='!text-xs'>0 used today</Text>
+            <Text type='paragraph' color='gray' className='!text-xs'>{queriesData.usedToday} used today</Text>
           </div>
         </div>
         <div className='flex flex-col w-full justify-between gap-y-4 bg-creamy rounded-2xl p-4'>
@@ -89,7 +89,7 @@ const Home: FC = () => {
           </div>
           <div className='flex flex-col'>
             <Text type='subtitle' color='dark' className='!text-xl'>{queries.length || 0}</Text>
-            <Text type='paragraph' color='gray' className='!text-xs'>6 this week</Text>
+            <Text type='paragraph' color='gray' className='!text-xs'>{queriesData.weekQueries} this week</Text>
           </div>
         </div>
       </div>

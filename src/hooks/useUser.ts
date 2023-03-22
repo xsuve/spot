@@ -3,6 +3,7 @@ import { User as SupabaseUser } from '@supabase/supabase-js';
 import { getSession, getUserData, getUserQueries } from '@/services/supabase';
 import { QueryData } from '@/typings';
 import { useState } from 'react';
+import { DateTime } from 'luxon';
 
 type UserDataExperience = {
   position: string;
@@ -35,17 +36,23 @@ export type User = {
     created_at: string;
     data: QueryData;
   }[] | undefined;
+  queriesData: {
+    usedToday: number;
+    weekQueries: number;
+  } | undefined;
 };
 
 
 export const useUser = (): User => {
+  const today = DateTime.now();
+
   const [loading, setLoading] = useState(false);
 
   const fetchUser = async () => {
     setLoading(true);
 
     const getSessionResponse = await getSession();
-    let user, data, queries;
+    let user, data, queries, queriesData;
 
     if (getSessionResponse?.data?.session?.user) {
       user = getSessionResponse.data.session.user;
@@ -57,16 +64,32 @@ export const useUser = (): User => {
         if (!getUserDataResponse?.error && !getUserQueriesResponse?.error) {
           data = getUserDataResponse?.data?.data;
           queries = getUserQueriesResponse?.data;
+          queriesData = {
+            usedToday: getUserQueriesResponse?.data.reduce((count, item) => {
+              if (today.startOf('day') <= DateTime.fromISO(item.created_at).startOf('day')) {
+                count += 1;
+              }
+
+              return count;
+            }, 0),
+            weekQueries: getUserQueriesResponse?.data.reduce((count, item) => {
+              if (today.startOf('week') <= DateTime.fromISO(item.created_at).startOf('week')) {
+                count += 1;
+              }
+
+              return count;
+            }, 0)
+          };
         }
       }
     }
 
     setLoading(false);
 
-    return { isLoading: loading, user, data, queries };
+    return { isLoading: loading, user, data, queries, queriesData };
   };
 
   const { data, isLoading } = useSWR('/user', fetchUser);
   
-  return data || { isLoading: isLoading, user: undefined, data: undefined, queries: undefined };
+  return data || { isLoading: isLoading, user: undefined, data: undefined, queries: undefined, queriesData: undefined };
 };

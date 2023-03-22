@@ -159,7 +159,8 @@ export  const getUserQueries = async (userId: string) => {
   const { data, error } = await supabase
     .from('user_queries')
     .select('job_id, data, created_at')
-    .eq('user_id', userId);
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
   
   return { data, error };
 };
