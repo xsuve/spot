@@ -102,9 +102,12 @@ const Home: FC = () => {
       <div className='flex flex-col gap-y-2 mt-8'>
         <div className='flex justify-between items-center'>
           <Text type='label' color='dark'>Recent Activity</Text>
-          <Link to='/queries'>
-            <Text type='paragraph' color='gray' className='!text-xs'>See all</Text>
-          </Link>
+          { queries.length > 0
+            ? <Link to='/queries'>
+                <Text type='paragraph' color='gray' className='!text-xs'>See all</Text>
+              </Link>
+            : null
+          }
         </div>
         <div className='flex flex-col gap-y-4'>
           { queries.length > 0
