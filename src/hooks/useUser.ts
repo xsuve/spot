@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 import { getSession, getUserData, getUserQueries } from '@/services/supabase';
-import { QueryData } from '@/typings';
+import { QueryData, QueryUsage } from '@/typings';
 import { useState } from 'react';
 import { DateTime } from 'luxon';
 
@@ -35,6 +35,7 @@ export type User = {
     job_id: string;
     created_at: string;
     data: QueryData;
+    usage: QueryUsage;
   }[] | undefined;
   queriesData: {
     usedToday: number;

@@ -159,7 +159,7 @@ export const insertQuery = async (insertData: any) => {
 export  const getUserQueries = async (userId: string) => {
   const { data, error } = await supabase
     .from('user_queries')
-    .select('job_id, data, created_at')
+    .select('job_id, data, created_at, usage')
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
   

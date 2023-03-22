@@ -18,6 +18,12 @@ export type QueryData = {
   salaryForPosition: SalaryForPosition;
 };
 
+export type QueryUsage = {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
+};
+
 export type BoxData = {
   queryData: QueryData;
   userSkills: TechnologyItem[];

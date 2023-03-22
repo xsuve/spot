@@ -101,7 +101,7 @@ const Home: FC = () => {
 
       <div className='flex flex-col gap-y-2 mt-8'>
         <div className='flex justify-between items-center'>
-          <Text type='label' color='dark'>Recent Activity</Text>
+          <Text type='label' color='dark'>Recent Queries</Text>
           { queries.length > 0
             ? <Link to='/queries'>
                 <Text type='paragraph' color='gray' className='!text-xs'>See all</Text>
@@ -126,7 +126,7 @@ const Home: FC = () => {
                   </div>
                 </Link>
               ))
-            : <Text type='paragraph' color='gray'>No recent activity yet.</Text>
+            : <Text type='paragraph' color='gray'>No recent queries yet.</Text>
           }
         </div>
       </div>
