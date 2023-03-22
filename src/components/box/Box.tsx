@@ -21,6 +21,11 @@ const Box: FC<BoxProps> = ({
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
+  const isDarkMode = 
+    window.matchMedia 
+    && window.matchMedia('(prefers-color-scheme: dark)').matches
+    && !document.querySelector('meta[name="theme-color"]')?.getAttribute('content')?.includes('#ffffff')
+  
   const handleClick = async () => {
     setLoading(true);
     setAlert(null);
@@ -75,7 +80,11 @@ const Box: FC<BoxProps> = ({
   }, []);
 
   return (
-    <div className={`${jobDescription ? 'bg-aquamarine' : 'bg-linkedin-dark'} w-full rounded-[0.8rem] mb-[16px] relative ${className}`}>
+    <div className={`
+      ${jobDescription ? 'bg-aquamarine' : (isDarkMode ? 'bg-linkedin-dark' : 'bg-white !shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08)]')} 
+      w-full rounded-[0.8rem] mb-[16px] relative 
+      ${className}`}
+    >
       { jobDescription
       ? <div className='!grid grid-cols-5 items-center'>
           <div className='col-span-3 p-[2.4rem] z-20'>
@@ -109,19 +118,19 @@ const Box: FC<BoxProps> = ({
       : <div className='flex flex-col gap-y-[32px] p-[2.4rem]'>
           <div className='flex justify-between gap-x-[32px]'>
             <div className='flex items-center gap-x-[16px]'>
-              <Text type='title' color='white' className='!text-[2rem]'>{boxData.queryData.positionTitle}</Text>
-              <Text type='title' color='white' className='!text-[1.8rem] !text-white/40'>{boxData.queryData.experienceLevel}-level</Text>
+              <Text type='title' color={isDarkMode ? 'white' : 'dark'} className='!text-[2rem]'>{boxData.queryData.positionTitle}</Text>
+              <Text type='title' color={isDarkMode ? 'white' : 'gray'} className={`!text-[1.8rem] ${isDarkMode ? '!text-white/40' : ''}`}>{boxData.queryData.experienceLevel}-level</Text>
             </div>
             <div className='flex items-center gap-x-[8px]'>
-              <Text type='paragraph' color='white' className='!text-[1.2rem] leading-[1.5] !text-white/70'>Powered by</Text>
+              <Text type='paragraph' color={isDarkMode ? 'white' : 'gray'} className={`!text-[1.2rem] leading-[1.5] ${isDarkMode ? '!text-white/70' : ''}`}>Powered by</Text>
               <img src={chrome.runtime.getURL('assets/img/spot-icon-background.svg')} className='w-[24px]' />
             </div>
           </div>
           <div className='!grid grid-cols-3 gap-x-[32px]'>
             <div className='col-span-2'>
               <div className='flex flex-col gap-y-[4px]'>
-                <Text type='title' color='white' className='!text-[1.8rem] leading-[1.25]'>Technologies</Text>
-                <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.25]'>Job required technologies and libraries, included based on your skills.</Text>
+                <Text type='title' color={isDarkMode ? 'white' : 'dark'} className='!text-[1.8rem] leading-[1.25]'>Technologies</Text>
+                <Text type='paragraph' color={isDarkMode ? 'white' : 'dark'} className='!text-[1.4rem] leading-[1.25]'>Job required technologies and libraries, included based on your skills.</Text>
               </div>
               <div className='flex flex-wrap items-start gap-[12px] mt-[16px]'>
                 { boxData.queryData.technologies.map((item: TechnologyItem, index: number) => 
@@ -141,44 +150,44 @@ const Box: FC<BoxProps> = ({
             <div>
               <div className='flex justify-between gap-x-[16px]'>
                 <div className='flex flex-col gap-y-[4px]'>
-                  <Text type='title' color='white' className='!text-[1.8rem] leading-[1.25]'>Salary info</Text>
-                  <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.25]'>Suitable: {boxData.queryData.salaryForPosition.suitable} {boxData.queryData.salaryForPosition.currencyCode}</Text>
+                  <Text type='title' color={isDarkMode ? 'white' : 'dark'} className='!text-[1.8rem] leading-[1.25]'>Salary info</Text>
+                  <Text type='paragraph' color={isDarkMode ? 'white' : 'dark'} className='!text-[1.4rem] leading-[1.25]'>Suitable: {boxData.queryData.salaryForPosition.suitable} {boxData.queryData.salaryForPosition.currencyCode}</Text>
                 </div>
                 <InformationCircleIcon className='w-[20px] h-[20px] text-white/70' />
               </div>
               <div className='flex flex-col gap-y-[16px] mt-[16px]'>
                 <div className='flex items-center justify-between'>
-                  <div className={`bg-red-400 ${f < 1 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-orange-400 ${f < 2 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-amber-400 ${f < 3 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-yellow-400 ${f < 4 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-lime-400 ${f < 5 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-green-400 ${f < 6 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-emerald-400 ${f < 7 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-teal-400 ${f < 8 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-cyan-400 ${f < 9 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-sky-400 ${f < 10 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
-                  <div className={`bg-blue-400 ${f < 11 ? '!bg-white/20' : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-red-400 ${f < 1 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-orange-400 ${f < 2 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-amber-400 ${f < 3 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-yellow-400 ${f < 4 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-lime-400 ${f < 5 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-green-400 ${f < 6 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-emerald-400 ${f < 7 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-teal-400 ${f < 8 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-cyan-400 ${f < 9 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-sky-400 ${f < 10 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
+                  <div className={`bg-blue-400 ${f < 11 ? (isDarkMode ? '!bg-white/20' : 'bg-gray-200') : ''} h-[30px] rounded-[4px] w-[8px]`}></div>
                 </div>
                 <div className='flex justify-between'>
                   <div className='flex flex-col justify-start gap-y-[4px] text-left'>
-                    <Text type='paragraph' color='white' className='!text-[1.2rem] !text-white/70'>min</Text>
-                    <Text type='label' color='white' className='!text-[1.2rem]'>{boxData.queryData.salaryForPosition.min} {boxData.queryData.salaryForPosition.currencyCode}</Text>
+                    <Text type='paragraph' color={isDarkMode ? 'white' : 'gray'} className={`!text-[1.2rem] ${isDarkMode ? '!text-white/70' : ''}`}>min</Text>
+                    <Text type='label' color={isDarkMode ? 'white' : 'dark'} className='!text-[1.2rem]'>{boxData.queryData.salaryForPosition.min} {boxData.queryData.salaryForPosition.currencyCode}</Text>
                   </div>
                   <div className='flex flex-col justify-end gap-y-[4px] text-right'>
-                    <Text type='paragraph' color='white' className='!text-[1.2rem] !text-white/70'>max</Text>
-                    <Text type='label' color='white' className='!text-[1.2rem]'>{boxData.queryData.salaryForPosition.max} {boxData.queryData.salaryForPosition.currencyCode}</Text>
+                    <Text type='paragraph' color={isDarkMode ? 'white' : 'gray'} className={`!text-[1.2rem] ${isDarkMode ? '!text-white/70' : ''}`}>max</Text>
+                    <Text type='label' color={isDarkMode ? 'white' : 'dark'} className='!text-[1.2rem]'>{boxData.queryData.salaryForPosition.max} {boxData.queryData.salaryForPosition.currencyCode}</Text>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div>
-            <Text type='title' color='white' className='!text-[1.8rem] mb-[8px] leading-[1.25]'>Interview questions</Text>
+            <Text type='title' color={isDarkMode ? 'white' : 'dark'} className='!text-[1.8rem] mb-[8px] leading-[1.25]'>Interview questions</Text>
             <ul className='!list-decimal indent-[0.5rem] pl-[2rem]'>
               { boxData.queryData.interviewQuestions.map((item: string) => 
                 <li className='leading-loose'>
-                  <Text type='paragraph' color='white' className='!text-[1.4rem] leading-[1.5]'>{item}</Text>
+                  <Text type='paragraph' color={isDarkMode ? 'white' : 'dark'} className='!text-[1.4rem] leading-[1.5]'>{item}</Text>
                 </li>
               ) }
             </ul>

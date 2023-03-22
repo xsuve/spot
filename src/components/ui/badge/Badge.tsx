@@ -12,9 +12,9 @@ const BadgePropsColorMap = {
     'icon': 'text-white'
   },
   'gray': {
-    'background': 'bg-white/20',
+    'background': 'bg-gray-500',
     'text': 'white',
-    'chipBackground': 'bg-white/40',
+    'chipBackground': 'bg-gray-600',
     'chipText': 'white',
     'icon': 'text-white'
   },
