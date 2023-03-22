@@ -42,7 +42,7 @@ serve(async (req) => {
     \n\n
     - positionTitle: String with the position title from the job description.
     \n\n
-    - experienceLevel: String with the experience level for the position from this options: Intern, Junior, Mid, Senior, Lead.
+    - experienceLevel: String with the experience level for the position. Choose one from this options: Intern, Junior, Mid, Senior, Lead.
     \n\n
     - salaryForPosition: Object with following properties:
     \n
