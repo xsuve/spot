@@ -84,6 +84,15 @@ const handleMessage = async (request: Request, sendResponse: ResponseCallback) =
         return;
       }
 
+      if (
+        !getUserDataResponse?.data?.data.experience
+        || !getUserDataResponse?.data?.data.skills.length
+        || !getUserDataResponse?.data?.data.education
+      ) {
+        sendResponse({ data: null, error: 'Complete your profile first.' });
+        return;
+      }
+
       const invokeGenerateResponse = await invokeGenerate({
         userCountry: generate_User?.data.user.user_metadata.country,
         jobDescription: request.data.jobDescription
