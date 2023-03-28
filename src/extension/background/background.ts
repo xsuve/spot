@@ -25,16 +25,6 @@ const _getUser = async (): Promise<Response> => {
 
 const handleMessage = async (request: Request, sendResponse: ResponseCallback) => {
   switch (request.type) {
-    case RequestType.SET_SESSION:
-      chrome.storage.local.set({ [STORAGE_AUTH_KEY]: request.data.session });
-      sendResponse({ data: null, error: null });
-    break;
-
-    case RequestType.REMOVE_SESSION:
-      chrome.storage.local.remove([STORAGE_AUTH_KEY]);
-      sendResponse({ data: null, error: null });
-    break;
-
     case RequestType.CHECK_EXISTS:
       const getUser_User = await _getUser();
       if (getUser_User?.error) {
