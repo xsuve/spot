@@ -99,8 +99,38 @@ export const getSession = async () => {
 };
 
 
+export const setSession = async (accessToken: string, refreshToken: string) => {
+  const { data, error } = await supabase.auth.setSession({
+    access_token: accessToken,
+    refresh_token: refreshToken
+  });
+
+  return { data, error };
+};
+
+
 export const getUser = async (jwt: string) => {
   const { data, error } = await supabase.auth.getUser(jwt);
+
+  return { data, error };
+};
+
+
+export const sendResetPasswordEmail = async (email: string) => {
+  const { data, error } = await supabase.auth.resetPasswordForEmail(
+    email,
+    {
+      redirectTo: `chrome-extension://${chrome.runtime.id}/src/extension/popup/index.html`
+    }
+  );
+
+  return { data, error };
+};
+
+export const updateUserPassword = async (newPassword: string) => {
+  const { data, error } = await supabase.auth.updateUser({
+    password: newPassword
+  });
 
   return { data, error };
 };

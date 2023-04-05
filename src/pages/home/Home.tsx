@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useUser } from '@/hooks/useUser';
 import { Cog6ToothIcon,  ListBulletIcon, SparklesIcon, ChevronRightIcon, ArrowRightOnRectangleIcon, SwatchIcon } from '@heroicons/react/24/outline';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { DateTime } from 'luxon';
 import GetStarted from '@/components/get-started/GetStarted';
 import Layout from '@/components/layout/Layout';
 import { logOut } from '@/services/supabase';
-import { STORAGE_AUTH_KEY } from '@/utils/storageKeys';
+import { STORAGE_AUTH_KEY, UPDATE_PASSWORD_KEY } from '@/utils/storageKeys';
 import { mutate } from 'swr';
 
 const Home: FC = () => {
@@ -24,6 +24,19 @@ const Home: FC = () => {
   };
 
   const { isLoading, user, data, queries, queriesData } = useUser();
+
+  const [isUpdatePassword, setIsUpdatePassword] = useState(false);
+  useEffect(() => {
+    chrome.storage.local.get([UPDATE_PASSWORD_KEY], (result) => {
+      if (result && result[UPDATE_PASSWORD_KEY]) {
+        setIsUpdatePassword(true);
+      }
+    });
+  }, []);
+  
+  if (isUpdatePassword) {
+    return <Navigate to='/update-password' replace />;
+  }
   
   if (isLoading) {
     return <LoadingScreen />;
