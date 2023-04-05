@@ -32,7 +32,7 @@ const Settings: React.FC = () => {
     setLoading(false);
     setAlert({
       type: 'success',
-      title: 'Check your email address.',
+      title: 'Check your email.',
       text: 'We have sent a reset password link to your email.'
     });
 

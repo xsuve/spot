@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { setSession } from '@/services/supabase';
 import { mutate } from 'swr';
-import { STORAGE_AUTH_KEY, UPDATE_PASSWORD_KEY } from '@/utils/storageKeys';
+import { UPDATE_PASSWORD_KEY } from '@/utils/storageKeys';
 
 import Home from '@/pages/home/Home';
 import Profile from '@/pages/profile/Profile';
@@ -16,6 +16,7 @@ import Onboard from '@/pages/onboard/Onboard';
 import Signup from '@/pages/signup/Signup';
 import Queries from '@/pages/queries/Queries';
 import UpdatePassword from '@/pages/update-password/UpdatePassword';
+import ResetPassword from '@/pages/reset-password/ResetPassword';
 
 import '@/styles.css';
 
@@ -37,14 +38,9 @@ const Popup: FC = () => {
           return;
         }
 
-        const { data, error } = await setSession(accessToken, refreshToken);
-        
-        // if (error) {
-        //   return;
-        // }
+        await setSession(accessToken, refreshToken);
         
         chrome.storage.local.set({ [UPDATE_PASSWORD_KEY]: true });
-        chrome.storage.local.set({ [STORAGE_AUTH_KEY]: data.session });
         
         mutate('/user');
 
@@ -78,6 +74,7 @@ const Popup: FC = () => {
           <Route path='/onboard' element={<Onboard />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/update-password' element={<UpdatePassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
         </Routes>
       </MemoryRouter>
 

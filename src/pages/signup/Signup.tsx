@@ -47,7 +47,7 @@ const Signup: React.FC = () => {
     setLoading(false);
     setAlert({
       type: 'success',
-      title: 'Check your email address.',
+      title: 'Check your email.',
       text: 'We have sent you a confirmation email to confirm your account.'
     });
     reset();

@@ -112,7 +112,7 @@ const Login: React.FC = () => {
           </>
           <div className='flex gap-x-1.5'>
             <Text type='paragraph' color='gray'>Forgot password? </Text>
-            <Link to='/forgot'>
+            <Link to='/reset-password'>
               <Text type='label' color='gray'>Reset</Text>
             </Link>
           </div>
