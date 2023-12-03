@@ -1,101 +1,127 @@
 // @ts-ignore
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-
-export const createCompletion = async (prompt: string) => {
-  const response = await fetch(
-    'https://api.openai.com/v1/completions',
-    {
-      body: JSON.stringify({
-        model: 'text-davinci-003',
-        prompt: prompt,
-        temperature: 1,
-        max_tokens: 512,
-        top_p: 1,
-        frequency_penalty: 0.5,
-        presence_penalty: 0.5,
-        best_of: 1
-      }),
-      headers: {
-        // @ts-ignore
-        Authorization: `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    },
-  );
-  return response.text();    
-}
-
+import { serve } from 'https://deno.land/std@0.208.0/http/server.ts';
 // @ts-ignore
-serve(async (req) => {
-  const { userCountry, jobDescription } = await req.json();
+import OpenAI from 'https://deno.land/x/openai@v4.20.1/mod.ts';
 
-  const prompt = `
-    Given the job description below, create a JSON object with the following properties:
-    \n\n
-    - programmingLanguages: Array of Objects with programming languages and libraries from job description. Each object will have the following properties:
-    \n
-    title: The title of the technology.
-    yearsOfExperience: The years of experience required for the technology (-1 if not specified).
-    \n\n
-    - interviewQuestions: Array of Strings with 5 potential interview questions from job description.
-    \n\n
-    - positionTitle: String with the position title from the job description.
-    \n\n
-    - experienceLevel: String with the experience level for the position. Choose one from this options: Intern, Junior, Mid, Senior, Lead.
-    \n\n
-    - salaryForPosition: Object with following properties:
-    \n
-    suitable: Number with the suitable salary for the position and experience level in country ${userCountry}.
-    min: Number with minimum salary for the position and experience level in country ${userCountry}.
-    max: Number with maximum salary for the position and experience level in country ${userCountry}.
-    currencyCode: String with the currency code for the salary range values (e.g. USD, EUR, RON etc.).
-    \n\n
-    The job description:
-    \n
-    """${jobDescription}"""
-    \n\n
-    Example response:
-    \n
-    {
-      "programmingLanguages": [
-        { "title": "React", "yearsOfExperience": 3 },
-        { "title": "NodeJS", "yearsOfExperience": 2 },
-        { "title": "MongoDB", "yearsOfExperience": -1 },
-        { "title": "Jest", "yearsOfExperience": -1 }
-      ],
-      "interviewQuestions": ["What is your experience with React?"],
-      "positionTitle": "React Developer",
-      "experienceLevel": "Junior",
-      "salaryForPosition": {
-        "suitable": 10000,
-        "min": 7000,
-        "max": 14000,
-        "currencyCode": "RON"
-      }
-    }
-    \n\n
-    The JSON object:
-  `;
-  const result = await createCompletion(prompt);
+export const sendResponse = (data: any, usage: any, error: any) => {
+  return new Response(
+    JSON.stringify({
+      data,
+      usage,
+      error,
+    }),
+    { headers: { 'Content-Type': 'application/json' } }
+  );
+};
+
+serve(async (req: Request) => {
   try {
-    const jsonData = JSON.parse(result);
-    return new Response(
-      JSON.stringify({
-        data: jsonData.choices[0].text,
-        usage: jsonData.usage,
-        error: null
-      }),
-      { headers: { 'Content-Type': 'application/json' } }
-    );
+    const { openAIAPIKey, userCountry, jobDescription } = await req.json();
+    if (!openAIAPIKey) {
+      return sendResponse(null, null, 'OpenAI API key is not set.');
+    }
+
+    const responseSchema = {
+      type: 'object',
+      properties: {
+        programmingLanguages: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              title: {
+                type: 'string',
+                description:
+                  'Abbreviated title of the technology. Example: CSS, HTML, React etc.',
+              },
+              yearsOfExperience: {
+                type: 'integer',
+                description: `The years of experience required for the technology. Set the value to -1 if not specified.`,
+              },
+            },
+          },
+          description:
+            'Programming languages and libraries from job description.',
+        },
+        interviewQuestions: {
+          type: 'array',
+          items: {
+            type: 'string',
+            description: 'Interview question.',
+          },
+          description:
+            'Ten potential interview questions from job description.',
+        },
+        jobTitle: {
+          type: 'string',
+          description: 'Job title from job description.',
+        },
+        experienceLevel: {
+          type: 'string',
+          enum: ['Intern', 'Junior', 'Mid', 'Senior', 'Lead'],
+          description:
+            'Experience level for the position from job description.',
+        },
+        salaryForPosition: {
+          type: 'object',
+          properties: {
+            suitable: {
+              type: 'integer',
+              description: `Suitable monthly salary for the position and experience level in ${userCountry}.`,
+            },
+            min: {
+              type: 'integer',
+              description: `Minimum monthly salary for the position and experience level in ${userCountry}.`,
+            },
+            max: {
+              type: 'integer',
+              description: `Maximum monthly salary for the position and experience level in ${userCountry}.`,
+            },
+            currencyCode: {
+              type: 'string',
+              enum: ['RON', 'EUR', 'USD'],
+              description: 'Currency code for the monthly salary.',
+            },
+          },
+        },
+      },
+      required: [
+        'programmingLanguages',
+        'interviewQuestions',
+        'jobTitle',
+        'experienceLevel',
+        'salaryForPosition',
+      ],
+    };
+
+    const openai = new OpenAI({ apiKey: openAIAPIKey });
+    const response = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo-1106',
+      messages: [
+        {
+          role: 'system',
+          content:
+            'Extract the required information and create an object from the job description:',
+        },
+        {
+          role: 'user',
+          content: jobDescription,
+        },
+      ],
+      functions: [
+        {
+          name: 'createResponse',
+          parameters: responseSchema,
+        },
+      ],
+      function_call: { name: 'createResponse' },
+    });
+
+    const functionCall = response.choices[0].message.function_call.arguments;
+    const jsonData = JSON.parse(functionCall);
+
+    return sendResponse(jsonData, response.usage, null);
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        data: null,
-        usage: null,
-        error
-      }),
-      { headers: { 'Content-Type': 'application/json' } },
-    );
+    return sendResponse(null, null, error.message);
   }
 });

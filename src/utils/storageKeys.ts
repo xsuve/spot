@@ -1,2 +1,2 @@
-export const STORAGE_AUTH_KEY = 'supabase_auth_session';
-export const UPDATE_PASSWORD_KEY = 'supabase_auth_update_password';
+export const SPOT_USER_DATA = 'spot_user_data';
+export const SPOT_USER_QUERIES = 'spot_user_queries';

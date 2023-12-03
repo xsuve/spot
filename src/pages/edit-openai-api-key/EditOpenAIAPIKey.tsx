@@ -1,26 +1,17 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
-import {
-  Alert,
-  AlertProps,
-  Button,
-  Select,
-  SelectPropsOption,
-  Text,
-} from '@/components/ui';
+import { Alert, AlertProps, Button, Input, Text } from '@/components/ui';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useForm } from 'react-hook-form';
-import { jobPositions, yearsOfExperience } from '@/utils/selectOptions';
 import { useUserStore } from '@/stores/user';
 import { useShallow } from 'zustand/react/shallow';
 
-type ExperienceFormData = {
-  jobTitleOption: SelectPropsOption;
-  yearsOfExperienceOption: SelectPropsOption;
+type OpenAIAPIKeyFormData = {
+  openAIAPIKey: string;
 };
 
-const EditExperience: React.FC = () => {
+const EditOpenAIAPIKey: React.FC = () => {
   const { user, updateUser } = useUserStore(useShallow((state) => state));
 
   const navigate = useNavigate();
@@ -33,10 +24,10 @@ const EditExperience: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors, isValid },
-  } = useForm<ExperienceFormData>({ mode: 'onSubmit' });
+  } = useForm<OpenAIAPIKeyFormData>({ mode: 'onSubmit' });
 
-  const submitUpdateExperience = async (
-    experienceFormData: ExperienceFormData,
+  const submitUpdateEducation = async (
+    openAIAPIKeyFormData: OpenAIAPIKeyFormData,
     e: BaseSyntheticEvent | undefined
   ) => {
     e?.preventDefault();
@@ -44,20 +35,20 @@ const EditExperience: React.FC = () => {
     setLoading(true);
     updateUser({
       ...user,
-      experience: {
-        jobTitle: experienceFormData.jobTitleOption.value,
-        yearsOfExperience: experienceFormData.yearsOfExperienceOption.value,
+      openAIAPI: {
+        key: openAIAPIKeyFormData.openAIAPIKey,
+        updatedAt: new Date().toISOString(),
       },
     });
 
     setLoading(false);
     reset();
-    navigate('/profile');
+    navigate('/settings');
   };
 
   return (
     <Layout type='login'>
-      <Link to='/profile'>
+      <Link to='/settings'>
         <div className='flex items-center gap-x-2'>
           <ChevronLeftIcon className='w-4 h-4 text-slate-400' />
           <Text type='paragraph' color='gray' className='!text-xs'>
@@ -68,57 +59,31 @@ const EditExperience: React.FC = () => {
 
       <div className='flex flex-col gap-y-1.5'>
         <Text type='title' color='dark'>
-          Update experience
+          Update OpenAI API key
         </Text>
         <Text type='paragraph' color='gray'>
-          Set your job experience with the main job title and years of
-          experience.
+          Set your OpenAI API key for the app.
         </Text>
       </div>
 
       <form
         className='w-full flex flex-col gap-y-6'
-        onSubmit={handleSubmit(submitUpdateExperience)}
+        onSubmit={handleSubmit(submitUpdateEducation)}
         autoComplete='off'
         noValidate
       >
         <div className='w-full flex flex-col gap-y-6'>
-          <Select
-            name='jobTitleOption'
-            placeholder='Job title'
-            label='Job title'
-            selected={
-              user.experience
-                ? jobPositions.find(
-                    (item) => item.value === user.experience.jobTitle
-                  )
-                : null
-            }
+          <Input
+            type='text'
+            name='openAIAPIKey'
+            placeholder='Your OpenAI API key'
+            label='OpenAI API key'
+            value={user.openAIAPI.key}
             errors={errors}
             control={control}
             validation={{
               required: 'This field is required.',
             }}
-            options={jobPositions}
-            required
-          />
-          <Select
-            name='yearsOfExperienceOption'
-            placeholder='Years of experience'
-            label='Years of experience'
-            selected={
-              user.experience
-                ? yearsOfExperience.find(
-                    (item) => item.value === user.experience.yearsOfExperience
-                  )
-                : null
-            }
-            errors={errors}
-            control={control}
-            validation={{
-              required: 'This field is required.',
-            }}
-            options={yearsOfExperience}
             required
           />
           <>{alert && !loading ? <Alert {...alert} /> : null}</>
@@ -140,4 +105,4 @@ const EditExperience: React.FC = () => {
   );
 };
 
-export default EditExperience;
+export default EditOpenAIAPIKey;
